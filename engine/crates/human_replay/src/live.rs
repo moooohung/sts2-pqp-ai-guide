@@ -26,6 +26,8 @@ impl Pending {
     }
 }
 
+pub enum LiveRun { Solo(sts2_sim::run::RunManager), Party(sts2_sim::run::mp::MpRun) }
+
 /// Worker-owned original-input journal. No final result or floor digests required.
 /// `pending` reconstructs the prefix through the shared replay implementation;
 /// a refused prefix never yields observations from the last successful state.
@@ -50,6 +52,12 @@ impl LiveMirror {
         Ok(())
     }
     pub fn pending(&self,encoder:NativeEncoder)->Result<Vec<Pending>,Failure>{
+        self.pending_with_run(encoder).map(|(pending,_)|pending)
+    }
+    /// Also returns the replayed run itself (party seat `i` has network id `i + 1`).
+    /// It holds the simulator's hidden future: callers must not show or use it
+    /// except through a determinization that re-samples that future.
+    pub fn pending_with_run(&self,encoder:NativeEncoder)->Result<(Vec<Pending>,LiveRun),Failure>{
         if self.recording.party.len()==1 {crate::solo::live_pending(&self.recording,encoder)}
         else {crate::party::live_pending(&self.recording,encoder)}
     }

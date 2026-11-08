@@ -473,6 +473,7 @@ pub(crate) fn use_effect(c: &mut Combat, owner: CId, id: PotionId, target: Optio
                     c.cards[k as usize].upgraded as u8,
                 )
             });
+            c.players[player].draw_known = Default::default();
             c.run.rngs.shuffle.shuffle(&mut c.players[player].draw);
             c.draw_cards(player, 5, false);
         }

@@ -13,6 +13,7 @@ pub mod combat;
 pub mod content;
 pub mod creature;
 pub mod damage;
+pub mod determinize;
 pub mod digest;
 // relic fire: core/hooks.py:781
 pub mod extra_turn;

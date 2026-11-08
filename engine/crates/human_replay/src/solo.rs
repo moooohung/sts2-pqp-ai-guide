@@ -375,9 +375,10 @@ pub(crate) fn live_probe_steps(recording:&Recording,probes:&[Recording],
     }).collect()
 }
 
-pub(crate) fn live_pending(recording:&Recording,encoder:NativeEncoder)->Result<Vec<crate::live::Pending>>{
+pub(crate) fn live_pending(recording:&Recording,encoder:NativeEncoder)->Result<(Vec<crate::live::Pending>,crate::live::LiveRun)>{
     let mut replay=live_replay(recording,encoder)?;
     replay.encoder.encode_solo(&replay.game,replay.decision,&mut replay.obs)
         .map_err(|_|fail("NATIVE_OBSERVATION_FAILED"))?;
-    Ok(vec![crate::live::Pending::new(replay.obs,replay.decision,1)?])
+    let pending=vec![crate::live::Pending::new(replay.obs,replay.decision,1)?];
+    Ok((pending,crate::live::LiveRun::Solo(replay.game)))
 }

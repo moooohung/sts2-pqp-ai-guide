@@ -33,6 +33,13 @@ public static partial class RecorderMod
         System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(typeof(AiAdvisor).Assembly, (name, _, _) =>
             name == "sts2_advisor_bridge" ? System.Runtime.InteropServices.NativeLibrary.Load(bridge) : IntPtr.Zero);
         AiAdvisor.Install(harmony);
+        // Decision-time search plays the host's AI teammates; the human's badges stay the policy's.
+        AiAdvisor.SearchesSeat = seat => run is { } state && seat < state.Players.Count && AiOwned(state.Players[seat]);
+        AiAdvisor.SeatDeadline = seat => run is { } state && seat < state.Players.Count
+            ? aiFallbackDeadline.ActBy(state.Players[seat], System.Diagnostics.Stopwatch.GetTimestamp(), AiFallbackDelay,
+                (long)(System.Diagnostics.Stopwatch.Frequency * AiActMarginSeconds))
+            : long.MaxValue;
+        AiAdvisor.Log = line => AdvisorLog(line);
         AiAdvisor.Changed += () => {
             AdvisorLog($"status={AiAdvisor.Status} failure={AiAdvisor.LastFailureKind} " +
                 $"refused={AiAdvisor.LastRefusal is not null} unavailable={AiAdvisor.UnavailableReason is not null} " +

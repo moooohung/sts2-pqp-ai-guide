@@ -23,7 +23,7 @@ internal sealed class AiTeammatePresence(Action<INetMessage> submit, Func<double
 
     internal bool Think(object currentRoom, AiAdvisor.LiveOption chosen, AiAdvisor.LiveOption? alternative,
         float confidence, NetScreenType screen, RunLocation location, Vector2? from, Vector2? destination,
-        long now, long frequency)
+        long now, long frequency, long readyBy = long.MaxValue)
     {
         if (!ReferenceEquals(room, currentRoom) || decision is null ||
             decision.Binding != chosen.Binding || !ReferenceEquals(decision.Option, chosen.Option) ||
@@ -34,15 +34,17 @@ internal sealed class AiTeammatePresence(Action<INetMessage> submit, Func<double
             // Cosmetic randomness is deliberately separate from every game RNG.
             runnerUp = confidence < .7f && cosmeticRandom() < .45 ? alternative : null;
             started = now;
-            // 350–1600 ms, comfortably inside the five-second policy fallback.
+            // 350–1600 ms, clamped below to the seat's policy fallback deadline (readyBy).
             duration = (long)(frequency * (.35 + 1 - Math.Clamp(confidence, 0, 1) + .25 * cosmeticRandom()));
             origin = screen == Screen ? position ?? from : from;
             Screen = screen;
             nextUpdate = now;
             pinged = false;
         }
+        // Cosmetic think time never outlasts the seat's fallback deadline (advice may arrive late).
+        duration = Math.Min(duration, Math.Max(0, readyBy - started));
         if (hidden) { nextUpdate = now; hidden = false; }
-        double progress = Math.Clamp((double)(now - started) / duration, 0, 1);
+        double progress = duration > 0 ? Math.Clamp((double)(now - started) / duration, 0, 1) : 1;
         if (now >= nextUpdate) {
             nextUpdate = now + frequency / 20;
             var hover = progress < .35 && runnerUp is not null ? runnerUp : chosen;

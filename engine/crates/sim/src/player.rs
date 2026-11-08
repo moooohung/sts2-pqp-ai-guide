@@ -51,6 +51,44 @@ pub struct PlayerCombatState {
     pub base_max_energy: i32,
     pub character_pool: Option<crate::character::CardPool>,
     pub orbs: crate::orbs::OrbQueue,
+    /// Draw-pile positions players watched being set; read only by search determinization.
+    pub draw_known: DrawKnowledge,
+}
+
+/// Draw-pile positions known from watched CardPilePosition.Top/Bottom adds (C# Headbutt,
+/// Thinking Ahead, Nostalgia/Rebound play results, generated cards). `top[i]`/`bottom[i]`
+/// is the i-th card from that end: true when every seat watched it arrive (from a face-up
+/// pile, or generated), false when only the owner did (from the owner's hand).
+/// It holds only while the draw pile is `pile` with cards taken off the top; any other
+/// change (shuffle, random insert, removal from the middle) voids it, so a search can know
+/// less than a player, never more.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct DrawKnowledge {
+    top: Vec<bool>,
+    bottom: Vec<bool>,
+    pile: Vec<KRef>,
+}
+
+impl DrawKnowledge {
+    /// The (top, bottom) knowledge still valid for `draw`.
+    pub fn current(&self, draw: &[KRef]) -> (&[bool], &[bool]) {
+        let Some(drawn) = self.pile.len().checked_sub(draw.len()).filter(|&d| self.pile[d..] == *draw)
+        else { return (&[], &[]) };
+        (self.top.get(drawn..).unwrap_or(&[]), &self.bottom[..self.bottom.len().min(draw.len())])
+    }
+    /// `after` is the draw pile just after one card was put on its top (`at_top`) or bottom.
+    pub fn record(&mut self, after: &[KRef], at_top: bool, public: bool) {
+        let before = if at_top { &after[1..] } else { &after[..after.len() - 1] };
+        let (top, bottom) = self.current(before);
+        let (mut top, mut bottom) = (top.to_vec(), bottom.to_vec());
+        if at_top { top.insert(0, public) } else { bottom.insert(0, public) }
+        *self = Self { top, bottom, pile: after.to_vec() };
+    }
+    /// Knowledge of exactly `top`/`bottom` for `draw` (determinization keeps what a viewer knows).
+    pub fn known(top: &[bool], bottom: &[bool], draw: &[KRef]) -> Self {
+        if top.is_empty() && bottom.is_empty() { return Self::default(); }
+        Self { top: top.to_vec(), bottom: bottom.to_vec(), pile: draw.to_vec() }
+    }
 }
 
 impl PlayerCombatState {
@@ -78,6 +116,7 @@ impl PlayerCombatState {
             base_max_energy,
             character_pool: None,
             orbs: Default::default(),
+            draw_known: DrawKnowledge::default(),
         }
     }
 }

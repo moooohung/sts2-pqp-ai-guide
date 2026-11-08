@@ -73,13 +73,43 @@ public static class AiAdvisor
     public static string? UnavailableReason => Unavailable?.Detail;
     static bool replayUnavailable;
     static readonly Dictionary<int, IReadOnlyList<(object Option, float Probability)>> advice = new();
+    // Decision-time search: the option binding it chose per seat, for seats that act on their own.
+    static readonly Dictionary<int, string> searchChoices = new();
+    // Per searched seat: the decision version whose search result is still awaited, and until when.
+    static readonly Dictionary<int, (long Version, long Until)> searchPending = new();
+    /// <summary>How long after its decision was captured an AI seat waits for that decision's search
+    /// before it takes the policy's choice. Plain advice is published first and a search runs only
+    /// while no other work waits, so neither a slow search nor other seats' searches hold a seat past
+    /// this; with the 0.35–1.6 s presence think it stays inside the 5 s AI fallback (AiFallback.cs).</summary>
+    internal const double SearchWaitSeconds = 2;
+    /// <summary>The measured default (2 samples, 64 nodes: p95 about 100 ms per combat decision natively).
+    /// In the bridge each search runs on its own thread: a panic, a simulator fault or no result within
+    /// its 2 s stall limit reports the search unavailable and the policy's choice stands; after a stall
+    /// no search runs again until the game restarts.</summary>
+    static readonly object SearchConfig = new Dictionary<string, int> { ["samples"] = 2, ["node_budget"] = 64 };
+    /// <summary>Seats whose decisions are searched (the host's AI teammates); called on the main thread.
+    /// The human's advice is never searched: the badges show the policy's own probabilities.</summary>
+    public static Func<int, bool>? SearchesSeat { get; set; }
+    /// <summary>The latest timestamp a seat may still act and beat its fallback (main thread). A
+    /// pending search never holds the seat past it, so a search wait ends at the earlier of this
+    /// and <see cref="SearchWaitSeconds"/> after capture.</summary>
+    public static Func<int, long>? SeatDeadline { get; set; }
+    static long WaitEnd(int seat, long until) => SeatDeadline is { } deadline ? Math.Min(until, deadline(seat)) : until;
+    /// <summary>Diagnostic lines (search turned off, search unavailable); at most once per run and reason.</summary>
+    public static Action<string>? Log { get; set; }
+    static bool searchAvailable;
+    // A routine refusal (a teammate resolving a card choice) must not hide a later stall or fault.
+    static readonly HashSet<string> searchFailuresLogged = new(StringComparer.Ordinal);
     // Per seat: option source -> representative of its indistinguishable group.
     static readonly Dictionary<int, Dictionary<object, object>> equivalent = new();
     static BlockingCollection<Action>? queue;
     static CancellationTokenSource? cancellation;
     internal static Task WorkerCompletion { get; private set; } = Task.CompletedTask;
     [ThreadStatic] static IntPtr native;
+    [ThreadStatic] static NativeBridge? workerBridge;
     [ThreadStatic] static CancellationToken workerToken;
+    // Searches of decisions whose plain advice is out; the worker runs one only when no job waits.
+    [ThreadStatic] static Queue<Action>? workerSearches;
     static int localSeat;
     static long runId, revision;
 
@@ -133,12 +163,15 @@ public static class AiAdvisor
     }
     // A seat's advice is only as old as that seat's own decision: in a 3-4 player
     // party one teammate's new capture must not discard the others' results.
-    static readonly Dictionary<int, long> seatVersions = new();
+    // Written on the main thread; the worker reads it to skip searches of superseded decisions.
+    static readonly ConcurrentDictionary<int, long> seatVersions = new();
     static readonly Dictionary<int, long> requestedVersions = new();
     static long epoch;
     static void Clear()
     {
         advice.Clear();
+        searchChoices.Clear();
+        searchPending.Clear();
         equivalent.Clear();
         requestedVersions.Clear();
         LastAdvicePath = null;
@@ -149,6 +182,8 @@ public static class AiAdvisor
     static void ClearSeat(int seat)
     {
         advice.Remove(seat);
+        searchChoices.Remove(seat);
+        searchPending.Remove(seat);
         equivalent.Remove(seat);
         requestedVersions.Remove(seat);
         seatVersions[seat] = ++revision;
@@ -191,13 +226,23 @@ public static class AiAdvisor
         queue = jobs;
         var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         WorkerCompletion = completion.Task;
+        var bridge = Bridge;
         var thread = new Thread(() => {
             workerToken = token;
+            workerBridge = bridge;
             workerRecordingFailure = protectedRecording;
+            var searches = workerSearches = new Queue<Action>();
             try {
-                foreach (var job in jobs.GetConsumingEnumerable(token)) {
+                // Every waiting job (a seat's plain advice) runs before the next search, so at
+                // most one running search delays another seat's advice.
+                while (true) {
                     token.ThrowIfCancellationRequested();
-                    job();
+                    if (jobs.TryTake(out var job, searches.Count == 0 ? Timeout.Infinite : 0, token)) {
+                        token.ThrowIfCancellationRequested();
+                        job();
+                    }
+                    else if (searches.Count > 0) searches.Dequeue()();
+                    else break;
                 }
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested) { }
@@ -212,7 +257,7 @@ public static class AiAdvisor
                 });
             }
             finally {
-                try { if (native != IntPtr.Zero) Native.Destroy(native); }
+                try { if (native != IntPtr.Zero) bridge.Destroy(native); }
                 catch (Exception) { /* Teardown cannot escape a background thread. */ }
                 native = IntPtr.Zero;
                 jobs.Dispose();
@@ -227,15 +272,22 @@ public static class AiAdvisor
                 token.ThrowIfCancellationRequested();
                 byte[] start = Encoding.UTF8.GetBytes(runStartJson);
                 token.ThrowIfCancellationRequested();
-                native = Native.Create(weights, (nuint)weights.Length, start, (nuint)start.Length);
+                native = bridge.Create(weights, start);
                 token.ThrowIfCancellationRequested();
                 using var meta = Request("{\"op\":\"meta\"}");
                 var value = meta.RootElement.GetProperty("value");
                 if (value.GetProperty("game_version").GetString() != gameVersion)
                     throw new InvalidDataException("POLICY_GAME_VERSION_MISMATCH");
                 string label = $"{value.GetProperty("checkpoint_id").GetString()} · {value.GetProperty("step").GetUInt64()}";
+                // Search discounts with the checkpoint's training gamma; weights exported
+                // without it keep every seat on the plain policy.
+                bool searchable = value.TryGetProperty("gamma", out var gamma) && gamma.ValueKind == JsonValueKind.Number;
                 Post(() => {
                     if (id != runId || token.IsCancellationRequested) return;
+                    searchAvailable = searchable;
+                    searchFailuresLogged.Clear();
+                    if (!searchable)
+                        Log?.Invoke($"decision search off: policy {label} lacks the training discount (gamma); AI teammates play the plain policy");
                     CheckpointLabel = label;
                     Status = AdvisorStatus.Ready;
                     LastRefusal = null;
@@ -275,6 +327,7 @@ public static class AiAdvisor
         liveStates.Clear();
         unavailable.Clear();
         replayUnavailable = false;
+        searchAvailable = false;
         recordingFailure = null;
         Interlocked.Exchange(ref replayIntegrityLost, 0);
         CheckpointLabel = null;
@@ -372,6 +425,8 @@ public static class AiAdvisor
         boundaries.Remove(seat);
         liveStates.Remove(seat);
         advice.Remove(seat);
+        searchChoices.Remove(seat);
+        searchPending.Remove(seat);
         equivalent.Remove(seat);
         requestedVersions.Remove(seat);
         seatVersions[seat] = ++revision;
@@ -422,19 +477,26 @@ public static class AiAdvisor
         var capturedBoundaries = boundaries.ToDictionary(p => p.Key, p => p.Value);
         var capturedStates = liveStates.ToDictionary(p => p.Key, p => p.Value);
         bool preferLive = replayUnavailable;
-        Worker(() => {
-        var requests = snapshots.Where(p => capturedBoundaries.ContainsKey(p.Key) || capturedStates.ContainsKey(p.Key))
-            .Select(p => (Seat: p.Key, Json: JsonSerializer.Serialize(new {
+        var searchedSeats = pendingSeats.Where(seat => searchAvailable && SearchesSeat?.Invoke(seat) == true).ToHashSet();
+        // Measured from capture: a queue delay counts against the seat's wait for its search.
+        long searchUntil = System.Diagnostics.Stopwatch.GetTimestamp() +
+            (long)(System.Diagnostics.Stopwatch.Frequency * SearchWaitSeconds);
+        string Json(int seat, LiveOption[] options, bool search) => JsonSerializer.Serialize(new {
             op = "checked_pending",
             prefer_live = preferLive,
-            live_state = capturedStates.GetValueOrDefault(p.Key),
+            search = search ? SearchConfig : null,
+            live_state = capturedStates.GetValueOrDefault(seat),
             decisions = new[] { new {
-                seat = p.Key,
-                before = capturedBoundaries.TryGetValue(p.Key, out var boundary) ? boundary.Before : null,
-                parent_seq = capturedBoundaries.TryGetValue(p.Key, out boundary) ? boundary.Parent : null,
-                options = p.Value.Select(o => o.Binding).ToArray()
+                seat,
+                before = capturedBoundaries.TryGetValue(seat, out var boundary) ? boundary.Before : null,
+                parent_seq = capturedBoundaries.TryGetValue(seat, out boundary) ? boundary.Parent : null,
+                options = options.Select(o => o.Binding).ToArray()
             } }
-        }, RecordingFormat.Json))).ToArray();
+        }, RecordingFormat.Json);
+        Worker(() => {
+        // The policy's advice for every seat first; searches follow (SearchSeat).
+        var requests = snapshots.Where(p => capturedBoundaries.ContainsKey(p.Key) || capturedStates.ContainsKey(p.Key))
+            .Select(p => (Seat: p.Key, Json: Json(p.Key, p.Value, search: false))).ToArray();
             var result = new Dictionary<int, IReadOnlyList<(object Option, float Probability)>>();
             var groups = new Dictionary<int, Dictionary<object, object>>();
             string? selectedPath = null;
@@ -484,6 +546,9 @@ public static class AiAdvisor
                     // A newer decision for this seat supersedes this result.
                     if (seatVersions.GetValueOrDefault(pair.Key) != versions[pair.Key]) continue;
                     advice[pair.Key] = pair.Value;
+                    searchChoices.Remove(pair.Key);
+                    if (searchedSeats.Contains(pair.Key)) searchPending[pair.Key] = (versions[pair.Key], searchUntil);
+                    else searchPending.Remove(pair.Key);
                     if (groups.TryGetValue(pair.Key, out var grouped)) equivalent[pair.Key] = grouped;
                     else equivalent.Remove(pair.Key);
                 }
@@ -492,6 +557,50 @@ public static class AiAdvisor
                 if (selectedPath is not null) LastAdvicePath = selectedPath;
                 Notify();
             });
+            foreach (int seat in result.Keys.Where(searchedSeats.Contains)) {
+                string json = Json(seat, snapshots[seat], search: true);
+                var keys = snapshots[seat].Select(o => o.Binding).ToHashSet(StringComparer.Ordinal);
+                workerSearches!.Enqueue(() => SearchSeat(id, capturedEpoch, seat, versions[seat], searchUntil, json, keys));
+            }
+        });
+    }
+
+    /// <summary>On the worker: one seat's search after its plain advice is out. Search is advisory to
+    /// the AI seat only: a missing, failed or late search leaves the policy's choice.</summary>
+    static void SearchSeat(long id, long capturedEpoch, int seat, long version, long until, string json, HashSet<string> keys)
+    {
+        // Superseded, or the seat has stopped waiting for it: nothing would use the result.
+        if (Volatile.Read(ref epoch) != capturedEpoch || seatVersions.GetValueOrDefault(seat) != version ||
+            System.Diagnostics.Stopwatch.GetTimestamp() >= until) return;
+        string? choice = null, searchFailure = null;
+        try {
+            using var response = Request(json);
+            foreach (var entry in response.RootElement.GetProperty("value").EnumerateArray()) {
+                if (entry.GetProperty("seat").GetInt32() != seat) throw new InvalidDataException("NATIVE_SEAT_MISMATCH");
+                if (!entry.TryGetProperty("search", out var search) || search.ValueKind != JsonValueKind.Object) continue;
+                string? reason = search.TryGetProperty("reason", out var why) ? why.GetString() : null;
+                if (reason == "searched" && search.TryGetProperty("binding", out var chosen) &&
+                    chosen.ValueKind == JsonValueKind.String && keys.Contains(chosen.GetString()!))
+                    choice = chosen.GetString()!;
+                else if (reason == "unavailable")
+                    searchFailure = search.TryGetProperty("error", out var error) ? error.ToString() : "unknown";
+            }
+        } catch (OperationCanceledException) when (workerToken.IsCancellationRequested) { throw; }
+        catch (Exception error) { searchFailure = error.Message; }
+        Post(() => {
+            if (id != runId || capturedEpoch != epoch || seatVersions.GetValueOrDefault(seat) != version) return;
+            // Once the seat stopped waiting it may already be acting on the policy's choice.
+            if (!searchPending.Remove(seat, out var pending)) return;
+            // Past the wait the seat may act on the policy's choice before AwaitingSearch polls.
+            if (System.Diagnostics.Stopwatch.GetTimestamp() >= WaitEnd(seat, pending.Until)) {
+                SearchWaitExpired();
+                Notify();
+                return;
+            }
+            if (choice is not null) searchChoices[seat] = choice;
+            if (searchFailure is not null && searchFailuresLogged.Add(searchFailure))
+                Log?.Invoke("decision search unavailable (" + searchFailure + "); the AI teammate keeps the policy's choice");
+            Notify();
         });
     }
 
@@ -500,8 +609,7 @@ public static class AiAdvisor
         workerToken.ThrowIfCancellationRequested();
         if (native == IntPtr.Zero) throw new InvalidOperationException("NATIVE_INITIALIZATION_FAILED");
         byte[] request = Encoding.UTF8.GetBytes(json);
-        var pointer = Native.Request(native, request, (nuint)request.Length);
-        var response = JsonDocument.Parse(Marshal.PtrToStringUTF8(pointer) ?? throw new InvalidDataException("NATIVE_RESPONSE_MISSING"));
+        var response = JsonDocument.Parse(workerBridge!.Request(native, request) ?? throw new InvalidDataException("NATIVE_RESPONSE_MISSING"));
         if (response.RootElement.TryGetProperty("replay_clean", out var clean) && clean.ValueKind == JsonValueKind.False)
             MarkReplayIntegrityLost();
         if (workerToken.IsCancellationRequested) {
@@ -533,6 +641,15 @@ public static class AiAdvisor
         Worker(() => Post(() => done.TrySetResult()));
         return done.Task;
     }
+
+    /// <summary>The bridge's entry points; verification substitutes a scripted bridge. Each run's
+    /// worker keeps the bridge it started with.</summary>
+    internal sealed record NativeBridge(Func<byte[], byte[], IntPtr> Create, Func<IntPtr, byte[], string?> Request,
+        Action<IntPtr> Destroy);
+    internal static NativeBridge Bridge { get; set; } = new(
+        (weights, start) => Native.Create(weights, (nuint)weights.Length, start, (nuint)start.Length),
+        (handle, request) => Marshal.PtrToStringUTF8(Native.Request(handle, request, (nuint)request.Length)),
+        Native.Destroy);
 
     static class Native
     {
@@ -679,6 +796,29 @@ public static class AiAdvisor
     /// Source and Target are the live game objects used for execution.</summary>
     public static IReadOnlyList<(object Option, float Probability)>? AdviceForSeat(int seat) =>
         Status == AdvisorStatus.Ready && advice.TryGetValue(seat, out var choices) ? choices : null;
+
+    /// <summary>The option binding decision-time search chose for the seat's current advice
+    /// (combat decisions of <see cref="SearchesSeat"/> seats only); null otherwise.</summary>
+    public static string? SearchChoiceForSeat(int seat) =>
+        AdviceForSeat(seat) is not null ? searchChoices.GetValueOrDefault(seat) : null;
+
+    /// <summary>True while the seat's current decision still waits for its search: the policy's
+    /// advice is out, the search result is not, and <see cref="SearchWaitSeconds"/> since capture
+    /// have not passed. Afterwards the seat takes the policy's choice and a late result is dropped.</summary>
+    /// <see cref="SeatDeadline"/> ends the wait earlier, both here and when the result is applied.
+    public static bool AwaitingSearch(int seat)
+    {
+        if (!searchPending.TryGetValue(seat, out var pending)) return false;
+        if (System.Diagnostics.Stopwatch.GetTimestamp() < WaitEnd(seat, pending.Until)) return true;
+        searchPending.Remove(seat);
+        SearchWaitExpired();
+        return false;
+    }
+    static void SearchWaitExpired()
+    {
+        if (searchFailuresLogged.Add("SEARCH_WAIT"))
+            Log?.Invoke($"decision search unavailable (no result within the AI seat's {SearchWaitSeconds} s wait); the AI teammate keeps the policy's choice");
+    }
 
     sealed class Sentinel(string name)
     {

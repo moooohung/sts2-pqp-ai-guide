@@ -188,6 +188,7 @@ impl Combat {
         p.discard.clear();
         p.exhaust.clear();
         p.play.clear();
+        p.draw_known = Default::default();
         self.run.rngs.shuffle.shuffle(&mut self.players[owner].draw);
     }
 
@@ -817,6 +818,7 @@ impl Combat {
             drop(shuffle_capture);
             let p = &mut self.players[owner];
             dotnet_sort_cards(&mut p.draw, &self.cards);
+            p.draw_known = Default::default();
             self.run.rngs.shuffle.shuffle(&mut self.players[owner].draw);
             // fire: core/combat.py:2178
             crate::card::enchant::modify_shuffle_order(self, owner);
@@ -1415,15 +1417,30 @@ impl Combat {
                 let pile = if r.pile == PileKind::Hand
                     && self.players[r.owner].hand.len() >= crate::combat::MAX_HAND_SIZE
                 { PileKind::Discard } else { r.pile };
-                self.insert_pile(k, pile, r.pos);
+                self.insert_pile_from(k, PileKind::Play, pile, r.pos);
                 self.fire_after_card_changed_piles(k, PileKind::Play, None);
             }
             PileKind::Play => {}
         }
     }
 
-    /// Insert `k` into its owner's `pile` at `pos`.
+    /// Insert `k` into its owner's `pile` at `pos`. Draw-pile positions it sets count as
+    /// watched by the owner only (as for a card from the owner's hand).
     pub(crate) fn insert_pile(&mut self, k: KRef, pile: PileKind, pos: PilePos) {
+        self.insert_pile_from(k, PileKind::Hand, pile, pos);
+    }
+
+    /// Put `k` on its owner's draw pile top or bottom, recording who watched (`public`: every seat).
+    pub(crate) fn put_on_draw(&mut self, k: KRef, at_top: bool, public: bool) {
+        let p = &mut self.players[self.cards[k as usize].owner];
+        if at_top { p.draw.insert(0, k) } else { p.draw.push(k) }
+        p.draw_known.record(&p.draw, at_top, public);
+    }
+
+    /// `insert_pile` for a card that left `from` (PileKind::None: generated); a draw-pile
+    /// position from a face-up pile or a generated card is watched by every seat.
+    pub(crate) fn insert_pile_from(&mut self, k: KRef, from: PileKind, pile: PileKind, pos: PilePos) {
+        let public = matches!(from, PileKind::None | PileKind::Discard | PileKind::Play | PileKind::Exhaust);
         let owner = self.cards[k as usize].owner;
         // CardPilePosition.RANDOM: shuffle_rng.next_int(0, len) (r7 core/combat.py).
         let random_slot = |c: &mut Combat, len: usize| c.run.rngs.shuffle.next_int(0, len as i64) as usize;
@@ -1435,6 +1452,7 @@ impl Combat {
             (PileKind::Draw, PilePos::Random) => {
                 let i = random_slot(self, self.players[owner].draw.len());
                 self.players[owner].draw.insert(i, k);
+                self.players[owner].draw_known = Default::default();
             }
             (PileKind::Hand, PilePos::Random) => {
                 let i = random_slot(self, self.players[owner].hand.len());
@@ -1442,8 +1460,8 @@ impl Combat {
             }
             (PileKind::Discard, PilePos::Top) => self.players[owner].discard.insert(0, k),
             (PileKind::Discard, _) => self.players[owner].discard.push(k),
-            (PileKind::Draw, PilePos::Top) => self.players[owner].draw.insert(0, k),
-            (PileKind::Draw, _) => self.players[owner].draw.push(k),
+            (PileKind::Draw, PilePos::Top) => self.put_on_draw(k, true, public),
+            (PileKind::Draw, _) => self.put_on_draw(k, false, public),
             (PileKind::Hand, PilePos::Top) => self.players[owner].hand.insert(0, k),
             (PileKind::Hand, _) => self.players[owner].hand.push(k),
             (PileKind::Exhaust, _) => self.players[owner].exhaust.push(k),

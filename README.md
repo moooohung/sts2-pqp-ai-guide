@@ -28,8 +28,8 @@ Without `sts2_advisor_bridge.dll`, the mod still loads normally and displays AI 
 
 The Steam Workshop release was built from the following source commits:
 
-- `mod`: `a55978936c9f74f415e4eea1da1195803d994868` (`sts2_mods/HumanPlayRecorder`)
-- `engine`: `87e56c44489fb6777c99dd2ec0332f148c32c14e` (`sts2_native`)
+- `mod`: `879a859ee7997a399e1122dcddd5da6b2d750de0` (`sts2_mods/HumanPlayRecorder`)
+- `engine`: `1ffac8bf1ce96665cf0ebce3017767b0b8049d29` (`sts2_native`)
 
 ### Policy Weights
 
@@ -115,8 +115,8 @@ This project is an unofficial community work and is not affiliated with, endorse
 
 Steam 창작마당 배포판은 아래 원본 커밋에서 빌드되었습니다.
 
-- `mod`: `a55978936c9f74f415e4eea1da1195803d994868` (`sts2_mods/HumanPlayRecorder`)
-- `engine`: `87e56c44489fb6777c99dd2ec0332f148c32c14e` (`sts2_native`)
+- `mod`: `879a859ee7997a399e1122dcddd5da6b2d750de0` (`sts2_mods/HumanPlayRecorder`)
+- `engine`: `1ffac8bf1ce96665cf0ebce3017767b0b8049d29` (`sts2_native`)
 
 ### 정책 가중치 (모델 파일)
 

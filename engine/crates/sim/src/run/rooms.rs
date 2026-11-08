@@ -121,6 +121,29 @@ pub(crate) fn generate_rooms_for_party(
     }
 }
 
+impl GeneratedRooms {
+    /// Search determinization: a fresh sample, from `rng` only, of the rooms not entered
+    /// yet. `entered` is how many (events, normal, elite) the act already used; None for an
+    /// act not started, whose boss and second boss are hidden too and are re-drawn. Kept:
+    /// the started act's boss (on its map) and every ancient (see `crate::determinize`).
+    pub(crate) fn resample_unentered(&mut self, act: &'static ActDef, rng: &mut Rng, multiplayer: bool,
+        entered: Option<(usize, usize, usize)>) {
+        fn splice<T: Copy>(seq: &mut Vec<T>, from: usize, fresh: &[T]) {
+            let len = seq.len();
+            seq.truncate(from);
+            seq.extend(fresh.iter().copied().skip(seq.len()).take(len.saturating_sub(seq.len())));
+        }
+        let fresh = generate_rooms_for_party(act, rng, &[], self.second_boss.is_some(), multiplayer);
+        let (events, normal, elite) = entered.unwrap_or_default();
+        splice(&mut self.events, events, &fresh.events);
+        splice(&mut self.normal, normal, &fresh.normal);
+        splice(&mut self.elite, elite, &fresh.elite);
+        if entered.is_none() {
+            (self.boss, self.public_boss, self.second_boss) = (fresh.boss, fresh.public_boss, fresh.second_boss);
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

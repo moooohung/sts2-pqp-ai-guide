@@ -47,6 +47,7 @@ pub unsafe extern "C" fn sts2_advisor_request(handle:*mut Handle,request:*const 
     }
     handle.response.as_ptr()
 }
+/// Never waits for an abandoned search: its thread owns everything it reads.
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn sts2_advisor_destroy(handle:*mut Handle) {
     if !handle.is_null(){drop(unsafe{Box::from_raw(handle)});}

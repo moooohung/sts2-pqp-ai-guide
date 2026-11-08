@@ -348,20 +348,23 @@ public static partial class RecorderMod
         List<AiReadyDecision> ready)
     {
         int seat = run!.GetPlayerSlotIndex(player);
+        // A searched decision waits for its search, at most AiAdvisor.SearchWaitSeconds after capture
+        // and never past the seat's fallback deadline (AiAdvisor.SeatDeadline).
         if (!aiPublications.TryGetValue(seat, out var publication) ||
-            AiAdvisor.AdviceForSeat(seat) is not { Count: > 0 } advice) {
+            AiAdvisor.AdviceForSeat(seat) is not { Count: > 0 } advice || AiAdvisor.AwaitingSearch(seat)) {
             AiSuspendPresence(player);
             return false;
         }
         long signature = AiDecisionFingerprint(run, seat, current, publication.Live);
-        if (!publication.Loop.TryPeek(publication.Generation, signature, current, advice, out var chosen)) {
+        string? searched = AiAdvisor.SearchChoiceForSeat(seat);
+        if (!publication.Loop.TryPeek(publication.Generation, signature, current, advice, out var chosen, searched, AiReopensClosedCardReward)) {
             // A teammate's action changes the shared snapshot. Await fresh advice
             // without restarting this seat's clock if the policy keeps its action.
             AiSuspendPresence(player);
             return false;
         }
         if (!AiThink(player, chosen!, current, advice)) return true;
-        if (!publication.Loop.TryTake(publication.Generation, signature, current, advice, out chosen)) return false;
+        if (!publication.Loop.TryTake(publication.Generation, signature, current, advice, out chosen, searched, AiReopensClosedCardReward)) return false;
         // Revoke this seat's result before entering code which may synchronously
         // enqueue/complete an action or request a nested choice. Other seats keep
         // theirs: each is re-projected and must match the live state (TryTake).
@@ -374,6 +377,12 @@ public static partial class RecorderMod
         ready.Add(new(player, chosen!, run, run.CurrentRoom, signature, publication.Live));
         return true;
     }
+    // Reward-reopen guard: a card reward this AI closed without taking a card (C#
+    // CardReward.OnSelect returned false; NRewardButton re-enables it) is not opened again
+    // on the same rewards screen, or a greedy teammate would open and skip it forever.
+    static bool AiReopensClosedCardReward(AiAdvisor.LiveOption option) =>
+        option.Action == AiAdvisor.DecisionAction.OpenReward &&
+        option.Option is MegaCrit.Sts2.Core.Rewards.CardReward reward && AiRewardFailed(reward);
     static long AiDecisionFingerprint(RunState state, int seat, IReadOnlyList<AiAdvisor.LiveOption> current, bool live)
     {
         if (!live) return AiReplayFingerprint(ReplayCheckpoints.Capture(state, rewardIndices.Keys), current);

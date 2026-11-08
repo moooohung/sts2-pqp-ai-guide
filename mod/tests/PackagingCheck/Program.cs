@@ -111,6 +111,14 @@ static void Attest(string managed, string native, string managedCommit, string n
     if (NativeCommit(native) != nativeCommit) throw new InvalidDataException("native binary does not match reviewed source commit");
     if (File.ReadAllBytes(native).AsSpan().IndexOf(Encoding.UTF8.GetBytes("INVALID_LIVE_POLICY_SLOT")) < 0)
         throw new InvalidDataException("native bridge lacks live policy slot validation");
+    RejectFaultInjection(native);
+}
+// Decision-search fault injection lives only in the Rust crates' own unit tests, and every
+// injected fault names this marker; a shipped bridge must never contain one.
+static void RejectFaultInjection(string native)
+{
+    if (File.ReadAllBytes(native).AsSpan().IndexOf("STS2_SEARCH_FAULT_INJECTION"u8) >= 0)
+        throw new InvalidDataException("native bridge contains search fault injection: " + native);
 }
 
 static void InspectNative(string path)
@@ -144,7 +152,8 @@ static void InspectNative(string path)
     }
     foreach (var name in new[] { "sts2_advisor_create", "sts2_advisor_request", "sts2_advisor_destroy", "sts2_advisor_source_commit" })
         if (!names.Contains(name)) throw new InvalidDataException("missing native advisor export: " + name);
-    Console.WriteLine("PASS: native advisor x64 DLL and C ABI exports: " + path);
+    RejectFaultInjection(path);
+    Console.WriteLine("PASS: native advisor x64 DLL, C ABI exports and no search fault injection: " + path);
 }
 
 static (string Hash, string Id, ulong Step) Checkpoint(string directory, string gameHash)

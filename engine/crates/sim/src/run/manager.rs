@@ -35,6 +35,9 @@ mod nr_dispatch_tests;
 #[path = "review_tests.rs"]
 mod review_tests;
 #[cfg(test)]
+#[path = "reward_cycle_tests.rs"]
+mod reward_cycle_tests;
+#[cfg(test)]
 #[path = "relic_run_owner_review_a_tests.rs"]
 mod relic_run_owner_review_a_tests;
 #[cfg(test)]
@@ -578,6 +581,8 @@ pub struct RunManager {
 
 #[path = "native_view.rs"]
 pub mod native_view;
+#[path = "determinize_run.rs"]
+mod determinize_run;
 #[path = "merchant_fixture.rs"]
 pub mod merchant_fixture;
 #[path = "replay_view_solo.rs"]

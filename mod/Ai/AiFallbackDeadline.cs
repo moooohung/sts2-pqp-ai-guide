@@ -14,6 +14,10 @@ public sealed class AiFallbackDeadline
         }
         return now - entry.Start >= delay;
     }
+    /// <summary>The latest time the seat may act and still beat the fallback for its pending
+    /// decision (a decision not yet waiting starts its clock now), less a safety margin.</summary>
+    public long ActBy(object seat, long now, long delay, long margin)
+        => (waiting.TryGetValue(seat, out var entry) ? entry.Start : now) + delay - margin;
     public void Progress(object seat) => waiting.Remove(seat);
     public void Clear() => waiting.Clear();
 }

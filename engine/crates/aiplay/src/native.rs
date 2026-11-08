@@ -18,6 +18,8 @@ mod mix;
 pub use mix::TrainingMix;
 #[path="live_advisor.rs"]
 pub mod live;
+#[path="native_search.rs"]
+pub mod search;
 #[cfg(not(target_arch = "wasm32"))]
 #[path="shop_fixture.rs"]
 pub mod shop_fixture;
@@ -72,9 +74,14 @@ pub struct WebPolicyMeta {
     pub hidden: u32,
     pub reward: Reward,
     pub game_version: String,
+    /// The checkpoint's training discount (training_config.gamma); decision-time search
+    /// discounts with it and refuses weights exported without it.
+    #[serde(default)]
+    pub gamma: Option<f32>,
 }
 impl WebPolicyMeta {
     pub fn validate(&self) -> Result<(), String> {
+        if self.gamma.is_some_and(|g| !(g > 0. && g <= 1.)) { return Err("invalid native policy discount".into()); }
         if !identifier(&self.lineage, 96) || self.checkpoint_id != format!("{}.{}", self.lineage, self.update)
             || !hex64(&self.checkpoint_sha256) || self.hidden == 0 || self.hidden > 4096
             || self.game_version.is_empty() || self.game_version.len() > 64 || self.game_version.chars().any(char::is_control)
@@ -114,6 +121,7 @@ fn export_with_mix(model:&NativePolicy,meta:&WebPolicyMeta,mix:Option<&TrainingM
         ("obs_manifest", sts2_policy::native::observation_manifest_metadata(model.is_v2(),model.is_joint()).to_string())] {
         store = store.metadata(key, value);
     }
+    if let Some(gamma) = meta.gamma { store = store.metadata("gamma", gamma.to_string()); }
     model.save_into(&mut store).map_err(|e| format!("{e:?}"))?;
     store.get_bytes().map_err(|e| format!("{e:?}"))
 }
@@ -142,6 +150,8 @@ pub fn metadata(bytes: &[u8]) -> Result<WebPolicyMeta, String> {
         hidden: u32::try_from(number("hidden")?).map_err(|_| "invalid hidden")?,
         reward: serde_json::from_str(&text("reward")?).map_err(|e| e.to_string())?,
         game_version: text("game_version")?,
+        gamma: match m.get("gamma") { None | Some(Value::Null) => None,
+            Some(_) => Some(text("gamma")?.parse().map_err(|_| "invalid gamma")?) },
     };
     meta.validate()?;
     Ok(meta)
@@ -177,7 +187,7 @@ pub fn export_checkpoint(dir: &std::path::Path, lineage: &str, game_version: &st
     -> Result<(Vec<u8>, WebPolicyMeta), Box<dyn std::error::Error>> {
     use burn::module::Module;
     #[derive(Deserialize)]
-    struct Config { reward: Reward, #[serde(flatten)] mix:TrainingMix }
+    struct Config { reward: Reward, #[serde(default)] gamma: Option<f32>, #[serde(flatten)] mix:TrainingMix }
     #[derive(Deserialize)]
     struct State { schema: String, manifest: Value, hidden: u64, steps: u64, next_update: u64, training_config: Config,
         #[serde(default="sts2_policy::native::legacy_observation_mode")] observation_mode:String }
@@ -195,7 +205,7 @@ pub fn export_checkpoint(dir: &std::path::Path, lineage: &str, game_version: &st
     let meta = WebPolicyMeta {
         lineage: lineage.into(), update, step: state.steps, checkpoint_id: format!("{lineage}.{update}"),
         checkpoint_sha256: sha256(&raw), hidden: hidden as u32, reward: state.training_config.reward,
-        game_version: game_version.into(),
+        game_version: game_version.into(), gamma: state.training_config.gamma,
     };
     Ok((export_with_mix(&model, &meta,Some(&state.training_config.mix))?, meta))
 }
@@ -219,7 +229,8 @@ pub(crate) fn verify_rows(weights: &[u8], seed: u64, names: &[String], ascension
         observation_mode(&policy_fields(weights)?)?)?;
     let current = Some(game.decision_input()?);
     let mut episode = Episode { game, rng: Rng(seed), seed, character: names[0].clone(), characters:names.to_vec(), ascension,
-        high: 0, rows: String::new(), decisions: 0, frames: false, acts: vec![], current, end: None };
+        high: 0, rows: String::new(), decisions: 0, frames: false, acts: vec![], current, end: None, search: None,
+        search_failed: false };
     let mut inputs = Vec::new();
     for (t, row) in rows.iter().enumerate() {
         if episode.end.is_some() { return Err("rows after terminal".into()); }
@@ -249,11 +260,33 @@ struct Episode {
     game: Game, rng: Rng, seed: u64, character: String, characters:Vec<String>, ascension: u8, high: u32,
     rows: String, decisions: usize, frames: bool, acts: Vec<u64>,
     current: Option<(NativeDecision, String)>, end: Option<Result<Option<bool>, String>>,
+    /// Decision-time search (off unless the start options ask for it). Its games are
+    /// never trainable: the searched actions are not the policy's behavior.
+    /// Boxed: the encoder workspace is large and the episode is moved by value
+    /// (an inline copy overflowed the 2 MiB test-thread stack in debug builds).
+    search: Option<Box<(search::SearchConfig, search::Workspace)>>,
+    /// A search failed in this game (logged once); those decisions kept the sampled action.
+    search_failed: bool,
+}
+
+#[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console, js_name = warn)]
+    fn console_warn(text: &str);
+}
+/// One diagnostic line: the browser console in the page, stderr natively.
+fn log_line(text: &str) {
+    #[cfg(target_arch = "wasm32")]
+    console_warn(&format!("sts2 aiplay: {text}"));
+    #[cfg(not(target_arch = "wasm32"))]
+    eprintln!("sts2 aiplay: {text}");
 }
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Options { #[serde(default)] character: String, #[serde(default)] party:Option<Vec<String>>, #[serde(default="default_ascension")] ascension: u8, #[serde(default)] party_size: Option<u8>, #[serde(default)] frames: bool }
+struct Options { #[serde(default)] character: String, #[serde(default)] party:Option<Vec<String>>, #[serde(default="default_ascension")] ascension: u8, #[serde(default)] party_size: Option<u8>, #[serde(default)] frames: bool,
+    #[serde(default)] search: Option<search::SearchConfig> }
 fn default_ascension()->u8{10}
 
 /// One worker's policy and its current episode. The episode keeps the policy it started with.
@@ -319,14 +352,28 @@ impl NativeAiPlay {
         // Ascensions 0-9 are watch-only (finish returns no rows): the policy trains at ascension 10 only.
         if o.ascension > 10 || !(1..=4).contains(&party.len()) || o.party_size.is_some_and(|size|size as usize!=party.len()) { return Err("party/ascension mismatch: AI-play supports ascension 0-10".into()); }
         let characters=party.iter().map(|name|character(name)).collect::<Result<Vec<_>,_>>()?;
+        let mut search=o.search;
+        if let Some(config)=&search {config.validate()?;}
+        // Weights exported before the discount was published, joint ones included: play on
+        // with the plain policy.
+        let search_unavailable=search.is_some() && self.meta.gamma.is_none();
+        if search_unavailable {
+            log_line(&format!("decision search off: {} lacks the training discount (gamma); playing with the plain policy",
+                self.meta.checkpoint_id));
+            search=None;
+        }
+        if search.is_some() && self.joint {return Err("decision search supports per-seat policies only".into());}
         let mut game = Game::start_mode(seed, &characters, o.ascension,self.joint,self.relational)?;
         if o.frames && self.joint {game.enable_replay_recording();}
         let current = Some(game.decision_input()?);
         self.episode = Some(Episode { game, rng: Rng(seed), seed, character: party[0].clone(), characters:party.clone(), ascension: o.ascension,
-            high: 0, rows: String::new(), decisions: 0, frames: o.frames, acts: vec![], current, end: None });
+            high: 0, rows: String::new(), decisions: 0, frames: o.frames, acts: vec![], current, end: None,
+            search: search.map(|config|Box::new((config,search::Workspace::new(self.relational)))), search_failed: false });
         let mut header=json!({"type":"header","v":2,"source":"aiplay","seed":seed.to_string(),"character":party.join("+"),
             "characters":party,"party_size":characters.len(),"ascension":o.ascension,"reason":"aiplay",
             "checkpoint_id":self.meta.checkpoint_id,"checkpoint_step":self.meta.step,"sim_commit":SOURCE_COMMIT});
+        if let Some(config)=&search {header["search"]=json!(config);}
+        if search_unavailable {header["search_unavailable"]=json!("weights lack the training discount (gamma)");}
         if o.frames {header["between_event_schema"]=json!(sts2_native_obs::replay::between::SCHEMA);}
         if self.joint {header["v"]=json!(3);header["action_contract"]=json!(ACTION_CONTRACT);
             header["queue_event_schema"]=json!("sts2-combat-queue-v1");}
@@ -369,7 +416,8 @@ impl NativeAiPlay {
                 if result["meta"]["party_size"]==1{
                     result["meta"].as_object_mut().unwrap().remove("characters");
                 }
-                if e.ascension!=10 {
+                if let Some(state)=&e.search {result["meta"]["search"]=json!(state.0);}
+                if e.ascension!=10 || e.search.is_some() {
                     result["decision"]=json!("watch_only"); result["meta"]["decision"]=json!("watch_only");
                     result.as_object_mut().unwrap().remove("rows");
                 }
@@ -390,7 +438,8 @@ impl NativeAiPlay {
 }
 
 impl NativeAiPlay {
-    /// One decision, sampled exactly like trainer native_run (PCG uniform, inverse CDF over legal slots).
+    /// One decision, sampled like trainer native_run (PCG uniform, inverse CDF over legal slots),
+    /// except that the reward-reopen guard's blocked slots are left out.
     fn decide(policy: &CpuPolicy, workspace: &mut CpuWorkspace, meta: &WebPolicyMeta, e: &mut Episode,
         frames: &mut Vec<Value>, maps: &mut Map<String, Value>) -> Result<(), String> {
         if e.decisions >= MAX_DECISIONS { return Err("decision cap".into()); }
@@ -400,17 +449,36 @@ impl NativeAiPlay {
         let value = policy.forward(&decision, workspace);
         let sum: f64 = workspace.logp.iter().map(|p| (*p as f64).exp()).sum();
         if !value.is_finite() || (sum - 1.).abs() > 1e-5 { return Err("invalid native policy distribution/value".into()); }
-        let u = e.rng.uniform();
+        // Under the reward-reopen guard the behavior distribution is the policy's,
+        // renormalized over the positions it leaves; that probability is the one recorded.
+        let blocked = e.game.reopen_guard(&decision.slots);
+        let kept = |p: &usize| blocked.as_ref().is_none_or(|b| !b[*p]);
+        let mass: f64 = if blocked.is_some() { (0..legal).filter(kept).map(|p| (workspace.logp[p] as f64).exp()).sum() } else { 1. };
+        let u = e.rng.uniform() * mass;
         let mut cumulative = 0.;
-        let mut position = legal - 1;
-        for p in 0..legal {
+        let mut position = (0..legal).filter(kept).last().ok_or("no legal option")?;
+        for p in (0..legal).filter(kept) {
             cumulative += (workspace.logp[p] as f64).exp();
             if u < cumulative { position = p; break; }
+        }
+        if let Some(state) = &mut e.search && let Some(root) = e.game.search_root() {
+            let (config, ws) = &mut **state;
+            // Search only ever replaces the sampled action; a failed search leaves it.
+            match search::search(policy, &meta.reward, meta.gamma, &root, config, ws) {
+                Ok(outcome) if outcome.reason == "searched" => {
+                    position = decision.slots.iter().position(|slot| *slot == outcome.slot).ok_or("searched slot is not legal")?;
+                },
+                Ok(_) => {},
+                Err(error) => if !e.search_failed {
+                    e.search_failed = true;
+                    log_line(&format!("decision search failed ({error}); this game continues with the plain policy where it fails"));
+                },
+            }
         }
         let slot = decision.slots[position] as usize;
         let identity=e.game.action_identity(slot)?;
         let actor=identity.actor;
-        let logp = workspace.logp[position];
+        let logp = workspace.logp[position] - mass.ln() as f32;
         if e.frames {
             let act = e.game.act();
             if !e.acts.contains(&act) { e.acts.push(act); maps.insert(act.to_string(), e.game.map()); }
@@ -482,6 +550,7 @@ fn relational_header(m:&Value)->Result<bool,String> {
     Ok(true)
 }
 pub fn policy_is_joint(bytes:&[u8])->Result<bool,String>{joint_header(&policy_fields(bytes)?)}
+pub fn policy_is_relational(bytes:&[u8])->Result<bool,String>{observation_mode(&policy_fields(bytes)?)}
 fn observation_mode(m:&Value)->Result<bool,String> {
     let relational=relational_header(m)?;
     let mode=m.get("observation_mode").map(|v|v.as_str().ok_or("invalid observation mode")).transpose()?;
@@ -497,12 +566,40 @@ mod joint_tests;
 mod tests {
     use super::*;
 
-    fn weights(hidden: usize) -> Vec<u8> {
+    fn weights(hidden: usize) -> Vec<u8> { weights_with(hidden, Some(0.999)) }
+    fn weights_with(hidden: usize, gamma: Option<f32>) -> Vec<u8> {
         let model = NativePolicy::init(hidden, &Device::flex());
         let meta = WebPolicyMeta { lineage: "test-run".into(), update: 7, step: 4096, checkpoint_id: "test-run.7".into(),
             checkpoint_sha256: sha256(b"policy.bpk"), hidden: hidden as u32,
-            reward: Reward::default(), game_version: "test".into() };
+            reward: Reward::default(), game_version: "test".into(), gamma };
         export(&model, &meta).unwrap()
+    }
+
+    #[test]
+    fn weights_without_gamma_play_the_plain_policy_when_search_is_asked_for() {
+        let mut ai = NativeAiPlay::new(weights_with(8, None)).unwrap();
+        let options = r#"{"character":"IRONCLAD","ascension":10,"search":{"samples":2,"node_budget":64}}"#;
+        let header: Value = serde_json::from_str(&ai.start(403, options).unwrap()).unwrap();
+        assert!(header.get("search").is_none(), "{header}");
+        assert!(header["search_unavailable"].as_str().is_some_and(|s| s.contains("gamma")));
+        ai.advance(u32::MAX).unwrap();
+        let searched_request = ai.finish().unwrap();
+        let plain = ai.play_episode(403, r#"{"character":"IRONCLAD","ascension":10}"#).unwrap();
+        assert_eq!(searched_request, plain, "the game is the plain policy's, trainable as such");
+    }
+
+    #[test]
+    fn joint_weights_without_gamma_also_play_the_plain_policy_when_search_is_asked_for() {
+        let model = NativePolicy::init_joint(8, &Device::flex());
+        let joint = |gamma| export(&model, &WebPolicyMeta { lineage: "joint-test".into(), update: 0, step: 0,
+            checkpoint_id: "joint-test.0".into(), checkpoint_sha256: sha256(b"joint"), hidden: 8,
+            reward: Reward::default(), game_version: "test".into(), gamma }).unwrap();
+        let options = r#"{"party":["IRONCLAD","SILENT"],"ascension":10,"search":{"samples":2,"node_budget":64}}"#;
+        let header: Value = serde_json::from_str(&NativeAiPlay::new(joint(None)).unwrap().start(404, options).unwrap()).unwrap();
+        assert!(header.get("search").is_none(), "{header}");
+        assert!(header["search_unavailable"].as_str().is_some_and(|s| s.contains("gamma")), "{header}");
+        assert!(NativeAiPlay::new(joint(Some(0.999))).unwrap().start(404, options).is_err(),
+            "joint weights with a discount still refuse search");
     }
 
     #[test]
@@ -648,6 +745,24 @@ mod tests {
             else { *faults.entry(end["fault"].as_str().unwrap().chars().take(90).collect()).or_default() += 1; }
         }
         eprintln!("complete={complete}/40 decisions={decisions} faults={faults:#?}");
+    }
+
+    #[test]
+    fn search_is_off_by_default_and_searched_games_are_watch_only() {
+        let mut ai = NativeAiPlay::new(weights(8)).unwrap();
+        let plain: Value = serde_json::from_str(&ai.start(402, r#"{"character":"IRONCLAD"}"#).unwrap()).unwrap();
+        assert!(plain.get("search").is_none());
+        let options = r#"{"character":"IRONCLAD","search":{"samples":2,"node_budget":48}}"#;
+        let header: Value = serde_json::from_str(&ai.start(402, options).unwrap()).unwrap();
+        assert_eq!(header["search"]["samples"], 2);
+        ai.advance(u32::MAX).unwrap();
+        let end = ai.finish().unwrap();
+        assert_eq!(ai.play_episode(402, options).unwrap(), end, "searched play is reproducible");
+        let end: Value = serde_json::from_str(&end).unwrap();
+        if end["decision"] == "fault" { return; }
+        assert_eq!((&end["decision"], &end["meta"]["search"]["node_budget"]), (&json!("watch_only"), &json!(48)));
+        assert!(end.get("rows").is_none(), "searched actions are not the policy's behavior");
+        assert!(ai.start(402, r#"{"character":"IRONCLAD","search":{"samples":0}}"#).is_err());
     }
 
     #[test]

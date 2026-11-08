@@ -533,7 +533,7 @@ pub(crate) fn live_probe_steps(recording:&Recording,probes:&[Recording],
     }).collect()
 }
 
-pub(crate) fn live_pending(recording:&Recording,encoder:NativeEncoder)->Result<Vec<crate::live::Pending>>{
+pub(crate) fn live_pending(recording:&Recording,encoder:NativeEncoder)->Result<(Vec<crate::live::Pending>,crate::live::LiveRun)>{
     let mut replay=live_replay(recording,encoder)?;
     replay.advance()?;
     let mut pending=Vec::new();
@@ -544,5 +544,5 @@ pub(crate) fn live_pending(recording:&Recording,encoder:NativeEncoder)->Result<V
             .map_err(|_|fail("NATIVE_OBSERVATION_FAILED"))?;
         pending.push(crate::live::Pending::new(obs,decision,actor as u64+1)?);
     }
-    Ok(pending)
+    Ok((pending,crate::live::LiveRun::Party(replay.run)))
 }

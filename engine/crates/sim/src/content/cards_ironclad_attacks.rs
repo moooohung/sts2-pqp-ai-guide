@@ -148,7 +148,7 @@ pub(crate) fn play(c: &mut Combat, k: KRef, target: Option<CId>) -> bool {
                 0 => {}
                 1 => {
                     let selected = c.players[who].discard.remove(0);
-                    c.insert_pile(selected, PileKind::Draw, PilePos::Top);
+                    c.insert_pile_from(selected, PileKind::Discard, PileKind::Draw, PilePos::Top);
                     c.fire_after_card_changed_piles(selected, PileKind::Discard, None);
                 }
                 _ => {
@@ -529,7 +529,7 @@ pub(crate) fn resolve(c: &mut Combat, r: Resolver, selected: &[KRef]) -> bool {
                 && let Some(i) = c.players[c.cards[picked as usize].owner].discard.iter().position(|&q| q == picked)
             {
                 c.players[c.cards[picked as usize].owner].discard.remove(i);
-                c.insert_pile(picked, PileKind::Draw, PilePos::Top);
+                c.insert_pile_from(picked, PileKind::Discard, PileKind::Draw, PilePos::Top);
                 c.fire_after_card_changed_piles(picked, PileKind::Discard, None);
             }
         }

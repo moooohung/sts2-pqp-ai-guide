@@ -4,6 +4,8 @@ use crate::{card::Card, combat::Combat, relic::Relic,
     tables::{CardId, CardRarity, PotionId, RelicId, RoomType}, run::Coord};
 #[path = "replay_view.rs"]
 mod replay_view;
+#[path = "determinize_mp.rs"]
+mod determinize_mp;
 
 fn model_id_entry(type_name: &str) -> String {
     let mut out = String::with_capacity(type_name.len() + 8);
@@ -388,6 +390,7 @@ impl MpRun {
     }
 
     pub fn combat(&self) -> Option<&Combat> { self.combat.as_ref() }
+    pub fn combat_mut(&mut self) -> Option<&mut Combat> { self.combat.as_mut() }
     pub fn record_replay_combat(&mut self, recorder: &crate::between::Recorder) {
         if let Some(combat) = &mut self.combat { recorder.record_combat(combat); }
     }

@@ -109,7 +109,8 @@ public static partial class RecorderMod
         long now = Stopwatch.GetTimestamp();
         AiCosmetic(() => presence.Think(run!.CurrentRoom!, chosen, runnerUp, confidence,
             AiPresenceScreen(player, chosen), RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation,
-            origin, destination, now, Stopwatch.Frequency));
+            origin, destination, now, Stopwatch.Frequency,
+            aiFallbackDeadline.ActBy(player, now, AiFallbackDelay, (long)(Stopwatch.Frequency * AiActMarginSeconds))));
         // Think stores its deadline before emitting any cosmetic messages.
         return presence.Ready(now);
     }

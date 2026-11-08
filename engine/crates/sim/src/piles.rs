@@ -202,13 +202,13 @@ impl Combat {
     pub(crate) fn move_cards_to_pile(&mut self, cards: &[KRef], pile: PileKind, pos: PilePos) {
         if self.is_over_or_ending() { return; }
         let old_piles: Vec<_> = cards.iter().map(|&k| self.card_pile(k)).collect();
-        for &k in cards {
+        for (&k, &old) in cards.iter().zip(&old_piles) {
             let owner = self.cards[k as usize].owner;
             let destination = if pile == PileKind::Hand && self.players[owner].hand.len() >= crate::combat::MAX_HAND_SIZE {
                 PileKind::Discard
             } else { pile };
             self.remove_card_from_piles(k);
-            self.insert_pile(k, destination, pos);
+            self.insert_pile_from(k, old, destination, pos);
         }
         for (&k, old) in cards.iter().zip(old_piles) {
             if old != self.card_pile(k) {

@@ -75,6 +75,16 @@ impl PartyGame {
   self.refresh()
  }
  pub fn is_joint(&self)->bool{self.joint}
+ /// The current per-seat decision as a search root; team (joint) decisions are not searched.
+ pub fn search_root(&self)->Option<super::search::Root>{
+  if self.team_active || self.phase()!="COMBAT" {return None;}
+  let run=match &self.run{Run::Solo(g)=>super::search::SimRun::Solo(g.clone()),Run::Party(g)=>super::search::SimRun::Party(g.clone())};
+  Some(super::search::Root{run,decision:self.decision,seats:self.seats,net_base:100})
+ }
+ /// The reward-reopen guard (`search::reopen_guard`) for the current per-seat decision.
+ pub fn reopen_guard(&self,slots:&[i32])->Option<Vec<bool>>{
+  match &self.run{Run::Solo(g) if !self.team_active=>super::search::reopen_guard(g,&self.obs,slots),_=>None}
+ }
  pub fn enable_replay_recording(&mut self){if let Run::Party(g)=&mut self.run{g.enable_queue_recording();}}
  pub fn begin_between(&mut self,index:usize)->(sts2_sim::between::Capture,sts2_native_obs::replay::between::Origin){
   let origin=sts2_native_obs::replay::between::origin(&self.game(),index);

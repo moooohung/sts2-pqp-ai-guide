@@ -4,7 +4,7 @@ use super::*;
 fn joint_web_weights_and_action_identities_round_trip_with_ordered_queue_frames() {
     let model=NativePolicy::init_joint(8,&Device::flex());
     let meta=WebPolicyMeta {lineage:"joint-test".into(),update:0,step:0,checkpoint_id:"joint-test.0".into(),
-        checkpoint_sha256:sha256(b"joint"),hidden:8,reward:Reward::default(),game_version:"test".into()};
+        checkpoint_sha256:sha256(b"joint"),hidden:8,reward:Reward::default(),game_version:"test".into(),gamma:None};
     let bytes=export(&model,&meta).unwrap();
     let mut ai=NativeAiPlay::new(bytes).unwrap();
     let header:Value=serde_json::from_str(&ai.start(202610290000,

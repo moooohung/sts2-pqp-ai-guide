@@ -417,9 +417,10 @@ impl Combat {
                 PilePos::Random => {
                     let i = self.run.rngs.shuffle.next_int(0, self.players[owner].draw.len() as i64) as usize;
                     self.players[owner].draw.insert(i, k);
+                    self.players[owner].draw_known = Default::default();
                 }
-                PilePos::Bottom => self.players[owner].draw.push(k),
-                _ => self.players[owner].draw.insert(0, k),
+                PilePos::Bottom => self.put_on_draw(k, false, true),
+                _ => self.put_on_draw(k, true, true),
             },
             PileKind::Discard => match pos {
                 PilePos::Random => {

@@ -21,6 +21,10 @@ public static partial class RecorderMod
     internal static Task<byte[]> PreloadAiPolicy(CancellationToken token) => Task.Run(() =>
         PolicyCache.Load(Path.Combine(DataDirectory, "policy-cache"), "public-beta+0861bfa1", token), token);
     static readonly AiFallbackDeadline aiFallbackDeadline = new();
+    internal const double AiFallbackSeconds = 5;
+    // An AI seat whose advice arrived in time acts at least this long before its fallback fires.
+    internal const double AiActMarginSeconds = .75;
+    static long AiFallbackDelay => (long)(Stopwatch.Frequency * AiFallbackSeconds);
     static readonly Dictionary<Player, Func<PlayerChoiceResult>> aiNativeDefaults = new();
     static readonly Dictionary<Reward, Task<bool>> aiRewardOutcomes = new();
     internal static bool AiRewardFailed(Reward reward) =>
@@ -157,7 +161,7 @@ public static partial class RecorderMod
                         Location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation });
                 }
             }
-            if (!aiFallbackDeadline.Due(player, decision, Stopwatch.GetTimestamp(), Stopwatch.Frequency * 5) ||
+            if (!aiFallbackDeadline.Due(player, decision, Stopwatch.GetTimestamp(), AiFallbackDelay) ||
                 execute is null) return;
             execute();
             AiClearPresence(player);
@@ -182,7 +186,7 @@ public static partial class RecorderMod
     internal static bool AiFallbackPending(Player player, uint choice, long now, PlayerChoiceResult result,
         Action<uint, PlayerChoiceResult> submit)
     {
-        if (!aiFallbackDeadline.Due(player, ("choice", choice), now, Stopwatch.Frequency * 5)) return false;
+        if (!aiFallbackDeadline.Due(player, ("choice", choice), now, AiFallbackDelay)) return false;
         submit(choice, result);
         aiFallbackDeadline.Progress(player);
         return true;
