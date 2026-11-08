@@ -1,0 +1,19 @@
+version = 1
+
+# Licensing is declared here instead of in per-file headers: some Rust sources
+# (for example engine/crates/native_obs/src/binding.rs and layout.rs) are hashed
+# by the build into the observation schema hash, so a header comment would change
+# the compiled output. The plain AGPL identifier is used; the additional permission
+# is in LICENSE-EXCEPTION.md.
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 the pqp AI Guide & Replay authors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# Upstream Burn source (patched), kept under its own license.
+[[annotations]]
+path = "engine/vendor/burn-optim-0.22.1/**"
+precedence = "override"
+SPDX-FileCopyrightText = "Tracel AI and the Burn contributors"
+SPDX-License-Identifier = "MIT OR Apache-2.0"

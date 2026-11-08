@@ -1,0 +1,955 @@
+{
+  "version": 2,
+  "state_capacity": 8192,
+  "candidate_capacity": 512,
+  "edge_capacity": 16384,
+  "selection_capacity": 1024,
+  "numeric_lanes": 16,
+  "id_lanes": 4,
+  "max_seats": 4,
+  "public_modal_kinds": ["AbandonRunConfirmation", "CrystalSphereRewards"],
+  "public_modal_actions": ["Confirm", "Cancel", "Take", "Skip", "Reroll", "Sacrifice"],
+  "capacity_status": "validated_measured_envelope",
+  "identity": "namespace + enum.index() + 1; 0 is absent; handles are one-based observation-local references and never embeddings",
+  "numeric_conversion": "i32 is exact native integer; f32 is only an already-f32 source or an explicitly audited finite conversion. Decimal modifiers retain signed base-65536 coefficient limbs and scale; no implicit rounding of prices or effects.",
+  "native_tables": [
+    "CardId",
+    "RelicId",
+    "PowerId",
+    "PotionId",
+    "MonsterKind",
+    "IntentType",
+    "OrbType",
+    "VarKey",
+    "CardType",
+    "CardRarity",
+    "TargetType",
+    "CardTag",
+    "MapPointType",
+    "RoomType",
+    "PotionRarity",
+    "PotionUsageType",
+    "PotionTargetType",
+    "RelicRarity",
+    "RelicPool",
+    "PowerType",
+    "PowerStackType"
+  ],
+  "action_kinds": [
+    "EventChoice",
+    "Move",
+    "LeaveShop",
+    "BuyCard",
+    "BuyRelic",
+    "BuyPotion",
+    "RemoveCard",
+    "RestOption",
+    "EndTurn",
+    "PlayCard",
+    "UsePotion",
+    "DiscardPotion",
+    "Choose",
+    "ConfirmChoice",
+    "Skip",
+    "PickCard",
+    "PickSpecialCard",
+    "RerollCardReward",
+    "SacrificeCardReward",
+    "PickCardBundle",
+    "SkipRewards",
+    "SkipPotion",
+    "PickPotion",
+    "SkipRelic",
+    "PickRelicReward",
+    "OpenReward",
+    "Collect",
+    "UnendTurn",
+    "BeginRemoval",
+    "CancelRemoval",
+    "ChooseNeow",
+    "TakeGoldSkipRemaining",
+    "TreasureOpen",
+    "TreasureVote",
+    "TreasureSkip",
+    "ReadyForEnemyTurn"
+  ],
+  "flags": [
+    "Alive",
+    "Ready",
+    "Participating",
+    "Revealed",
+    "Selected",
+    "Upgraded",
+    "OnSale",
+    "Sold",
+    "Used",
+    "Optional",
+    "CanConfirm",
+    "CanCancel",
+    "Skippable",
+    "SingleSelect",
+    "Ordered",
+    "Current",
+    "Reachable",
+    "Visited",
+    "XCost",
+    "StarXCost",
+    "Pet",
+    "Boss",
+    "Complete",
+    "Targetable",
+    "Retained",
+    "Exhausts",
+    "Ethereal",
+    "Innate",
+    "Sly",
+    "Eternal",
+    "Locked",
+    "Consumed",
+    "SkipCompletes"
+  ],
+  "rows": [
+    {
+      "name": "Global",
+      "ids": [
+        "phase",
+        "room_type",
+        "public_boss",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "act",
+          "type": "i32"
+        },
+        {
+          "name": "floor",
+          "type": "i32"
+        },
+        {
+          "name": "ascension",
+          "type": "i32"
+        },
+        {
+          "name": "turn",
+          "type": "i32"
+        },
+        {
+          "name": "side",
+          "type": "i32"
+        },
+        {
+          "name": "participating_seats",
+          "type": "i32"
+        },
+        {
+          "name": "owner_seat",
+          "type": "i32"
+        },
+        {
+          "name": "current_x",
+          "type": "i32"
+        },
+        {
+          "name": "current_y",
+          "type": "i32"
+        },
+        {
+          "name": "extra_turn_generation",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Seat",
+      "ids": [
+        "character",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "absolute_seat",
+          "type": "i32"
+        },
+        {
+          "name": "relative_seat",
+          "type": "i32"
+        },
+        {
+          "name": "hp",
+          "type": "i32"
+        },
+        {
+          "name": "max_hp",
+          "type": "i32"
+        },
+        {
+          "name": "block",
+          "type": "i32"
+        },
+        {
+          "name": "energy",
+          "type": "i32"
+        },
+        {
+          "name": "max_energy",
+          "type": "i32"
+        },
+        {
+          "name": "stars",
+          "type": "i32"
+        },
+        {
+          "name": "gold",
+          "type": "i32"
+        },
+        {
+          "name": "potion_capacity",
+          "type": "i32"
+        },
+        {
+          "name": "hand_count",
+          "type": "i32"
+        },
+        {
+          "name": "draw_count",
+          "type": "i32"
+        },
+        {
+          "name": "discard_count",
+          "type": "i32"
+        },
+        {
+          "name": "exhaust_count",
+          "type": "i32"
+        },
+        {
+          "name": "readiness_generation",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Creature",
+      "ids": [
+        "side",
+        "intent",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "hp",
+          "type": "i32"
+        },
+        {
+          "name": "max_hp",
+          "type": "i32"
+        },
+        {
+          "name": "block",
+          "type": "i32"
+        },
+        {
+          "name": "creature_index",
+          "type": "i32"
+        },
+        {
+          "name": "owner_seat",
+          "type": "i32"
+        },
+        {
+          "name": "displayed_damage",
+          "type": "i32"
+        },
+        {
+          "name": "displayed_hits",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Intent",
+      "ids": ["intent_type", "", "", ""],
+      "numeric": [
+        {"name": "displayed_damage", "type": "i32"},
+        {"name": "displayed_hits", "type": "i32"},
+        {"name": "status_cards", "type": "i32"},
+        {"name": "order", "type": "i32"}
+      ]
+    },
+    {
+      "name": "Card",
+      "ids": [
+        "card_type",
+        "rarity",
+        "target_type",
+        "pile"
+      ],
+      "numeric": [
+        {
+          "name": "energy_cost",
+          "type": "i32"
+        },
+        {
+          "name": "star_cost",
+          "type": "i32"
+        },
+        {
+          "name": "upgrades",
+          "type": "i32"
+        },
+        {
+          "name": "hand_order",
+          "type": "i32"
+        },
+        {
+          "name": "draw_count",
+          "type": "i32"
+        },
+        {
+          "name": "display_damage",
+          "type": "i32"
+        },
+        {
+          "name": "display_block",
+          "type": "i32"
+        },
+        {
+          "name": "replay_count",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Power",
+      "ids": [
+        "power_type",
+        "stack_type",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "amount",
+          "type": "i32"
+        },
+        {
+          "name": "display_counter",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Relic",
+      "ids": [
+        "rarity",
+        "pool",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "display_counter",
+          "type": "i32"
+        },
+        {
+          "name": "inventory_order",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Potion",
+      "ids": [
+        "rarity",
+        "usage",
+        "target_type",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "slot",
+          "type": "i32"
+        },
+        {
+          "name": "capacity",
+          "type": "i32"
+        },
+        {
+          "name": "price",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Orb",
+      "ids": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "order",
+          "type": "i32"
+        },
+        {
+          "name": "passive",
+          "type": "i32"
+        },
+        {
+          "name": "evoke",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Rune",
+      "ids": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "order",
+          "type": "i32"
+        },
+        {
+          "name": "amount",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Modifier",
+      "ids": [
+        "variable",
+        "effect",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "duration",
+          "type": "i32"
+        },
+        {
+          "name": "decimal_scale",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_0",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_1",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_2",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_3",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_4",
+          "type": "i32"
+        },
+        {
+          "name": "coefficient_5",
+          "type": "i32"
+        },
+        {
+          "name": "sign",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "MapNode",
+      "ids": [
+        "room_type",
+        "point_type",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "x",
+          "type": "i32"
+        },
+        {
+          "name": "y",
+          "type": "i32"
+        },
+        {
+          "name": "act",
+          "type": "i32"
+        },
+        {
+          "name": "visit_order",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "MapEdge",
+      "ids": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "traversal_cost",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Choice",
+      "ids": [
+        "purpose",
+        "effect",
+        "source_pile",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "resolver_stage",
+          "type": "i32"
+        },
+        {
+          "name": "minimum",
+          "type": "i32"
+        },
+        {
+          "name": "maximum",
+          "type": "i32"
+        },
+        {
+          "name": "selected_count",
+          "type": "i32"
+        },
+        {
+          "name": "owner_seat",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "ChoiceOption",
+      "ids": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "offer_order",
+          "type": "i32"
+        },
+        {
+          "name": "selected_order",
+          "type": "i32"
+        },
+        {
+          "name": "retrieval_order",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Reward",
+      "ids": [
+        "reward_kind",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "amount",
+          "type": "i32"
+        },
+        {
+          "name": "reward_order",
+          "type": "i32"
+        },
+        {
+          "name": "remaining_rerolls",
+          "type": "i32"
+        },
+        {
+          "name": "remaining_sacrifices",
+          "type": "i32"
+        },
+        {
+          "name": "reroll_cost",
+          "type": "i32"
+        },
+        {
+          "name": "sacrifice_cost",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Offer",
+      "ids": [
+        "reward_kind",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "price",
+          "type": "i32"
+        },
+        {
+          "name": "offer_order",
+          "type": "i32"
+        },
+        {
+          "name": "bundle_size",
+          "type": "i32"
+        },
+        {
+          "name": "remaining_uses",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Event",
+      "ids": [
+        "event",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "stage",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "EventPage",
+      "ids": [
+        "page",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "stage",
+          "type": "i32"
+        },
+        {
+          "name": "parameter",
+          "type": "i32"
+        },
+        {
+          "name": "parameter_y",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "EventOption",
+      "ids": [
+        "option",
+        "effect",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "option_order",
+          "type": "i32"
+        },
+        {
+          "name": "hp_cost",
+          "type": "i32"
+        },
+        {
+          "name": "max_hp_cost",
+          "type": "i32"
+        },
+        {
+          "name": "gold_cost",
+          "type": "i32"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "minimum",
+          "type": "i32"
+        },
+        {
+          "name": "maximum",
+          "type": "i32"
+        },
+        {
+          "name": "parameter",
+          "type": "i32"
+        },
+        {
+          "name": "x",
+          "type": "i32"
+        },
+        {
+          "name": "y",
+          "type": "i32"
+        },
+        {
+          "name": "amount_fraction",
+          "type": "f32"
+        },
+        {
+          "name": "amount_fraction_tail",
+          "type": "f32"
+        }
+      ]
+    },
+    {
+      "name": "RestService",
+      "ids": [
+        "service",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "amount",
+          "type": "i32"
+        },
+        {
+          "name": "price",
+          "type": "i32"
+        },
+        {
+          "name": "remaining_uses",
+          "type": "i32"
+        },
+        {
+          "name": "service_order",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "Treasure",
+      "ids": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "numeric": [
+        {
+          "name": "gold",
+          "type": "i32"
+        },
+        {
+          "name": "claimed_count",
+          "type": "i32"
+        },
+        {
+          "name": "vote_count",
+          "type": "i32"
+        },
+        {
+          "name": "offer_order",
+          "type": "i32"
+        }
+      ]
+    },
+    {
+      "name": "CardPreview",
+      "ids": ["variable", "", "", ""],
+      "numeric": [
+        {"name":"display_value","type":"i32"},
+        {"name":"enchanted_base","type":"i32"},
+        {"name":"display_hits","type":"i32"},
+        {"name":"energy_x","type":"i32"},
+        {"name":"star_x","type":"i32"}
+      ]
+    },
+    {
+      "name": "UpgradePreview",
+      "ids": ["purpose", "", "", ""],
+      "numeric": []
+    },
+    {
+      "name": "PileSummary",
+      "ids": ["pile", "", "", ""],
+      "numeric": [
+        {"name":"total","type":"i32"},
+        {"name":"attacks","type":"i32"},
+        {"name":"skills","type":"i32"},
+        {"name":"powers","type":"i32"},
+        {"name":"curses","type":"i32"},
+        {"name":"statuses","type":"i32"},
+        {"name":"upgraded","type":"i32"},
+        {"name":"cost_zero","type":"i32"},
+        {"name":"cost_one","type":"i32"},
+        {"name":"cost_two","type":"i32"},
+        {"name":"cost_three","type":"i32"},
+        {"name":"cost_four_plus","type":"i32"},
+        {"name":"x_cost","type":"i32"},
+        {"name":"unplayable","type":"i32"},
+        {"name":"relics","type":"i32"},
+        {"name":"potions","type":"i32"}
+      ]
+    },
+    {
+      "name": "RouteSummary",
+      "ids": ["point_type", "", "", ""],
+      "numeric": [
+        {"name":"count","type":"i32"},
+        {"name":"nearest","type":"i32"},
+        {"name":"farthest","type":"i32"}
+      ]
+    },
+    {
+      "name": "Boss",
+      "ids": ["", "", "", ""],
+      "numeric": [
+        {"name":"order","type":"i32"},
+        {"name":"act","type":"i32"}
+      ]
+    },
+    {
+      "name": "EffectParameter",
+      "ids": ["effect", "timing", "subject", ""],
+      "numeric": [
+        {"name":"amount","type":"number"},
+        {"name":"fraction","type":"f32"},
+        {"name":"fraction_tail","type":"f32"}
+      ]
+    },
+    {
+      "name": "Modal",
+      "ids": ["backdrop_page", "", "", ""],
+      "numeric": []
+    },
+    {
+      "name": "ModalOption",
+      "ids": ["", "", "", ""],
+      "numeric": [{"name":"display_order","type":"i32"}]
+    }
+  ],
+  "candidate_numeric": [
+    {
+      "name": "energy_cost",
+      "type": "i32"
+    },
+    {
+      "name": "star_cost",
+      "type": "i32"
+    },
+    {
+      "name": "gold_cost",
+      "type": "i32"
+    },
+    {
+      "name": "amount",
+      "type": "i32"
+    },
+    {
+      "name": "minimum",
+      "type": "i32"
+    },
+    {
+      "name": "maximum",
+      "type": "i32"
+    },
+    {
+      "name": "selected_count",
+      "type": "i32"
+    },
+    {
+      "name": "offer_order",
+      "type": "i32"
+    },
+    {
+      "name": "x",
+      "type": "i32"
+    },
+    {
+      "name": "y",
+      "type": "i32"
+    },
+    {
+      "name": "parameter",
+      "type": "i32"
+    },
+    {
+      "name": "display_damage",
+      "type": "i32"
+    },
+    {
+      "name": "display_block",
+      "type": "i32"
+    }
+  ],
+  "candidate_contract": [
+    "action:u16",
+    "model:ContentId",
+    "detail:ContentId[4]",
+    "source:RowHandle",
+    "target:RowHandle",
+    "actor:u8",
+    "flags:u64",
+    "flags_present:u64",
+    "integers:i32[16]",
+    "floats:f32[16]",
+    "integer_present:u16",
+    "float_present:u16",
+    "candidate_present:bitset",
+    "legal:bitset"
+  ],
+  "relations": [
+    "Parent",
+    "Owner",
+    "Source",
+    "Target",
+    "MapConnection",
+    "Member",
+    "SelectedBefore"
+  ],
+  "binding_contract": "DecisionId + authenticated net_id + typed Command + optional exact source/target/offer instance IDs; multi-selection spans reference the same decision's caller-owned selection sidecar.",
+  "visibility": "Never encode seeds, RNG state, hidden draw order, unrevealed offers/rooms, hidden monster moves or private teammate hands. Known bits distinguish unknown from zero.",
+  "scalar_limit": 16,
+  "summary_groups": ["Combat", "Deck", "Map"],
+  "summary_group_contract": "ObservationView::summary_group: Seat/Global excluded; live cards and combat choices in Combat, inventories/owned deck/offers in Deck, visible graph/bosses in Map; typed parameter/preview children inherit their parent.",
+  "pile_group_contract": "RowsView.multiplicity is positive and weights both an indistinguishable Card group and its typed children. Full hands and all candidate-referenced cards remain materialized. Remaining publicly unique groups are available losslessly in ObservationView.streamed_piles for bounded-chunk weighted policy aggregation, with group-local handles above PILE_LOCAL_BASE and external Seat/PileSummary handles in the main observation. No legal bindings, numeric facts, draw order or RNG are discarded or exposed. V1 projection is absent for states the original V1 capacity rejected.",
+  "card_preview_contract": "Every original PowerVar<T>, including named variables, has a CardPreview with displayed given-hook amount and instance base; received/Artifact hooks are not display hooks. Deck, offer and upgrade previews run without global hooks. Voltaic CalculatedChannels counts only its owner's successful Lightning channels in the public combat history, including evoked orbs.",
+  "legacy_projection": {
+    "baseline_revision": "2100b176022a904a40ccc89a6cfb0cc62caa83a2",
+    "row_roles": ["Shared", "V2Only"],
+    "contract": "RowsView.legacy_role excludes V2Only rows and descendants from the transferred branch; ObservationView.legacy is the exact V1 learned-input snapshot including original numeric lanes, ordering and edges. CandidatesView.legacy_source/legacy_target are in the legacy snapshot handle space, aligned by candidate slot. Legacy metadata is not learned. The V2 manifest must still pass refit rejection."
+  }
+}

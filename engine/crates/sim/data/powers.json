@@ -1,0 +1,4502 @@
+{
+ "hook_names": [
+  "consume_ignore_next_instance",
+  "modify_damage_additive",
+  "modify_damage_multiplicative",
+  "modify_damage_cap",
+  "modify_block_additive",
+  "modify_block_multiplicative",
+  "after_modifying_block_amount",
+  "modify_hp_lost",
+  "modify_hp_lost_before_osty_late",
+  "modify_hp_lost_late",
+  "modify_unblocked_damage_target",
+  "should_clear_block",
+  "after_preventing_block_clear",
+  "should_flush",
+  "try_block_debuff",
+  "modify_hand_draw",
+  "modify_hand_draw_late",
+  "after_modifying_hand_draw",
+  "modify_max_energy",
+  "after_energy_reset",
+  "after_energy_reset_late",
+  "after_energy_spent",
+  "should_draw",
+  "after_preventing_draw",
+  "modify_card_play_count",
+  "after_modifying_card_play_count",
+  "after_card_entered_combat",
+  "after_card_generated_for_combat",
+  "before_side_turn_start",
+  "before_hand_draw",
+  "before_hand_draw_late",
+  "after_player_turn_start_early",
+  "after_player_turn_start",
+  "after_player_turn_start_late",
+  "after_side_turn_start",
+  "before_play_phase_start",
+  "before_turn_end_very_early",
+  "before_turn_end_early",
+  "before_turn_end",
+  "before_flush",
+  "before_flush_late",
+  "after_turn_end",
+  "after_turn_end_late",
+  "on_turn_end_enemy_side",
+  "on_turn_start_own_side",
+  "before_card_played",
+  "after_card_played",
+  "modify_card_play_result_pile_type_and_position",
+  "after_modifying_card_play_result_pile_or_position",
+  "after_card_exhausted",
+  "on_card_drawn",
+  "before_potion_used",
+  "before_damage_received",
+  "after_damage_received",
+  "after_current_hp_changed",
+  "after_damage_given",
+  "before_attack",
+  "after_attack",
+  "after_block_gained",
+  "after_block_cleared",
+  "after_power_amount_changed",
+  "before_power_amount_changed",
+  "after_combat_victory_early",
+  "after_combat_victory",
+  "before_combat_start",
+  "before_combat_start_late",
+  "after_creature_added_to_combat",
+  "after_combat_end",
+  "after_forge",
+  "on_stars_gained",
+  "on_stars_spent",
+  "should_owner_death_trigger_fatal",
+  "should_allow_hitting",
+  "should_power_be_removed_after_owner_death",
+  "should_other_power_be_removed_on_owner_death",
+  "should_creature_be_removed_from_combat_after_death",
+  "modify_summon_amount",
+  "after_summon",
+  "after_osty_revived",
+  "after_auto_pre_play_phase_entered",
+  "after_card_changed_piles",
+  "after_card_changed_piles_late"
+ ],
+ "powers": {
+  "ACCURACY": {
+   "class": "AccuracyPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "CALCIFY": {
+   "class": "CalcifyPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "COLOSSUS": {
+   "class": "ColossusPower",
+   "module": "block_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "CONQUEROR": {
+   "class": "ConquerorPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "COVERED": {
+   "class": "CoveredPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": [
+    "after_death"
+   ]
+  },
+  "DIAMOND_DIADEM": {
+   "class": "DiamondDiademPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "DOUBLE_DAMAGE": {
+   "class": "DoubleDamagePower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "FLANKING": {
+   "class": "FlankingPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "FLUTTER": {
+   "class": "FlutterPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_damage_received",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "GIGANTIFICATION": {
+   "class": "GigantificationPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_attack",
+    "before_attack",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "GUARDED": {
+   "class": "GuardedPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": [
+    "after_death"
+   ]
+  },
+  "HANG": {
+   "class": "HangPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "INTERCEPT": {
+   "class": "InterceptPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": [
+    "add_covered_creature",
+    "remove_covered_creature"
+   ]
+  },
+  "KNOCKDOWN": {
+   "class": "KnockdownPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "LEADERSHIP": {
+   "class": "LeadershipPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "LETHALITY": {
+   "class": "LethalityPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "PHANTOM_BLADES": {
+   "class": "PhantomBladesPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_power_amount_changed",
+    "before_side_turn_start",
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "SHRINK": {
+   "class": "ShrinkPower",
+   "module": "common",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": true,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": [
+    "after_death"
+   ]
+  },
+  "SLOW": {
+   "class": "SlowPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_side_turn_start",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "SOAR": {
+   "class": "SoarPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "STRENGTH": {
+   "class": "StrengthPower",
+   "module": "common",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": true,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "SURROUNDED": {
+   "class": "SurroundedPower",
+   "module": "monster",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played",
+    "before_potion_used",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": [
+    "on_ally_death"
+   ]
+  },
+  "TANK": {
+   "class": "TankPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "TRACKING": {
+   "class": "TrackingPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "VIGOR": {
+   "class": "VigorPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_attack",
+    "before_attack",
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "VULNERABLE": {
+   "class": "VulnerablePower",
+   "module": "common",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "WEAK": {
+   "class": "WeakPower",
+   "module": "common",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_multiplicative",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "DEXTERITY": {
+   "class": "DexterityPower",
+   "module": "common",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": true,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_block_additive"
+   ],
+   "extra_methods": []
+  },
+  "FASTEN": {
+   "class": "FastenPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_block_additive",
+    "after_modifying_block_amount"
+   ],
+   "extra_methods": []
+  },
+  "FRAIL": {
+   "class": "FrailPower",
+   "module": "common",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_block_multiplicative",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "NO_BLOCK": {
+   "class": "NoBlockPower",
+   "module": "block_modifiers",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_block_multiplicative",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "SHADOWMELD": {
+   "class": "ShadowmeldPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "modify_block_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "UNMOVABLE": {
+   "class": "UnmovablePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_block_multiplicative"
+   ],
+   "extra_methods": []
+  },
+  "AGGRESSION": {
+   "class": "AggressionPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "BIASED_COGNITION": {
+   "class": "BiasedCognitionPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "BLUR": {
+   "class": "BlurPower",
+   "module": "block_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start",
+    "should_clear_block"
+   ],
+   "extra_methods": []
+  },
+  "COOLANT": {
+   "class": "CoolantPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "COUNTDOWN": {
+   "class": "CountdownPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "CRIMSON_MANTLE": {
+   "class": "CrimsonMantlePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": [
+    "increment_self_damage"
+   ]
+  },
+  "DEMON_FORM": {
+   "class": "DemonFormPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "ENTROPY": {
+   "class": "EntropyPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "FERAL": {
+   "class": "FeralPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_result_pile_or_position",
+    "after_power_amount_changed",
+    "before_side_turn_start",
+    "modify_card_play_result_pile_type_and_position"
+   ],
+   "extra_methods": []
+  },
+  "FURNACE": {
+   "class": "FurnacePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "LOOP": {
+   "class": "LoopPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "NEUROSURGE": {
+   "class": "NeurosurgePower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "NOXIOUS_FUMES": {
+   "class": "NoxiousFumesPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "PLATING": {
+   "class": "PlatingPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_side_turn_start",
+    "before_side_turn_start",
+    "before_turn_end_early"
+   ],
+   "extra_methods": []
+  },
+  "POISON": {
+   "class": "PoisonPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": [
+    "trigger"
+   ]
+  },
+  "PREP_TIME": {
+   "class": "PrepTimePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "RAMPART": {
+   "class": "RampartPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "ROLLING_BOULDER": {
+   "class": "RollingBoulderPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "SANDPIT": {
+   "class": "SandpitPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": [
+    "add_instance",
+    "increment_target",
+    "on_removed",
+    "set_target"
+   ]
+  },
+  "SHADOW_STEP": {
+   "class": "ShadowStepPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "SUMMON_NEXT_TURN": {
+   "class": "SummonNextTurnPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "WRAITH_FORM": {
+   "class": "WraithFormPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "BATTLEWORN_DUMMY_TIME_LIMIT": {
+   "class": "BattlewornDummyTimeLimitPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "CONSTRICT": {
+   "class": "ConstrictPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "after_death"
+   ]
+  },
+  "CONSUMING_SHADOW": {
+   "class": "ConsumingShadowPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "DEBILITATE": {
+   "class": "DebilitatePower",
+   "module": "damage_modifiers",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "DEMISE": {
+   "class": "DemisePower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ESCAPE_ARTIST": {
+   "class": "EscapeArtistPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "GRAPPLE": {
+   "class": "GrapplePower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_gained",
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HATCH": {
+   "class": "HatchPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HIGH_VOLTAGE": {
+   "class": "HighVoltagePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "INTANGIBLE": {
+   "class": "IntangiblePower",
+   "module": "block_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_cap",
+    "modify_hp_lost",
+    "on_turn_end_enemy_side"
+   ],
+   "extra_methods": []
+  },
+  "MAGIC_BOMB": {
+   "class": "MagicBombPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "after_death"
+   ]
+  },
+  "NEMESIS": {
+   "class": "NemesisPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "NO_DRAW": {
+   "class": "NoDrawPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "should_draw"
+   ],
+   "extra_methods": []
+  },
+  "REBOUND": {
+   "class": "ReboundPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_result_pile_or_position",
+    "after_turn_end",
+    "modify_card_play_result_pile_type_and_position"
+   ],
+   "extra_methods": []
+  },
+  "REGEN": {
+   "class": "RegenPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "before_turn_end_early"
+   ],
+   "extra_methods": []
+  },
+  "RETAIN_HAND": {
+   "class": "RetainHandPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "should_flush"
+   ],
+   "extra_methods": []
+  },
+  "RITUAL": {
+   "class": "RitualPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "SIC_EM": {
+   "class": "SicEmPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "TEMPORARY_DEXTERITY": {
+   "class": "TemporaryDexterityPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "FADE": {
+   "class": "FadePower",
+   "module": "C# TemporaryDexterityPower",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": ["after_power_amount_changed", "after_turn_end"],
+   "extra_methods": []
+  },
+  "TEMPORARY_FOCUS": {
+   "class": "TemporaryFocusPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "TEMPORARY_STRENGTH": {
+   "class": "TemporaryStrengthPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "TERRITORIAL": {
+   "class": "TerritorialPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "WELL_LAID_PLANS": {
+   "class": "WellLaidPlansPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_flush"
+   ],
+   "extra_methods": []
+  },
+  "AFTERIMAGE": {
+   "class": "AfterimagePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "ARSENAL": {
+   "class": "ArsenalPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_generated_for_combat"
+   ],
+   "extra_methods": []
+  },
+  "BLACK_HOLE": {
+   "class": "BlackHolePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "on_stars_gained"
+   ],
+   "extra_methods": []
+  },
+  "BLADE_OF_INK": {
+   "class": "BladeOfInkPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "BURST": {
+   "class": "BurstPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_count",
+    "after_turn_end",
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "CALAMITY": {
+   "class": "CalamityPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "CHAINS_OF_BINDING": {
+   "class": "ChainsOfBindingPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played",
+    "before_side_turn_start",
+    "before_turn_end",
+    "on_card_drawn"
+   ],
+   "extra_methods": [
+    "should_play"
+   ]
+  },
+  "CURL_UP": {
+   "class": "CurlUpPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_card_played",
+    "after_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "DANSE_MACABRE": {
+   "class": "DanseMacabrePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "DEVOUR_LIFE": {
+   "class": "DevourLifePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "DUPLICATION": {
+   "class": "DuplicationPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_count",
+    "after_turn_end",
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "ECHO_FORM": {
+   "class": "EchoFormPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "ENRAGE": {
+   "class": "EnragePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "FREE_ATTACK": {
+   "class": "FreeAttackPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "FREE": {
+   "class": "FreePowerPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "FREE_SKILL": {
+   "class": "FreeSkillPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "GALVANIC": {
+   "class": "GalvanicPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_card_played",
+    "before_combat_start"
+   ],
+   "extra_methods": []
+  },
+  "GRAVITY": {
+   "class": "GravityPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "HAUNT": {
+   "class": "HauntPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "HELLRAISER": {
+   "class": "HellraiserPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "JUGGLING": {
+   "class": "JugglingPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "MASTER_PLANNER": {
+   "class": "MasterPlannerPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "MONOLOGUE": {
+   "class": "MonologuePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_power_amount_changed",
+    "after_turn_end",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "OBLIVION": {
+   "class": "OblivionPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "ONE_TWO_PUNCH": {
+   "class": "OneTwoPunchPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_count",
+    "after_turn_end",
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "PAINFUL_STABS": {
+   "class": "PainfulStabsPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_attack",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": []
+  },
+  "PANACHE": {
+   "class": "PanachePower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "RAGE": {
+   "class": "RagePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "RUPTURE": {
+   "class": "RupturePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_damage_received",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "SERPENT_FORM": {
+   "class": "SerpentFormPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "SIGNAL_BOOST": {
+   "class": "SignalBoostPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_count",
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "SKITTISH": {
+   "class": "SkittishPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_attack",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "SLOTH": {
+   "class": "SlothPower",
+   "module": "monster",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played",
+    "before_side_turn_start"
+   ],
+   "extra_methods": [
+    "can_play_card",
+    "should_play"
+   ]
+  },
+  "SMOGGY": {
+   "class": "SmoggyPower",
+   "module": "monster",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "should_card_be_playable"
+   ]
+  },
+  "SNEAKY": {
+   "class": "SneakyPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "SPIRIT_OF_ASH": {
+   "class": "SpiritOfAshPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "STORM": {
+   "class": "StormPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "STRANGLE": {
+   "class": "StranglePower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "SUBROUTINE": {
+   "class": "SubroutinePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "SUCK": {
+   "class": "SuckPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_attack"
+   ],
+   "extra_methods": []
+  },
+  "TAG_TEAM": {
+   "class": "TagTeamPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_modifying_card_play_count",
+    "modify_card_play_count"
+   ],
+   "extra_methods": []
+  },
+  "TENDER": {
+   "class": "TenderPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "THE_SEALED_THRONE": {
+   "class": "TheSealedThronePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "VEILPIERCER": {
+   "class": "VeilpiercerPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "VOID_FORM": {
+   "class": "VoidFormPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_side_turn_start"
+   ],
+   "extra_methods": [
+    "modify_card_cost",
+    "modify_star_cost"
+   ]
+  },
+  "ASLEEP": {
+   "class": "AsleepPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received",
+    "after_turn_end",
+    "before_turn_end_very_early"
+   ],
+   "extra_methods": []
+  },
+  "FLAME_BARRIER": {
+   "class": "FlameBarrierPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HARDENED_SHELL": {
+   "class": "HardenedShellPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_damage_received",
+    "before_side_turn_start",
+    "modify_hp_lost_before_osty_late"
+   ],
+   "extra_methods": []
+  },
+  "INFERNO": {
+   "class": "InfernoPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received",
+    "after_player_turn_start"
+   ],
+   "extra_methods": [
+    "increment_self_damage"
+   ]
+  },
+  "PERSONAL_HIVE": {
+   "class": "PersonalHivePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "PLOW": {
+   "class": "PlowPower",
+   "module": "monster",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "REFLECT": {
+   "class": "ReflectPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "SHRIEK": {
+   "class": "ShriekPower",
+   "module": "monster",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": true,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "SLIPPERY": {
+   "class": "SlipperyPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "after_damage_received",
+    "modify_hp_lost"
+   ],
+   "extra_methods": []
+  },
+  "SLUMBER": {
+   "class": "SlumberPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "THE_GAMBIT": {
+   "class": "TheGambitPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "THORNS": {
+   "class": "ThornsPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_damage_received"
+   ],
+   "extra_methods": []
+  },
+  "VITAL_SPARK": {
+   "class": "VitalSparkPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_card_played",
+    "after_power_amount_changed",
+    "before_combat_start"
+   ],
+   "extra_methods": [
+    "on_removed"
+   ]
+  },
+  "AUTOMATION": {
+   "class": "AutomationPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "CONFUSED": {
+   "class": "ConfusedPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "CORROSIVE_WAVE": {
+   "class": "CorrosiveWavePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end",
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "DARK_EMBRACE": {
+   "class": "DarkEmbracePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_exhausted",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "FEEL_NO_PAIN": {
+   "class": "FeelNoPainPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_exhausted"
+   ],
+   "extra_methods": []
+  },
+  "HEX": {
+   "class": "HexPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_power_amount_changed"
+   ],
+   "extra_methods": [
+    "afflict_card",
+    "after_death",
+    "on_removed"
+   ]
+  },
+  "ITERATION": {
+   "class": "IterationPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "PAGESTORM": {
+   "class": "PagestormPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "PILLAR_OF_CREATION": {
+   "class": "PillarOfCreationPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_generated_for_combat"
+   ],
+   "extra_methods": []
+  },
+  "RINGING": {
+   "class": "RingingPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "on_removed",
+    "should_play"
+   ]
+  },
+  "SMOKESTACK": {
+   "class": "SmokestackPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_generated_for_combat"
+   ],
+   "extra_methods": []
+  },
+  "SPEEDSTER": {
+   "class": "SpeedsterPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "SWORD_SAGE": {
+   "class": "SwordSagePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "get_sovereign_blade_cost_increase",
+    "get_sovereign_blade_repeats",
+    "modify_card_cost"
+   ]
+  },
+  "TANGLED": {
+   "class": "TangledPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_entered_combat",
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "modify_card_cost",
+    "on_removed"
+   ]
+  },
+  "TRASH_TO_TREASURE": {
+   "class": "TrashToTreasurePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_generated_for_combat"
+   ],
+   "extra_methods": []
+  },
+  "BLOCK_NEXT_TURN": {
+   "class": "BlockNextTurnPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_cleared",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "SELF_FORMING_CLAY": {
+   "class": "SelfFormingClayPower",
+   "module": "damage_reactions",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_cleared"
+   ],
+   "extra_methods": []
+  },
+  "TORIC_TOUGHNESS": {
+   "class": "ToricToughnessPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_cleared"
+   ],
+   "extra_methods": [
+    "on_block_cleared",
+    "set_block"
+   ]
+  },
+  "CLARITY": {
+   "class": "ClarityPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start",
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "CORRUPTION": {
+   "class": "CorruptionPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_card_play_result_pile_type_and_position"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "CURIOUS": {
+   "class": "CuriousPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "DEMESNE": {
+   "class": "DemesnePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_hand_draw",
+    "modify_max_energy"
+   ],
+   "extra_methods": []
+  },
+  "DRAW_CARDS_NEXT_TURN": {
+   "class": "DrawCardsNextTurnPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_side_turn_start",
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "FRIENDSHIP": {
+   "class": "FriendshipPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_max_energy"
+   ],
+   "extra_methods": []
+  },
+  "MACHINE_LEARNING": {
+   "class": "MachineLearningPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "MIND_ROT": {
+   "class": "MindRotPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "ORBIT": {
+   "class": "OrbitPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_spent",
+    "after_power_amount_changed"
+   ],
+   "extra_methods": [
+    "on_energy_spent"
+   ]
+  },
+  "PALE_BLUE_DOT": {
+   "class": "PaleBlueDotPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "PYRE": {
+   "class": "PyrePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_max_energy"
+   ],
+   "extra_methods": []
+  },
+  "TOOLS_OF_THE_TRADE": {
+   "class": "ToolsOfTheTradePower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start",
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "TYRANNY": {
+   "class": "TyrannyPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start",
+    "modify_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "WASTE_AWAY": {
+   "class": "WasteAwayPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_max_energy"
+   ],
+   "extra_methods": []
+  },
+  "ADAPTABLE": {
+   "class": "AdaptablePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_allow_hitting",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "after_death",
+    "do_revive",
+    "should_stop_combat_ending"
+   ]
+  },
+  "CRAB_RAGE": {
+   "class": "CrabRagePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "on_ally_death"
+   ]
+  },
+  "DAMPEN": {
+   "class": "DampenPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": [
+    "add_caster",
+    "after_death",
+    "on_ally_death",
+    "on_removed"
+   ]
+  },
+  "DIE_FOR_YOU": {
+   "class": "DieForYouPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_unblocked_damage_target",
+    "should_allow_hitting",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "should_redirect_damage"
+   ]
+  },
+  "DOOR_REVIVAL": {
+   "class": "DoorRevivalPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_allow_hitting",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "after_death",
+    "before_death",
+    "revive",
+    "should_stop_combat_ending"
+   ]
+  },
+  "ILLUSION": {
+   "class": "IllusionPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "should_allow_hitting",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_other_power_be_removed_on_owner_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "after_death",
+    "revive",
+    "should_stop_combat_ending"
+   ]
+  },
+  "INFESTED": {
+   "class": "InfestedPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "after_death",
+    "should_stop_combat_ending"
+   ]
+  },
+  "MINION": {
+   "class": "MinionPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_owner_death_trigger_fatal",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": []
+  },
+  "POSSESS_SPEED": {
+   "class": "PossessSpeedPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": [
+    "after_death",
+    "track_stolen_dexterity"
+   ]
+  },
+  "POSSESS_STRENGTH": {
+   "class": "PossessStrengthPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": [
+    "after_death",
+    "track_stolen_strength"
+   ]
+  },
+  "RAVENOUS": {
+   "class": "RavenousPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "on_ally_death"
+   ]
+  },
+  "REATTACH": {
+   "class": "ReattachPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "should_allow_hitting",
+    "should_creature_be_removed_from_combat_after_death",
+    "should_owner_death_trigger_fatal",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "after_death",
+    "do_reattach"
+   ]
+  },
+  "STEAM_ERUPTION": {
+   "class": "SteamEruptionPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_creature_be_removed_from_combat_after_death",
+    "should_power_be_removed_after_owner_death"
+   ],
+   "extra_methods": [
+    "after_death",
+    "should_stop_combat_ending"
+   ]
+  },
+  "STOCK": {
+   "class": "StockPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "after_death",
+    "should_stop_combat_ending"
+   ]
+  },
+  "SURPRISE": {
+   "class": "SurprisePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "after_death",
+    "should_stop_combat_ending"
+   ]
+  },
+  "ACCELERANT": {
+   "class": "AccelerantPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "ANTICIPATE": {
+   "class": "AnticipatePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ARTIFACT": {
+   "class": "ArtifactPower",
+   "module": "common",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "try_block_debuff"
+   ],
+   "extra_methods": []
+  },
+  "BACK_ATTACK_LEFT": {
+   "class": "BackAttackLeftPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "BACK_ATTACK_RIGHT": {
+   "class": "BackAttackRightPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "BARRICADE": {
+   "class": "BarricadePower",
+   "module": "block_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_clear_block"
+   ],
+   "extra_methods": []
+  },
+  "BEACON_OF_HOPE": {
+   "class": "BeaconOfHopePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_gained"
+   ],
+   "extra_methods": []
+  },
+  "BUFFER": {
+   "class": "BufferPower",
+   "module": "block_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": true,
+   "hooks": [
+    "modify_hp_lost_late"
+   ],
+   "extra_methods": []
+  },
+  "BURROWED": {
+   "class": "BurrowedPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "should_clear_block"
+   ],
+   "extra_methods": [
+    "on_block_broken",
+    "on_removed"
+   ]
+  },
+  "CALL_OF_THE_VOID": {
+   "class": "CallOfTheVoidPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "CHILD_OF_THE_STARS": {
+   "class": "ChildOfTheStarsPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_stars_spent"
+   ],
+   "extra_methods": []
+  },
+  "COORDINATE": {
+   "class": "CoordinatePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "CREATIVE_AI": {
+   "class": "CreativeAiPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "CRUELTY": {
+   "class": "CrueltyPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "extra_vulnerable_multiplier"
+   ]
+  },
+  "CRUSH_UNDER": {
+   "class": "CrushUnderPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "DARK_SHACKLES": {
+   "class": "DarkShacklesPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "DISINTEGRATION": {
+   "class": "DisintegrationPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end_late"
+   ],
+   "extra_methods": []
+  },
+  "DOOM": {
+   "class": "DoomPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_turn_end",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "DRUM_OF_BATTLE": null,
+  "DYING_STAR": {
+   "class": "DyingStarPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ENERGY_NEXT_TURN": {
+   "class": "EnergyNextTurnPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "ENFEEBLING_TOUCH": {
+   "class": "EnfeeblingTouchPower",
+   "module": "remaining_a",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ENVENOM": {
+   "class": "EnvenomPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given"
+   ],
+   "extra_methods": []
+  },
+  "FAN_OF_KNIVES": {
+   "class": "FanOfKnivesPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "FEEDING_FRENZY": {
+   "class": "FeedingFrenzyPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "FLEX_POTION": {
+   "class": "FlexPotionPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "FOCUS": {
+   "class": "FocusPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": true,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "FOCUSED_STRIKE": {
+   "class": "FocusedStrikePower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HYPERBEAM_FOCUS_DOWN": {
+   "class": "HyperbeamFocusDownPower",
+   "module": "original_csharp",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "FORBIDDEN_GRIMOIRE": {
+   "class": "ForbiddenGrimoirePower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_combat_end"
+   ],
+   "extra_methods": []
+  },
+  "FOREGONE_CONCLUSION": {
+   "class": "ForegoneConclusionPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "GENESIS": {
+   "class": "GenesisPower",
+   "module": "remaining_a",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "HAILSTORM": {
+   "class": "HailstormPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HAMMER_TIME": {
+   "class": "HammerTimePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_forge"
+   ],
+   "extra_methods": []
+  },
+  "HARD_TO_KILL": {
+   "class": "HardToKillPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_cap"
+   ],
+   "extra_methods": []
+  },
+  "HEIST": {
+   "class": "HeistPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "add_stolen_gold",
+    "before_death"
+   ]
+  },
+  "HELICAL_DART": {
+   "class": "HelicalDartPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HELLO_WORLD": {
+   "class": "HelloWorldPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "HOTFIX": {
+   "class": "HotfixPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "IMBALANCED": {
+   "class": "ImbalancedPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given"
+   ],
+   "extra_methods": []
+  },
+  "IMPROVEMENT": {
+   "class": "ImprovementPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_combat_end"
+   ],
+   "extra_methods": []
+  },
+  "INFINITE_BLADES": {
+   "class": "InfiniteBladesPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "JUGGERNAUT": {
+   "class": "JuggernautPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_block_gained"
+   ],
+   "extra_methods": []
+  },
+  "LIGHTNING_ROD": {
+   "class": "LightningRodPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "MANGLE": {
+   "class": "ManglePower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "MAYHEM": {
+   "class": "MayhemPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_auto_pre_play_phase_entered"
+   ],
+   "extra_methods": []
+  },
+  "MONARCHS_GAZE": {
+   "class": "MonarchsGazePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given"
+   ],
+   "extra_methods": []
+  },
+  "MONARCHS_GAZE_STRENGTH_DOWN": {
+   "class": "MonarchsGazeStrengthDownPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "NECRO_MASTERY": {
+   "class": "NecroMasteryPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_current_hp_changed"
+   ],
+   "extra_methods": []
+  },
+  "NIGHTMARE": {
+   "class": "NightmarePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": [
+    "set_selected_card"
+   ]
+  },
+  "NOSTALGIA": {
+   "class": "NostalgiaPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_card_play_result_pile_type_and_position",
+    "after_modifying_card_play_result_pile_or_position"
+   ],
+   "extra_methods": []
+  },
+  "OUTBREAK": {
+   "class": "OutbreakPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": []
+  },
+  "PAPER_CUTS": {
+   "class": "PaperCutsPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given"
+   ],
+   "extra_methods": []
+  },
+  "PARRY": {
+   "class": "ParryPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": []
+  },
+  "PIERCING_WAIL": {
+   "class": "PiercingWailPower",
+   "module": "remaining_b",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "RADIANCE": {
+   "class": "RadiancePower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "REAPER_FORM": {
+   "class": "ReaperFormPower",
+   "module": "remaining_b",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given"
+   ],
+   "extra_methods": []
+  },
+  "REPTILE_TRINKET": {
+   "class": "ReptileTrinketPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ROYALTIES": {
+   "class": "RoyaltiesPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_combat_end"
+   ],
+   "extra_methods": []
+  },
+  "SEEKING_EDGE": {
+   "class": "SeekingEdgePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "SENTRY_MODE": {
+   "class": "SentryModePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "SETUP_STRIKE": {
+   "class": "SetupStrikePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "SHACKLING_POTION": {
+   "class": "ShacklingPotionPower",
+   "module": "turn_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "SHROUD": {
+   "class": "ShroudPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": []
+  },
+  "SLEIGHT_OF_FLESH": {
+   "class": "SleightOfFleshPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": []
+  },
+  "SPECTRUM_SHIFT": {
+   "class": "SpectrumShiftPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_hand_draw"
+   ],
+   "extra_methods": []
+  },
+  "SPEED_POTION": {
+   "class": "SpeedPotionPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "SPINNER": {
+   "class": "SpinnerPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "STAMPEDE": {
+   "class": "StampedePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "STAR_NEXT_TURN": {
+   "class": "StarNextTurnPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_energy_reset",
+    "after_side_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "STRATAGEM": {
+   "class": "StratagemPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "on_shuffle"
+   ]
+  },
+  "SWIPE": {
+   "class": "SwipePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "before_death",
+    "steal"
+   ]
+  },
+  "SYNCHRONIZE": {
+   "class": "SynchronizePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": true,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "THE_BOMB": {
+   "class": "TheBombPower",
+   "module": "turn_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_turn_end"
+   ],
+   "extra_methods": [
+    "set_latest_damage"
+   ]
+  },
+  "THE_HUNT": {
+   "class": "TheHuntPower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "THIEVERY": {
+   "class": "ThieveryPower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "add_target",
+    "steal"
+   ]
+  },
+  "THUNDER": {
+   "class": "ThunderPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "on_orb_evoked"
+   ]
+  },
+  "VICIOUS": {
+   "class": "ViciousPower",
+   "module": "damage_modifiers",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_power_amount_changed"
+   ],
+   "extra_methods": []
+  },
+  "ELECTRODYNAMICS": {
+   "class": "ElectrodynamicsPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": []
+  },
+  "METALLICIZE": {
+   "class": "MetallicizePower",
+   "module": "remaining_c",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "ENTANGLED": {
+   "class": "EntangledPower",
+   "module": "remaining_c",
+   "power_type": "DEBUFF",
+   "stack_type": "SINGLE",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "can_play_card"
+   ]
+  },
+  "GRAPPLE_POWER": null,
+  "MANGLE_POWER": null,
+  "FREE_POWER": {
+   "class": "FreePowerPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "before_card_played"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "GENERIC": null,
+  "WITHERING_PRESENCE": {
+   "class": "WitheringPresencePower",
+   "module": "monster",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played"
+   ],
+   "extra_methods": [
+    "bind_target"
+   ]
+  },
+  "AMBERGRIS": {
+   "class": "AmbergrisPower",
+   "module": "common",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": false,
+   "scale_mp": false,
+   "hooks": [],
+   "extra_methods": [
+    "after_taking_extra_turn",
+    "should_take_extra_turn"
+   ]
+  },
+  "BORROWED_TIME": {
+   "class": "BorrowedTimePower",
+   "module": "card_play_effects",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_turn_end"
+   ],
+   "extra_methods": [
+    "modify_card_cost"
+   ]
+  },
+  "CACOPHONY": {
+   "class": "CacophonyPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "on_card_drawn"
+   ],
+   "extra_methods": []
+  },
+  "CONCOCT": {
+   "class": "ConcoctPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "HIBERNATE": {
+   "class": "HibernatePower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_player_turn_start"
+   ],
+   "extra_methods": []
+  },
+  "IMITATION_LEARNING": {
+   "class": "ImitationLearningPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": true,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_played",
+    "before_card_played"
+   ],
+   "extra_methods": []
+  },
+  "ONE_FOR_ALL": {
+   "class": "OneForAllPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive"
+   ],
+   "extra_methods": []
+  },
+  "SOULBOUND": {
+   "class": "SoulboundPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_card_generated_for_combat"
+   ],
+   "extra_methods": []
+  },
+  "UNDERWORLD": {
+   "class": "UnderworldPower",
+   "module": "card_play_effects",
+   "power_type": "BUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "after_damage_given",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  },
+  "TAINTED": {
+   "class": "TaintedPower",
+   "module": "tainted",
+   "power_type": "DEBUFF",
+   "stack_type": "COUNTER",
+   "instanced": false,
+   "allow_negative": false,
+   "is_temporary": false,
+   "is_visible": true,
+   "scale_mp": false,
+   "hooks": [
+    "modify_damage_additive",
+    "after_turn_end"
+   ],
+   "extra_methods": []
+  }
+ }
+}

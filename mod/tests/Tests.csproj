@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Same net9.0 target as the externally pinned game/mod. No NuGet packages. -->
+    <OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Recording.cs" Link="Recording.cs" />
+    <Compile Include="..\UploadQueue.cs" Link="UploadQueue.cs" />
+    <Compile Include="..\CompletedRun.cs" Link="CompletedRun.cs" />
+    <Compile Include="..\LiveRunSession.cs" Link="LiveRunSession.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="RecordingDownload.cs" />
+    <Compile Include="StorageBudgetTests.cs" />
+    <Compile Include="QueueResilienceTests.cs" />
+    <Compile Include="SharingFlagsTests.cs" />
+    <Compile Include="..\PartyConsent.cs" Link="PartyConsent.cs" />
+    <Compile Include="..\CaptureLease.cs" Link="CaptureLease.cs" />
+    <Compile Include="..\RunConsent.cs" Link="RunConsent.cs" />
+    <Compile Include="AscensionRecordingTests.cs" />
+    <Compile Include="..\LocalStorageBudget.cs" Link="LocalStorageBudget.cs" />
+    <Compile Include="..\RecorderDisclosure.cs" Link="RecorderDisclosure.cs" />
+    <Compile Include="..\RunStartDiagnostics.cs" Link="RunStartDiagnostics.cs" />
+    <Compile Include="..\AuditedCompatibleMods.cs" Link="AuditedCompatibleMods.cs" />
+    <Compile Include="..\GameplayPatchClassifier.cs" Link="GameplayPatchClassifier.cs" />
+    <Compile Include="RunStartDiagnosticsTests.cs" />
+    <Compile Include="..\StartupContentClassifier.cs" Link="StartupContentClassifier.cs" />
+    <Compile Include="StartupContentClassifierTests.cs" />
+    <Compile Include="..\Ai\AdviceReason.cs" Link="AdviceReason.cs" />
+    <Compile Include="AdviceRefusalTests.cs" />
+    <Compile Include="..\Recommend\ReasonTip.cs" Link="ReasonTip.cs" />
+    <Compile Include="ReasonTipTests.cs" />
+    <EmbeddedResource Include="..\Localization\ui_strings.json" LogicalName="HumanPlayRecorder.ui_strings.json" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Hard external ABI pins: installed STS2 uses net9.0 / runtime 9.0.7,
+         GodotSharp 4.5.1.0 and Harmony 2.4.2.0. Do not redistribute them. -->
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyMetadata Include="HumanPlayRecorder.SourceCommit" Value="$(RecorderSourceCommit)" />
+    <Reference Include="sts2"><HintPath>$(GameData)\sts2.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameData)\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="GodotSharp"><HintPath>$(GameData)\GodotSharp.dll</HintPath><Private>false</Private></Reference>
+    <!-- Shipped with the game; used for the in-process capture fingerprint. -->
+    <Reference Include="System.IO.Hashing"><HintPath>$(GameData)\System.IO.Hashing.dll</HintPath><Private>false</Private></Reference>
+    <Compile Remove="tests\**\*.cs" />
+    <Content Remove="tests\**" />
+    <None Remove="tests\**" />
+    <EmbeddedResource Include="vanilla-content.json" Condition="Exists('vanilla-content.json')" LogicalName="HumanPlayRecorder.vanilla-content.json" />
+    <!-- Settings/UiText reads the mod's UI strings from the DLL; the Workshop package ships only DLL + manifest. -->
+    <EmbeddedResource Include="Localization\ui_strings.json" LogicalName="HumanPlayRecorder.ui_strings.json" />
+  </ItemGroup>
+  <Target Name="RequireSts2GameDir" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(GameData)/sts2.dll')" Text="Slay the Spire 2 not found. Pass -p:Sts2GameDir=&quot;&lt;game install directory&gt;&quot; or set STS2_GAME_DIR (looked for '$(GameData)/sts2.dll')." />
+  </Target>
+  <Target Name="VerifyReleaseEntryPoint" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="dotnet run --project &quot;$(MSBuildProjectDirectory)\tests\PackagingCheck\PackagingCheck.csproj&quot; -c Release -- --expect-release &quot;$(TargetPath)&quot;" />
+  </Target>
+  <Target Name="RequireReleaseSourceCommit" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Release'">
+    <Error Condition="'$(RecorderSourceCommit)' == ''" Text="Release requires -p:RecorderSourceCommit=&lt;reviewed source commit&gt;." />
+  </Target>
+</Project>

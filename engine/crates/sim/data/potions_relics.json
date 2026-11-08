@@ -1,0 +1,4469 @@
+{
+ "potions": [
+  {
+   "id": "AttackPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "BlockPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "BloodPotion",
+   "rarity": "COMMON",
+   "usage": "ANY_TIME",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Ironclad",
+   "gen_combat": true
+  },
+  {
+   "id": "ColorlessPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "DexterityPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "EnergyPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "ExplosiveAmpoule",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ALL_ENEMIES",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "FirePotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "FlexPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "FocusPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Defect",
+   "gen_combat": true
+  },
+  {
+   "id": "PoisonPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": true,
+   "character_pool": "Silent",
+   "gen_combat": true
+  },
+  {
+   "id": "PotionOfDoom",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": true,
+   "character_pool": "Necrobinder",
+   "gen_combat": true
+  },
+  {
+   "id": "PowerPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "SkillPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "SpeedPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "StarPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Regent",
+   "gen_combat": true
+  },
+  {
+   "id": "StrengthPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "SwiftPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "VulnerablePotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "WeakPotion",
+   "rarity": "COMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "Ashwater",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Ironclad",
+   "gen_combat": true
+  },
+  {
+   "id": "BlessingOfTheForge",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "BoneBrew",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Necrobinder",
+   "gen_combat": true
+  },
+  {
+   "id": "Clarity",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "CunningPotion",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Silent",
+   "gen_combat": true
+  },
+  {
+   "id": "CureAll",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "Duplicator",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "Fortifier",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "FyshOil",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "GamblersBrew",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "HeartOfIron",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "KingsCourage",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Regent",
+   "gen_combat": true
+  },
+  {
+   "id": "LiquidBronze",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "PotionOfBinding",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ALL_ENEMIES",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "PotionOfCapacity",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Defect",
+   "gen_combat": true
+  },
+  {
+   "id": "PowderedDemise",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "RadiantTincture",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "RegenPotion",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": false
+  },
+  {
+   "id": "StableSerum",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "TouchOfInsanity",
+   "rarity": "UNCOMMON",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "BeetleJuice",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "BottledPotential",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "CosmicConcoction",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Regent",
+   "gen_combat": true
+  },
+  {
+   "id": "DistilledChaos",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "DropletOfPrecognition",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "EntropicBrew",
+   "rarity": "RARE",
+   "usage": "ANY_TIME",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "EssenceOfDarkness",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Defect",
+   "gen_combat": true
+  },
+  {
+   "id": "FairyInABottle",
+   "rarity": "RARE",
+   "usage": "AUTOMATIC",
+   "target": "SELF",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": false
+  },
+  {
+   "id": "FruitJuice",
+   "rarity": "RARE",
+   "usage": "ANY_TIME",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": false
+  },
+  {
+   "id": "GhostInAJar",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Silent",
+   "gen_combat": true
+  },
+  {
+   "id": "GigantificationPotion",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "LiquidMemories",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "LuckyTonic",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "MazalethsGift",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "OrobicAcid",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "PotOfGhouls",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Necrobinder",
+   "gen_combat": true
+  },
+  {
+   "id": "ShacklingPotion",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ALL_ENEMIES",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "ShipInABottle",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "SneckoOil",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "SoldiersStew",
+   "rarity": "RARE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": true,
+   "character_pool": "Ironclad",
+   "gen_combat": true
+  },
+  {
+   "id": "FoulPotion",
+   "rarity": "EVENT",
+   "usage": "ANY_TIME",
+   "target": "NONE",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "GlowwaterPotion",
+   "rarity": "EVENT",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "Ambergris",
+   "rarity": "EVENT",
+   "usage": "ANY_TIME",
+   "target": "ANY_PLAYER",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "PotionShapedRock",
+   "rarity": "TOKEN",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  },
+  {
+   "id": "DeprecatedPotion",
+   "rarity": "NONE",
+   "usage": "COMBAT_ONLY",
+   "target": "ANY_ENEMY",
+   "character_specific": false,
+   "character_pool": null,
+   "gen_combat": true
+  }
+ ],
+ "relics": {
+  "BURNING_BLOOD": {
+   "rarity": "STARTER",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BurningBlood",
+   "hooks": [
+    "after_combat_victory"
+   ]
+  },
+  "BLACK_BLOOD": {
+   "rarity": "STARTER",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BlackBlood",
+   "hooks": [
+    "after_combat_victory"
+   ]
+  },
+  "RING_OF_THE_SNAKE": {
+   "rarity": "STARTER",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RingOfTheSnake",
+   "hooks": [
+    "modify_hand_draw"
+   ]
+  },
+  "RING_OF_THE_DRAKE": {
+   "rarity": "STARTER",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RingOfTheDrake",
+   "hooks": [
+    "modify_hand_draw"
+   ]
+  },
+  "CRACKED_CORE": {
+   "rarity": "STARTER",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CrackedCore",
+   "hooks": [
+    "before_side_turn_start"
+   ]
+  },
+  "INFUSED_CORE": {
+   "rarity": "STARTER",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "InfusedCore",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "BOUND_PHYLACTERY": {
+   "rarity": "STARTER",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BoundPhylactery",
+   "hooks": [
+    "after_energy_reset_late",
+    "before_combat_start"
+   ]
+  },
+  "PHYLACTERY_UNBOUND": {
+   "rarity": "STARTER",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PhylacteryUnbound",
+   "hooks": [
+    "after_side_turn_start",
+    "before_combat_start"
+   ]
+  },
+  "DIVINE_RIGHT": {
+   "rarity": "STARTER",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DivineRight",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "DIVINE_DESTINY": {
+   "rarity": "STARTER",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DivineDestiny",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "PURE_WATER": {
+   "rarity": "STARTER",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WatcherPureWater",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "AMETHYST_AUBERGINE": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": false,
+   "class": "AmethystAubergine",
+   "hooks": [
+    "is_allowed",
+    "modify_rewards"
+   ]
+  },
+  "ANCHOR": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Anchor",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "BAG_OF_PREPARATION": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BagOfPreparation",
+   "hooks": [
+    "modify_hand_draw"
+   ]
+  },
+  "BLOOD_VIAL": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BloodVial",
+   "hooks": [
+    "after_player_turn_start_late"
+   ]
+  },
+  "BONE_FLUTE": {
+   "rarity": "COMMON",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BoneFlute",
+   "hooks": [
+    "after_attack"
+   ]
+  },
+  "BRONZE_SCALES": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BronzeScales",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "CENTENNIAL_PUZZLE": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CentennialPuzzle",
+   "hooks": [
+    "after_combat_end",
+    "after_damage_received"
+   ]
+  },
+  "DATA_DISK": {
+   "rarity": "COMMON",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DataDisk",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "FENCING_MANUAL": {
+   "rarity": "COMMON",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FencingManual",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "FESTIVE_POPPER": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FestivePopper",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "GORGET": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Gorget",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "HAPPY_FLOWER": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HappyFlower",
+   "hooks": [
+    "after_combat_end",
+    "after_side_turn_start"
+   ]
+  },
+  "JUZU_BRACELET": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "JuzuBracelet",
+   "hooks": [
+    "is_allowed",
+    "modify_unknown_map_point_room_types"
+   ]
+  },
+  "LANTERN": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Lantern",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "MEAL_TICKET": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MealTicket",
+   "hooks": [
+    "after_room_entered",
+    "is_allowed"
+   ]
+  },
+  "ODDLY_SMOOTH_STONE": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "OddlySmoothStone",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "PENDULUM": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Pendulum",
+   "hooks": [
+    "before_hand_draw",
+    "modify_hand_draw"
+   ]
+  },
+  "PERMAFROST": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Permafrost",
+   "hooks": [
+    "after_card_played",
+    "after_room_entered"
+   ]
+  },
+  "POTION_BELT": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PotionBelt",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "RED_SKULL": {
+   "rarity": "COMMON",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RedSkull",
+   "hooks": [
+    "after_combat_end",
+    "after_current_hp_changed",
+    "before_combat_start"
+   ]
+  },
+  "REGAL_PILLOW": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RegalPillow",
+   "hooks": [
+    "modify_rest_site_heal_amount"
+   ]
+  },
+  "SNECKO_SKULL": {
+   "rarity": "COMMON",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SneckoSkull",
+   "hooks": [
+    "modify_power_amount_given"
+   ]
+  },
+  "STRAWBERRY": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Strawberry",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "STRIKE_DUMMY": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "StrikeDummy",
+   "hooks": [
+    "modify_damage_additive"
+   ]
+  },
+  "TINY_MAILBOX": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TinyMailbox",
+   "hooks": [
+    "modify_rest_site_heal_rewards"
+   ]
+  },
+  "VAJRA": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Vajra",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "VENERABLE_TEA_SET": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "VenerableTeaSet",
+   "hooks": [
+    "after_energy_reset",
+    "after_room_entered"
+   ]
+  },
+  "WAR_PAINT": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WarPaint",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "WHETSTONE": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Whetstone",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "BOOK_OF_FIVE_RINGS": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BookOfFiveRings",
+   "hooks": [
+    "is_allowed",
+    "on_card_added_to_deck"
+   ]
+  },
+  "AKABEKO": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Akabeko",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "BAG_OF_MARBLES": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BagOfMarbles",
+   "hooks": [
+    "before_side_turn_start"
+   ]
+  },
+  "BELLOWS": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Bellows",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "BOOK_REPAIR_KNIFE": {
+   "rarity": "UNCOMMON",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BookRepairKnife",
+   "hooks": []
+  },
+  "BOWLER_HAT": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": false,
+   "class": "BowlerHat",
+   "hooks": [
+    "is_allowed",
+    "should_gain_gold"
+   ]
+  },
+  "CANDELABRA": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Candelabra",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "ETERNAL_FEATHER": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "EternalFeather",
+   "hooks": [
+    "after_room_entered"
+   ]
+  },
+  "FUNERARY_MASK": {
+   "rarity": "UNCOMMON",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FuneraryMask",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "GALACTIC_DUST": {
+   "rarity": "UNCOMMON",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GalacticDust",
+   "hooks": [
+    "on_stars_spent"
+   ]
+  },
+  "GOLD_PLATED_CABLES": {
+   "rarity": "UNCOMMON",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GoldPlatedCables",
+   "hooks": [
+    "after_side_turn_start",
+    "before_turn_end"
+   ]
+  },
+  "GREMLIN_HORN": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GremlinHorn",
+   "hooks": [
+    "after_death"
+   ]
+  },
+  "HORN_CLEAT": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HornCleat",
+   "hooks": [
+    "after_block_cleared"
+   ]
+  },
+  "JOSS_PAPER": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "JossPaper",
+   "hooks": [
+    "after_card_exhausted",
+    "after_combat_end",
+    "after_turn_end"
+   ]
+  },
+  "KUSARIGAMA": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Kusarigama",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "after_turn_end",
+    "before_combat_start"
+   ]
+  },
+  "LETTER_OPENER": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LetterOpener",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "after_side_turn_start"
+   ]
+  },
+  "LUCKY_FYSH": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": false,
+   "class": "LuckyFysh",
+   "hooks": [
+    "is_allowed",
+    "on_card_added_to_deck"
+   ]
+  },
+  "MERCURY_HOURGLASS": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MercuryHourglass",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "MINIATURE_CANNON": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MiniatureCannon",
+   "hooks": [
+    "modify_damage_additive"
+   ]
+  },
+  "NUNCHAKU": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Nunchaku",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "ORICHALCUM": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Orichalcum",
+   "hooks": [
+    "before_side_turn_start",
+    "before_turn_end",
+    "before_turn_end_very_early"
+   ]
+  },
+  "ORNAMENTAL_FAN": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "OrnamentalFan",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start"
+   ]
+  },
+  "PANTOGRAPH": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Pantograph",
+   "hooks": [
+    "after_room_entered"
+   ]
+  },
+  "PAPER_PHROG": {
+   "rarity": "UNCOMMON",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaperPhrog",
+   "hooks": [
+    "modify_damage_multiplicative"
+   ]
+  },
+  "PARRYING_SHIELD": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ParryingShield",
+   "hooks": [
+    "after_turn_end"
+   ]
+  },
+  "PEAR": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Pear",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PEN_NIB": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PenNib",
+   "hooks": [
+    "after_card_played",
+    "before_card_played",
+    "modify_damage_multiplicative"
+   ]
+  },
+  "PETRIFIED_TOAD": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PetrifiedToad",
+   "hooks": [
+    "before_combat_start_late"
+   ]
+  },
+  "PLANISPHERE": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Planisphere",
+   "hooks": [
+    "after_room_entered",
+    "is_allowed"
+   ]
+  },
+  "RED_MASK": {
+   "rarity": "COMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RedMask",
+   "hooks": [
+    "before_side_turn_start"
+   ]
+  },
+  "REGALITE": {
+   "rarity": "UNCOMMON",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Regalite",
+   "hooks": [
+    "after_card_entered_combat"
+   ]
+  },
+  "REPTILE_TRINKET": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ReptileTrinket",
+   "hooks": [
+    "after_potion_used"
+   ]
+  },
+  "RIPPLE_BASIN": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RippleBasin",
+   "hooks": [
+    "before_turn_end"
+   ]
+  },
+  "SELF_FORMING_CLAY": {
+   "rarity": "UNCOMMON",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SelfFormingClay",
+   "hooks": [
+    "after_damage_received"
+   ]
+  },
+  "SPARKLING_ROUGE": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SparklingRouge",
+   "hooks": [
+    "after_block_cleared"
+   ]
+  },
+  "STONE_CRACKER": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "StoneCracker",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "TUNING_FORK": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TuningFork",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "TINGSHA": {
+   "rarity": "UNCOMMON",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Tingsha",
+   "hooks": [
+    "after_card_discarded"
+   ]
+  },
+  "VAMBRACE": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Vambrace",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "after_modifying_block_amount",
+    "before_combat_start",
+    "modify_block_multiplicative"
+   ]
+  },
+  "ART_OF_WAR": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ArtOfWar",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "after_energy_reset",
+    "after_turn_end"
+   ]
+  },
+  "BEATING_REMNANT": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BeatingRemnant",
+   "hooks": [
+    "after_damage_received",
+    "before_side_turn_start",
+    "modify_hp_lost_after_osty"
+   ]
+  },
+  "BIG_HAT": {
+   "rarity": "RARE",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BigHat",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "BOOKMARK": {
+   "rarity": "RARE",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Bookmark",
+   "hooks": [
+    "after_turn_end"
+   ]
+  },
+  "CAPTAINS_WHEEL": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CaptainsWheel",
+   "hooks": [
+    "after_block_cleared"
+   ]
+  },
+  "CHANDELIER": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Chandelier",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "CHARONS_ASHES": {
+   "rarity": "RARE",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CharonsAshes",
+   "hooks": [
+    "after_card_exhausted"
+   ]
+  },
+  "DEMON_TONGUE": {
+   "rarity": "RARE",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DemonTongue",
+   "hooks": [
+    "after_damage_received",
+    "before_side_turn_start"
+   ]
+  },
+  "EMOTION_CHIP": {
+   "rarity": "RARE",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "EmotionChip",
+   "hooks": [
+    "after_combat_end",
+    "after_damage_received",
+    "after_player_turn_start"
+   ]
+  },
+  "FROZEN_EGG": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FrozenEgg",
+   "hooks": [
+    "is_allowed",
+    "modify_card_being_added_to_deck",
+    "modify_card_reward_options_late",
+    "modify_merchant_card_creation_results"
+   ]
+  },
+  "GAMBLING_CHIP": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GamblingChip",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "GAME_PIECE": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GamePiece",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "GIRYA": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Girya",
+   "hooks": [
+    "before_combat_start",
+    "is_allowed",
+    "modify_rest_site_options"
+   ]
+  },
+  "HELICAL_DART": {
+   "rarity": "RARE",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HelicalDart",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "ICE_CREAM": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "IceCream",
+   "hooks": [
+    "should_reset_energy"
+   ]
+  },
+  "INTIMIDATING_HELMET": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "IntimidatingHelmet",
+   "hooks": [
+    "before_card_played"
+   ]
+  },
+  "IVORY_TILE": {
+   "rarity": "RARE",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "IvoryTile",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "KUNAI": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Kunai",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start"
+   ]
+  },
+  "LASTING_CANDY": {
+   "rarity": "UNCOMMON",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LastingCandy",
+   "hooks": [
+    "after_combat_end",
+    "is_allowed",
+    "modify_card_reward_options"
+   ]
+  },
+  "LIZARD_TAIL": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LizardTail",
+   "hooks": [
+    "should_die_late"
+   ]
+  },
+  "LUNAR_PASTRY": {
+   "rarity": "RARE",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LunarPastry",
+   "hooks": [
+    "after_turn_end"
+   ]
+  },
+  "MANGO": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Mango",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "MEAT_ON_THE_BONE": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MeatOnTheBone",
+   "hooks": [
+    "after_combat_victory_early"
+   ]
+  },
+  "METRONOME": {
+   "rarity": "RARE",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Metronome",
+   "hooks": [
+    "after_combat_end"
+   ]
+  },
+  "MINI_REGENT": {
+   "rarity": "RARE",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MiniRegent",
+   "hooks": [
+    "after_combat_end",
+    "before_side_turn_start",
+    "on_stars_spent"
+   ]
+  },
+  "MOLTEN_EGG": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MoltenEgg",
+   "hooks": [
+    "is_allowed",
+    "modify_card_being_added_to_deck",
+    "modify_card_reward_options_late",
+    "modify_merchant_card_creation_results"
+   ]
+  },
+  "MUMMIFIED_HAND": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MummifiedHand",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "OLD_COIN": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": false,
+   "class": "OldCoin",
+   "hooks": [
+    "after_obtained",
+    "is_allowed"
+   ]
+  },
+  "ORANGE_DOUGH": {
+   "rarity": "RARE",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "OrangeDough",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "POCKETWATCH": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Pocketwatch",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start",
+    "modify_hand_draw"
+   ]
+  },
+  "POWER_CELL": {
+   "rarity": "RARE",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PowerCell",
+   "hooks": [
+    "before_side_turn_start"
+   ]
+  },
+  "PRAYER_WHEEL": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PrayerWheel",
+   "hooks": [
+    "modify_rewards"
+   ]
+  },
+  "RAINBOW_RING": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RainbowRing",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start"
+   ]
+  },
+  "RAZOR_TOOTH": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RazorTooth",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "SHOVEL": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Shovel",
+   "hooks": [
+    "is_allowed",
+    "modify_rest_site_options"
+   ]
+  },
+  "SHURIKEN": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Shuriken",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start"
+   ]
+  },
+  "STONE_CALENDAR": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "StoneCalendar",
+   "hooks": [
+    "before_turn_end"
+   ]
+  },
+  "STURDY_CLAMP": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SturdyClamp",
+   "hooks": [
+    "after_preventing_block_clear",
+    "should_clear_block"
+   ]
+  },
+  "THE_COURIER": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": false,
+   "class": "TheCourier",
+   "hooks": [
+    "modify_merchant_price",
+    "should_refill_merchant_entry"
+   ]
+  },
+  "TOUGH_BANDAGES": {
+   "rarity": "RARE",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ToughBandages",
+   "hooks": [
+    "after_card_discarded"
+   ]
+  },
+  "TOXIC_EGG": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ToxicEgg",
+   "hooks": [
+    "is_allowed",
+    "modify_card_being_added_to_deck",
+    "modify_card_reward_options_late",
+    "modify_merchant_card_creation_results"
+   ]
+  },
+  "TUNGSTEN_ROD": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TungstenRod",
+   "hooks": [
+    "modify_hp_lost_after_osty"
+   ]
+  },
+  "UNCEASING_TOP": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "UnceasingTop",
+   "hooks": [
+    "after_hand_emptied"
+   ]
+  },
+  "UNSETTLING_LAMP": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "UnsettlingLamp",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_combat_start",
+    "modify_power_amount_given"
+   ]
+  },
+  "RUINED_HELMET": {
+   "rarity": "RARE",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RuinedHelmet",
+   "hooks": [
+    "after_combat_end",
+    "after_modifying_power_amount_received",
+    "before_combat_start",
+    "modify_power_amount_received"
+   ]
+  },
+  "VEXING_PUZZLEBOX": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "VexingPuzzlebox",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "WHITE_BEAST_STATUE": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WhiteBeastStatue",
+   "hooks": [
+    "is_allowed",
+    "should_force_potion_reward"
+   ]
+  },
+  "WHITE_STAR": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WhiteStar",
+   "hooks": [
+    "is_allowed",
+    "modify_rewards"
+   ]
+  },
+  "PAPER_KRANE": {
+   "rarity": "RARE",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaperKrane",
+   "hooks": [
+    "modify_damage_multiplicative"
+   ]
+  },
+  "BELT_BUCKLE": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BeltBuckle",
+   "hooks": [
+    "after_combat_victory",
+    "after_obtained",
+    "after_potion_discarded",
+    "after_potion_procured",
+    "after_potion_used",
+    "before_combat_start"
+   ]
+  },
+  "BREAD": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Bread",
+   "hooks": [
+    "after_side_turn_start",
+    "modify_max_energy"
+   ]
+  },
+  "BRIMSTONE": {
+   "rarity": "SHOP",
+   "pool": "IRONCLAD",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Brimstone",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "BURNING_STICKS": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BurningSticks",
+   "hooks": [
+    "after_card_exhausted",
+    "after_combat_end",
+    "before_combat_start"
+   ]
+  },
+  "CAULDRON": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Cauldron",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "CHEMICAL_X": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ChemicalX",
+   "hooks": [
+    "before_card_played",
+    "modify_x_value"
+   ]
+  },
+  "DINGY_RUG": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DingyRug",
+   "hooks": [
+    "modify_card_reward_creation_options"
+   ]
+  },
+  "DOLLYS_MIRROR": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DollysMirror",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "DRAGON_FRUIT": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DragonFruit",
+   "hooks": [
+    "is_allowed"
+   ]
+  },
+  "GHOST_SEED": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GhostSeed",
+   "hooks": [
+    "after_card_entered_combat",
+    "before_combat_start"
+   ]
+  },
+  "GNARLED_HAMMER": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GnarledHammer",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "KIFUDA": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Kifuda",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LAVA_LAMP": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LavaLamp",
+   "hooks": [
+    "after_damage_received",
+    "after_room_entered",
+    "before_combat_start",
+    "modify_card_reward_options_late"
+   ]
+  },
+  "LEES_WAFFLE": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LeesWaffle",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "MEMBERSHIP_CARD": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MembershipCard",
+   "hooks": [
+    "modify_merchant_price"
+   ]
+  },
+  "MINIATURE_TENT": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MiniatureTent",
+   "hooks": [
+    "should_disable_remaining_rest_site_options"
+   ]
+  },
+  "MYSTIC_LIGHTER": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MysticLighter",
+   "hooks": [
+    "modify_damage_additive"
+   ]
+  },
+  "NINJA_SCROLL": {
+   "rarity": "SHOP",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NinjaScroll",
+   "hooks": [
+    "before_hand_draw"
+   ]
+  },
+  "ORRERY": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Orrery",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PUNCH_DAGGER": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PunchDagger",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "RINGING_TRIANGLE": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RingingTriangle",
+   "hooks": [
+    "should_flush"
+   ]
+  },
+  "ROYAL_STAMP": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RoyalStamp",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "RUNIC_CAPACITOR": {
+   "rarity": "SHOP",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RunicCapacitor",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "SCREAMING_FLAGON": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ScreamingFlagon",
+   "hooks": [
+    "before_turn_end"
+   ]
+  },
+  "SLING_OF_COURAGE": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SlingOfCourage",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "THE_ABACUS": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TheAbacus",
+   "hooks": [
+    "after_shuffle"
+   ]
+  },
+  "TOOLBOX": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Toolbox",
+   "hooks": [
+    "after_combat_end",
+    "before_combat_start",
+    "before_hand_draw"
+   ]
+  },
+  "UNDYING_SIGIL": {
+   "rarity": "SHOP",
+   "pool": "NECROBINDER",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "UndyingSigil",
+   "hooks": [
+    "modify_damage_multiplicative"
+   ]
+  },
+  "VITRUVIAN_MINION": {
+   "rarity": "SHOP",
+   "pool": "REGENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "VitruvianMinion",
+   "hooks": [
+    "modify_block_multiplicative",
+    "modify_damage_multiplicative"
+   ]
+  },
+  "WING_CHARM": {
+   "rarity": "SHOP",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WingCharm",
+   "hooks": [
+    "modify_card_reward_options_late"
+   ]
+  },
+  "ALCHEMICAL_COFFER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "AlchemicalCoffer",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "ARCANE_SCROLL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ArcaneScroll",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "ARCHAIC_TOOTH": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ArchaicTooth",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "ASTROLABE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Astrolabe",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "BEAUTIFUL_BRACELET": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BeautifulBracelet",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "BIG_MUSHROOM": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BigMushroom",
+   "hooks": [
+    "after_obtained",
+    "modify_hand_draw"
+   ]
+  },
+  "BIIIG_HUG": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BiiigHug",
+   "hooks": [
+    "after_obtained",
+    "after_shuffle"
+   ]
+  },
+  "BING_BONG": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BingBong",
+   "hooks": [
+    "on_card_added_to_deck"
+   ]
+  },
+  "BLACK_STAR": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BlackStar",
+   "hooks": [
+    "modify_rewards"
+   ]
+  },
+  "BLESSED_ANTLER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BlessedAntler",
+   "hooks": [
+    "before_hand_draw",
+    "modify_max_energy"
+   ]
+  },
+  "BLOOD_SOAKED_ROSE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BloodSoakedRose",
+   "hooks": [
+    "after_obtained",
+    "modify_max_energy"
+   ]
+  },
+  "BONE_TEA": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BoneTea",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "BOOMING_CONCH": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BoomingConch",
+   "hooks": [
+    "modify_hand_draw"
+   ]
+  },
+  "BRILLIANT_SCARF": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "BrilliantScarf",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start",
+    "modify_card_cost",
+    "modify_star_cost"
+   ]
+  },
+  "BYRDPIP": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": true,
+   "shops": true,
+   "class": "Byrdpip",
+   "hooks": [
+    "after_obtained",
+    "before_combat_start"
+   ]
+  },
+  "CALLING_BELL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CallingBell",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "CHOICES_PARADOX": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ChoicesParadox",
+   "hooks": [
+    "after_combat_end",
+    "after_player_turn_start",
+    "before_combat_start"
+   ]
+  },
+  "CHOSEN_CHEESE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ChosenCheese",
+   "hooks": [
+    "after_combat_end"
+   ]
+  },
+  "CLAWS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Claws",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "CROSSBOW": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Crossbow",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "CURSED_PEARL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CursedPearl",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "DARKSTONE_PERIAPT": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DarkstonePeriapt",
+   "hooks": [
+    "on_card_added_to_deck"
+   ]
+  },
+  "DAUGHTER_OF_THE_WIND": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DaughterOfTheWind",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "DELICATE_FROND": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DelicateFrond",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "DIAMOND_DIADEM": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DiamondDiadem",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "DISTINGUISHED_CAPE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DistinguishedCape",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "DREAM_CATCHER": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DreamCatcher",
+   "hooks": [
+    "modify_rest_site_heal_rewards"
+   ]
+  },
+  "DRIFTWOOD": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Driftwood",
+   "hooks": [
+    "modify_rewards_late"
+   ]
+  },
+  "DUSTY_TOME": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DustyTome",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "ECTOPLASM": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Ectoplasm",
+   "hooks": [
+    "modify_max_energy",
+    "should_gain_gold"
+   ]
+  },
+  "ELECTRIC_SHRYMP": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ElectricShrymp",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "EMBER_TEA": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "EmberTea",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "EMPTY_CAGE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "EmptyCage",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "FAKE_ANCHOR": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeAnchor",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "FAKE_BLOOD_VIAL": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeBloodVial",
+   "hooks": [
+    "after_player_turn_start_late"
+   ]
+  },
+  "FAKE_HAPPY_FLOWER": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeHappyFlower",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "FAKE_LEES_WAFFLE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeLeesWaffle",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "FAKE_MANGO": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeMango",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "FAKE_MERCHANTS_RUG": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeMerchantsRug",
+   "hooks": []
+  },
+  "FAKE_ORICHALCUM": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeOrichalcum",
+   "hooks": [
+    "before_side_turn_start",
+    "before_turn_end",
+    "before_turn_end_very_early"
+   ]
+  },
+  "FAKE_SNECKO_EYE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeSneckoEye",
+   "hooks": [
+    "after_obtained",
+    "before_combat_start"
+   ]
+  },
+  "FAKE_STRIKE_DUMMY": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeStrikeDummy",
+   "hooks": [
+    "modify_damage_additive"
+   ]
+  },
+  "FAKE_VENERABLE_TEA_SET": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FakeVenerableTeaSet",
+   "hooks": [
+    "after_energy_reset",
+    "after_room_entered"
+   ]
+  },
+  "FIDDLE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Fiddle",
+   "hooks": [
+    "modify_hand_draw_late",
+    "should_draw"
+   ]
+  },
+  "FORGOTTEN_SOUL": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ForgottenSoul",
+   "hooks": [
+    "after_card_exhausted"
+   ]
+  },
+  "FRAGRANT_MUSHROOM": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FragrantMushroom",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "FRESNEL_LENS": {
+   "rarity": "EVENT",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FresnelLens",
+   "hooks": [
+    "modify_card_being_added_to_deck",
+    "modify_card_reward_options_late",
+    "modify_merchant_card_creation_results"
+   ]
+  },
+  "FUR_COAT": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FurCoat",
+   "hooks": [
+    "after_obtained",
+    "before_combat_start",
+    "modify_generated_map_late"
+   ]
+  },
+  "GLASS_EYE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GlassEye",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "GLITTER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Glitter",
+   "hooks": [
+    "modify_card_reward_options_late"
+   ]
+  },
+  "GOLDEN_COMPASS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GoldenCompass",
+   "hooks": [
+    "after_obtained",
+    "modify_generated_map",
+    "modify_unknown_map_point_room_types"
+   ]
+  },
+  "GOLDEN_PEARL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "GoldenPearl",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "HAND_DRILL": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HandDrill",
+   "hooks": [
+    "after_damage_given"
+   ]
+  },
+  "HISTORY_COURSE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HistoryCourse",
+   "hooks": [
+    "after_player_turn_start_early"
+   ]
+  },
+  "IRON_CLUB": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "IronClub",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "JEWELED_MASK": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "JeweledMask",
+   "hooks": [
+    "before_hand_draw"
+   ]
+  },
+  "JEWELRY_BOX": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "JewelryBox",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LARGE_CAPSULE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LargeCapsule",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LAVA_ROCK": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LavaRock",
+   "hooks": [
+    "modify_rewards"
+   ]
+  },
+  "LEAD_PAPERWEIGHT": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LeadPaperweight",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LEAFY_POULTICE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LeafyPoultice",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LOOMING_FRUIT": {
+   "rarity": "ANCIENT",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LoomingFruit",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LORDS_PARASOL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LordsParasol",
+   "hooks": [
+    "after_room_entered"
+   ]
+  },
+  "LOST_COFFER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LostCoffer",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "LOST_WISP": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "LostWisp",
+   "hooks": [
+    "after_card_played"
+   ]
+  },
+  "MASSIVE_SCROLL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MassiveScroll",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "MAW_BANK": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MawBank",
+   "hooks": [
+    "after_room_entered",
+    "on_item_purchased"
+   ]
+  },
+  "MEAT_CLEAVER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MeatCleaver",
+   "hooks": [
+    "modify_rest_site_options"
+   ]
+  },
+  "MR_STRUGGLES": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MrStruggles",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "MUSIC_BOX": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "MusicBox",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_card_played",
+    "before_side_turn_start"
+   ]
+  },
+  "NEOWS_TORMENT": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NeowsTorment",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "NEW_LEAF": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NewLeaf",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "NUTRITIOUS_OYSTER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NutritiousOyster",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "NUTRITIOUS_SOUP": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NutritiousSoup",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PAELS_BLOOD": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsBlood",
+   "hooks": [
+    "modify_hand_draw"
+   ]
+  },
+  "PAELS_CLAW": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsClaw",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PAELS_EYE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsEye",
+   "hooks": [
+    "after_combat_end",
+    "after_side_turn_start",
+    "after_taking_extra_turn",
+    "before_card_played",
+    "before_turn_end_early",
+    "should_take_extra_turn"
+   ]
+  },
+  "PAELS_FLESH": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsFlesh",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "PAELS_GROWTH": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsGrowth",
+   "hooks": [
+    "after_obtained",
+    "modify_rest_site_options"
+   ]
+  },
+  "PAELS_HORN": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsHorn",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PAELS_LEGION": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsLegion",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "after_modifying_block_amount",
+    "after_obtained",
+    "after_side_turn_start",
+    "before_combat_start",
+    "modify_block_multiplicative"
+   ]
+  },
+  "PAELS_TEARS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsTears",
+   "hooks": [
+    "after_combat_end",
+    "after_side_turn_start",
+    "before_turn_end"
+   ]
+  },
+  "PAELS_TOOTH": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsTooth",
+   "hooks": [
+    "after_combat_end",
+    "after_obtained"
+   ]
+  },
+  "PAELS_WING": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PaelsWing",
+   "hooks": []
+  },
+  "PANDORAS_BOX": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PandorasBox",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PHILOSOPHERS_STONE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PhilosophersStone",
+   "hooks": [
+    "after_creature_added_to_combat",
+    "before_combat_start",
+    "modify_max_energy"
+   ]
+  },
+  "POLLINOUS_CORE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PollinousCore",
+   "hooks": [
+    "after_modifying_hand_draw",
+    "before_side_turn_start",
+    "modify_hand_draw"
+   ]
+  },
+  "POMANDER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Pomander",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PRECARIOUS_SHEARS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PrecariousShears",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PRECISE_SCISSORS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PreciseScissors",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PRESERVED_FOG": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PreservedFog",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PRISMATIC_GEM": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PrismaticGem",
+   "hooks": [
+    "modify_card_reward_creation_options",
+    "modify_max_energy"
+   ]
+  },
+  "PUMPKIN_CANDLE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PumpkinCandle",
+   "hooks": [
+    "after_combat_end",
+    "after_obtained",
+    "modify_max_energy",
+    "modify_rest_site_options"
+   ]
+  },
+  "RADIANT_PEARL": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RadiantPearl",
+   "hooks": [
+    "before_hand_draw"
+   ]
+  },
+  "ROYAL_POISON": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RoyalPoison",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "RUNIC_PYRAMID": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "RunicPyramid",
+   "hooks": [
+    "should_flush"
+   ]
+  },
+  "SAI": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Sai",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "SAND_CASTLE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SandCastle",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SCROLL_BOXES": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ScrollBoxes",
+   "hooks": [
+    "after_obtained",
+    "is_allowed_at_neow"
+   ]
+  },
+  "SEA_GLASS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SeaGlass",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SEAL_OF_GOLD": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SealOfGold",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "SERE_TALON": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SereTalon",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SIGNET_RING": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SignetRing",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SILVER_CRUCIBLE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SilverCrucible",
+   "hooks": [
+    "after_room_entered",
+    "modify_card_reward_options_late",
+    "should_generate_treasure"
+   ]
+  },
+  "SMALL_CAPSULE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SmallCapsule",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SNECKO_EYE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SneckoEye",
+   "hooks": [
+    "after_obtained",
+    "before_combat_start",
+    "modify_hand_draw"
+   ]
+  },
+  "SOZU": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Sozu",
+   "hooks": [
+    "modify_max_energy",
+    "should_procure_potion"
+   ]
+  },
+  "SPIKED_GAUNTLETS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SpikedGauntlets",
+   "hooks": [
+    "before_card_played",
+    "modify_card_cost",
+    "modify_max_energy",
+    "should_play"
+   ]
+  },
+  "STONE_HUMIDIFIER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "StoneHumidifier",
+   "hooks": [
+    "after_rest_site_heal"
+   ]
+  },
+  "STORYBOOK": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Storybook",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SWORD_OF_STONE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SwordOfStone",
+   "hooks": [
+    "after_combat_victory"
+   ]
+  },
+  "SWORD_OF_JADE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SwordOfJade",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "TANXS_WHISTLE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TanxsWhistle",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "TEA_OF_DISCOURTESY": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TeaOfDiscourtesy",
+   "hooks": [
+    "before_combat_start"
+   ]
+  },
+  "THE_BOOT": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TheBoot",
+   "hooks": [
+    "modify_hp_lost_after_osty"
+   ]
+  },
+  "THROWING_AXE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ThrowingAxe",
+   "hooks": [
+    "after_combat_end",
+    "after_modifying_card_play_count",
+    "before_combat_start",
+    "modify_card_play_count"
+   ]
+  },
+  "TOASTY_MITTENS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ToastyMittens",
+   "hooks": [
+    "after_player_turn_start"
+   ]
+  },
+  "TOUCH_OF_OROBAS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TouchOfOrobas",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "TOY_BOX": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "ToyBox",
+   "hooks": [
+    "after_combat_end",
+    "after_obtained"
+   ]
+  },
+  "TRI_BOOMERANG": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TriBoomerang",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "VELVET_CHOKER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "VelvetChoker",
+   "hooks": [
+    "after_card_played",
+    "after_combat_end",
+    "before_side_turn_start",
+    "modify_max_energy",
+    "should_play"
+   ]
+  },
+  "VERY_HOT_COCOA": {
+   "rarity": "ANCIENT",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "VeryHotCocoa",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "WAR_HAMMER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WarHammer",
+   "hooks": [
+    "after_combat_victory"
+   ]
+  },
+  "WHISPERING_EARRING": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WhisperingEarring",
+   "hooks": [
+    "before_play_phase_start",
+    "modify_max_energy"
+   ]
+  },
+  "WONGO_CUSTOMER_APPRECIATION_BADGE": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WongoCustomerAppreciationBadge",
+   "hooks": []
+  },
+  "WONGOS_MYSTERY_TICKET": {
+   "rarity": "EVENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WongosMysteryTicket",
+   "hooks": [
+    "after_combat_end",
+    "after_modifying_rewards",
+    "modify_rewards"
+   ]
+  },
+  "YUMMY_COOKIE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "YummyCookie",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SYMBIOTIC_VIRUS": {
+   "rarity": "UNCOMMON",
+   "pool": "DEFECT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SymbioticVirus",
+   "hooks": [
+    "after_side_turn_start"
+   ]
+  },
+  "TWISTED_FUNNEL": {
+   "rarity": "UNCOMMON",
+   "pool": "SILENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "TwistedFunnel",
+   "hooks": [
+    "before_side_turn_start"
+   ]
+  },
+  "CLOAK_CLASP": {
+   "rarity": "RARE",
+   "pool": "SHARED",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "CloakClasp",
+   "hooks": [
+    "before_turn_end"
+   ]
+  },
+  "CIRCLET": {
+   "rarity": "COMMON",
+   "pool": "FALLBACK",
+   "stackable": true,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Circlet",
+   "hooks": []
+  },
+  "DEPRECATED_RELIC": {
+   "rarity": "COMMON",
+   "pool": "DEPRECATED",
+   "stackable": true,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DeprecatedRelic",
+   "hooks": []
+  },
+  "DOWSING_ROD": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "DowsingRod",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "FISHING_ROD": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "FishingRod",
+   "hooks": [
+    "after_combat_end"
+   ]
+  },
+  "HEFTY_TABLET": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "HeftyTablet",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "KALEIDOSCOPE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "Kaleidoscope",
+   "hooks": [
+    "after_obtained",
+    "is_allowed_at_neow"
+   ]
+  },
+  "NEOWS_BONES": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NeowsBones",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "NEOWS_SACRIFICE": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NeowsSacrifice",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "NEOWS_TALISMAN": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "NeowsTalisman",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "PHIAL_HOLSTER": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "PhialHolster",
+   "hooks": [
+    "after_obtained"
+   ]
+  },
+  "SILKEN_TRESS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": true,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "SilkenTress",
+   "hooks": [
+    "after_obtained",
+    "modify_card_reward_options_late"
+   ]
+  },
+  "WINGED_BOOTS": {
+   "rarity": "ANCIENT",
+   "pool": "EVENT",
+   "stackable": false,
+   "upon_pickup": false,
+   "spawns_pets": false,
+   "shops": true,
+   "class": "WingedBoots",
+   "hooks": [
+    "after_room_entered",
+    "is_allowed"
+   ]
+  }
+ },
+ "relic_hook_names": [
+  "is_allowed",
+  "is_allowed_at_neow",
+  "is_before_act3_treasure_chest",
+  "modify_damage_additive",
+  "modify_damage_multiplicative",
+  "modify_damage_cap",
+  "modify_block_additive",
+  "modify_block_multiplicative",
+  "after_modifying_block_amount",
+  "modify_hp_lost",
+  "modify_hp_lost_before_osty",
+  "modify_hp_lost_before_osty_late",
+  "modify_hp_lost_after_osty",
+  "modify_power_amount_given",
+  "after_modifying_power_amount_given",
+  "modify_power_amount_received",
+  "after_modifying_power_amount_received",
+  "after_power_amount_changed",
+  "before_power_amount_changed",
+  "should_clear_block",
+  "after_preventing_block_clear",
+  "modify_hand_draw",
+  "modify_hand_draw_late",
+  "after_modifying_hand_draw",
+  "modify_max_energy",
+  "should_draw",
+  "after_preventing_draw",
+  "modify_card_play_count",
+  "after_modifying_card_play_count",
+  "after_card_entered_combat",
+  "after_card_generated_for_combat",
+  "on_card_drawn",
+  "modify_card_cost",
+  "modify_star_cost",
+  "before_side_turn_start",
+  "before_hand_draw",
+  "before_hand_draw_late",
+  "after_player_turn_start_early",
+  "after_player_turn_start",
+  "after_player_turn_start_late",
+  "after_side_turn_start",
+  "before_play_phase_start",
+  "before_turn_end_very_early",
+  "before_turn_end_early",
+  "before_turn_end",
+  "before_flush",
+  "before_flush_late",
+  "after_turn_end",
+  "after_turn_end_late",
+  "before_card_played",
+  "after_card_played",
+  "modify_card_play_result_pile_type_and_position",
+  "after_modifying_card_play_result_pile_or_position",
+  "after_card_exhausted",
+  "after_card_discarded",
+  "before_damage_received",
+  "after_damage_received",
+  "after_current_hp_changed",
+  "after_damage_given",
+  "before_attack",
+  "after_attack",
+  "after_block_gained",
+  "after_block_cleared",
+  "before_combat_start",
+  "before_combat_start_late",
+  "after_creature_added_to_combat",
+  "after_combat_victory_early",
+  "after_combat_victory",
+  "after_combat_end",
+  "after_forge",
+  "on_stars_gained",
+  "on_stars_spent",
+  "modify_summon_amount",
+  "after_summon",
+  "after_osty_revived",
+  "after_death",
+  "should_die_late",
+  "after_energy_reset",
+  "after_energy_reset_late",
+  "after_energy_spent",
+  "should_reset_energy",
+  "after_shuffle",
+  "after_hand_emptied",
+  "should_flush",
+  "should_take_extra_turn",
+  "after_taking_extra_turn",
+  "should_play",
+  "after_room_entered",
+  "after_obtained",
+  "modify_generated_map",
+  "modify_generated_map_late",
+  "modify_unknown_map_point_room_types",
+  "modify_rewards",
+  "modify_rewards_late",
+  "after_modifying_rewards",
+  "modify_card_reward_creation_options",
+  "modify_card_reward_options",
+  "modify_card_reward_options_late",
+  "modify_card_being_added_to_deck",
+  "on_card_added_to_deck",
+  "allow_card_reward_reroll",
+  "should_generate_treasure",
+  "modify_merchant_inventory",
+  "modify_merchant_card_creation_results",
+  "modify_merchant_price",
+  "should_refill_merchant_entry",
+  "on_item_purchased",
+  "modify_rest_site_options",
+  "modify_rest_site_heal_amount",
+  "modify_rest_site_heal_rewards",
+  "after_rest_site_heal",
+  "should_disable_remaining_rest_site_options",
+  "should_procure_potion",
+  "should_gain_gold",
+  "should_force_potion_reward",
+  "before_potion_used",
+  "after_potion_procured",
+  "after_potion_discarded",
+  "after_potion_used",
+  "modify_x_value"
+ ],
+ "relic_failures": {}
+}

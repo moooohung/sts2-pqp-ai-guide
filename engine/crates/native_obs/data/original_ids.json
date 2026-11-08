@@ -1,0 +1,3015 @@
+{
+  "capture": "0861BFA1DF347538D932F22D580E75420F08082792EB914E53B4882764ACDBE9",
+  "events": [
+    {
+      "key": "ABYSSAL_BATHS",
+      "name": "AbyssalBaths",
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "AMALGAMATOR",
+      "name": "Amalgamator",
+      "source": "Models/Events/Amalgamator.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS",
+      "name": "AromaOfChaos",
+      "source": "Models/Events/AromaOfChaos.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY",
+      "name": "BattlewornDummy",
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BRAIN_LEECH",
+      "name": "BrainLeech",
+      "source": "Models/Events/BrainLeech.cs"
+    },
+    {
+      "key": "BUGSLAYER",
+      "name": "Bugslayer",
+      "source": "Models/Events/Bugslayer.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST",
+      "name": "ByrdonisNest",
+      "source": "Models/Events/ByrdonisNest.cs"
+    },
+    {
+      "key": "COLORFUL_PHILOSOPHERS",
+      "name": "ColorfulPhilosophers",
+      "source": "Models/Events/ColorfulPhilosophers.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER",
+      "name": "ColossalFlower",
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE",
+      "name": "CrystalSphere",
+      "source": "Models/Events/CrystalSphere.cs"
+    },
+    {
+      "key": "DARV",
+      "name": "Darv",
+      "source": "Models/Events/Darv.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION",
+      "name": "DenseVegetation",
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DEPRECATED_ANCIENT_EVENT",
+      "name": "DeprecatedAncientEvent",
+      "source": "Models/Events/DeprecatedAncientEvent.cs"
+    },
+    {
+      "key": "DEPRECATED_EVENT",
+      "name": "DeprecatedEvent",
+      "source": "Models/Events/DeprecatedEvent.cs"
+    },
+    {
+      "key": "DOLL_ROOM",
+      "name": "DollRoom",
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK",
+      "name": "DoorsOfLightAndDark",
+      "source": "Models/Events/DoorsOfLightAndDark.cs"
+    },
+    {
+      "key": "DROWNING_BEACON",
+      "name": "DrowningBeacon",
+      "source": "Models/Events/DrowningBeacon.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR",
+      "name": "EndlessConveyor",
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "FAKE_MERCHANT",
+      "name": "FakeMerchant",
+      "source": "Models/Events/FakeMerchant.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES",
+      "name": "FieldOfManSizedHoles",
+      "source": "Models/Events/FieldOfManSizedHoles.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN",
+      "name": "GraveOfTheForgotten",
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS",
+      "name": "HungryForMushrooms",
+      "source": "Models/Events/HungryForMushrooms.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON",
+      "name": "InfestedAutomaton",
+      "source": "Models/Events/InfestedAutomaton.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE",
+      "name": "JungleMazeAdventure",
+      "source": "Models/Events/JungleMazeAdventure.cs"
+    },
+    {
+      "key": "LOST_WISP",
+      "name": "LostWisp",
+      "source": "Models/Events/LostWisp.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR",
+      "name": "LuminousChoir",
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "MOCK_EVENT_MODEL",
+      "name": "MocksMockEventModel",
+      "source": "Models/Events/Mocks/MockEventModel.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE",
+      "name": "MorphicGrove",
+      "source": "Models/Events/MorphicGrove.cs"
+    },
+    {
+      "key": "NEOW",
+      "name": "Neow",
+      "source": "Models/Events/Neow.cs"
+    },
+    {
+      "key": "NONUPEIPE",
+      "name": "Nonupeipe",
+      "source": "Models/Events/Nonupeipe.cs"
+    },
+    {
+      "key": "OROBAS",
+      "name": "Orobas",
+      "source": "Models/Events/Orobas.cs"
+    },
+    {
+      "key": "PAEL",
+      "name": "Pael",
+      "source": "Models/Events/Pael.cs"
+    },
+    {
+      "key": "POTION_COURIER",
+      "name": "PotionCourier",
+      "source": "Models/Events/PotionCourier.cs"
+    },
+    {
+      "key": "PUNCH_OFF",
+      "name": "PunchOff",
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER",
+      "name": "RanwidTheElder",
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "REFLECTIONS",
+      "name": "Reflections",
+      "source": "Models/Events/Reflections.cs"
+    },
+    {
+      "key": "RELIC_TRADER",
+      "name": "RelicTrader",
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE",
+      "name": "RoomFullOfCheese",
+      "source": "Models/Events/RoomFullOfCheese.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY",
+      "name": "RoundTeaParty",
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED",
+      "name": "SapphireSeed",
+      "source": "Models/Events/SapphireSeed.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK",
+      "name": "SelfHelpBook",
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE",
+      "name": "SlipperyBridge",
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL",
+      "name": "SpiralingWhirlpool",
+      "source": "Models/Events/SpiralingWhirlpool.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER",
+      "name": "SpiritGrafter",
+      "source": "Models/Events/SpiritGrafter.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME",
+      "name": "StoneOfAllTime",
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE",
+      "name": "SunkenStatue",
+      "source": "Models/Events/SunkenStatue.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY",
+      "name": "SunkenTreasury",
+      "source": "Models/Events/SunkenTreasury.cs"
+    },
+    {
+      "key": "SYMBIOTE",
+      "name": "Symbiote",
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH",
+      "name": "TabletOfTruth",
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TANX",
+      "name": "Tanx",
+      "source": "Models/Events/Tanx.cs"
+    },
+    {
+      "key": "TEA_MASTER",
+      "name": "TeaMaster",
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEZCATARA",
+      "name": "Tezcatara",
+      "source": "Models/Events/Tezcatara.cs"
+    },
+    {
+      "key": "THE_ARCHITECT",
+      "name": "TheArchitect",
+      "source": "Models/Events/TheArchitect.cs"
+    },
+    {
+      "key": "THE_FUTURE_OF_POTIONS",
+      "name": "TheFutureOfPotions",
+      "source": "Models/Events/TheFutureOfPotions.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY",
+      "name": "TheLanternKey",
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE",
+      "name": "TheLegendsWereTrue",
+      "source": "Models/Events/TheLegendsWereTrue.cs"
+    },
+    {
+      "key": "THIS_OR_THAT",
+      "name": "ThisOrThat",
+      "source": "Models/Events/ThisOrThat.cs"
+    },
+    {
+      "key": "TINKER_TIME",
+      "name": "TinkerTime",
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TRASH_HEAP",
+      "name": "TrashHeap",
+      "source": "Models/Events/TrashHeap.cs"
+    },
+    {
+      "key": "TRIAL",
+      "name": "Trial",
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "UNREST_SITE",
+      "name": "UnrestSite",
+      "source": "Models/Events/UnrestSite.cs"
+    },
+    {
+      "key": "VAKUU",
+      "name": "Vakuu",
+      "source": "Models/Events/Vakuu.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY",
+      "name": "WarHistorianRepy",
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM",
+      "name": "WaterloggedScriptorium",
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS",
+      "name": "WelcomeToWongos",
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELLSPRING",
+      "name": "Wellspring",
+      "source": "Models/Events/Wellspring.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW",
+      "name": "WhisperingHollow",
+      "source": "Models/Events/WhisperingHollow.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS",
+      "name": "WoodCarvings",
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "ZEN_WEAVER",
+      "name": "ZenWeaver",
+      "source": "Models/Events/ZenWeaver.cs"
+    }
+  ],
+  "format_version": 1,
+  "options": [
+    {
+      "key": "ABYSSAL_BATHS.ALL.EXIT_BATHS",
+      "name": "AbyssalBathsAllExitBaths",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.ALL.LINGER",
+      "name": "AbyssalBathsAllLinger",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.INITIAL.ABSTAIN",
+      "name": "AbyssalBathsInitialAbstain",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.INITIAL.IMMERSE",
+      "name": "AbyssalBathsInitialImmerse",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "AMALGAMATOR.INITIAL.COMBINE_DEFENDS",
+      "name": "AmalgamatorInitialCombineDefends",
+      "parameterized": false,
+      "source": "Models/Events/Amalgamator.cs"
+    },
+    {
+      "key": "AMALGAMATOR.INITIAL.COMBINE_STRIKES",
+      "name": "AmalgamatorInitialCombineStrikes",
+      "parameterized": false,
+      "source": "Models/Events/Amalgamator.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS.INITIAL.LET_GO",
+      "name": "AromaOfChaosInitialLetGo",
+      "parameterized": false,
+      "source": "Models/Events/AromaOfChaos.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS.INITIAL.MAINTAIN_CONTROL",
+      "name": "AromaOfChaosInitialMaintainControl",
+      "parameterized": false,
+      "source": "Models/Events/AromaOfChaos.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.INITIAL.SETTING_1",
+      "name": "BattlewornDummyInitialSetting1",
+      "parameterized": false,
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.INITIAL.SETTING_2",
+      "name": "BattlewornDummyInitialSetting2",
+      "parameterized": false,
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.INITIAL.SETTING_3",
+      "name": "BattlewornDummyInitialSetting3",
+      "parameterized": false,
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BRAIN_LEECH.INITIAL.RIP",
+      "name": "BrainLeechInitialRip",
+      "parameterized": false,
+      "source": "Models/Events/BrainLeech.cs"
+    },
+    {
+      "key": "BRAIN_LEECH.INITIAL.SHARE_KNOWLEDGE",
+      "name": "BrainLeechInitialShareKnowledge",
+      "parameterized": false,
+      "source": "Models/Events/BrainLeech.cs"
+    },
+    {
+      "key": "BUGSLAYER.INITIAL.EXTERMINATION",
+      "name": "BugslayerInitialExtermination",
+      "parameterized": false,
+      "source": "Models/Events/Bugslayer.cs"
+    },
+    {
+      "key": "BUGSLAYER.INITIAL.SQUASH",
+      "name": "BugslayerInitialSquash",
+      "parameterized": false,
+      "source": "Models/Events/Bugslayer.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST.INITIAL.EAT",
+      "name": "ByrdonisNestInitialEat",
+      "parameterized": false,
+      "source": "Models/Events/ByrdonisNest.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST.INITIAL.TAKE",
+      "name": "ByrdonisNestInitialTake",
+      "parameterized": false,
+      "source": "Models/Events/ByrdonisNest.cs"
+    },
+    {
+      "key": "COLORFUL_PHILOSOPHERS.INITIAL.{cardPool.EnergyColorName.ToUpperInvariant()}",
+      "name": "ColorfulPhilosophersInitialCardPoolEnergyColorNameToUpperInvariant",
+      "parameterized": true,
+      "source": "Models/Events/ColorfulPhilosophers.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.INITIAL.EXTRACT_CURRENT_PRIZE_{NumberOfDigs + 1}",
+      "name": "ColossalFlowerInitialExtractCurrentPrizeNumberOfDigs1",
+      "parameterized": true,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.INITIAL.REACH_DEEPER_{NumberOfDigs + 1}",
+      "name": "ColossalFlowerInitialReachDeeperNumberOfDigs1",
+      "parameterized": true,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_2.EXTRACT_INSTEAD",
+      "name": "ColossalFlowerReachDeeper2ExtractInstead",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_2.POLLINOUS_CORE",
+      "name": "ColossalFlowerReachDeeper2PollinousCore",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_{NumberOfDigs}.EXTRACT_CURRENT_PRIZE_{NumberOfDigs + 1}",
+      "name": "ColossalFlowerReachDeeperNumberOfDigsExtractCurrentPrizeNumberOfDigs1",
+      "parameterized": true,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_{NumberOfDigs}.REACH_DEEPER_{NumberOfDigs + 1}",
+      "name": "ColossalFlowerReachDeeperNumberOfDigsReachDeeperNumberOfDigs1",
+      "parameterized": true,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.CrystalSphereMinigame.CellClicked",
+      "name": "CrystalSphereCrystalSphereMinigameCellClicked",
+      "parameterized": false,
+      "source": "Events/Custom/CrystalSphereEvent/CrystalSphereMinigame.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.INITIAL.PAYMENT_PLAN",
+      "name": "CrystalSphereInitialPaymentPlan",
+      "parameterized": false,
+      "source": "Models/Events/CrystalSphere.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.INITIAL.UNCOVER_FUTURE",
+      "name": "CrystalSphereInitialUncoverFuture",
+      "parameterized": false,
+      "source": "Models/Events/CrystalSphere.cs"
+    },
+    {
+      "key": "DARV.{pageName}.{relic.Id.Entry}",
+      "name": "DarvPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.INITIAL.REST",
+      "name": "DenseVegetationInitialRest",
+      "parameterized": false,
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.INITIAL.TRUDGE_ON",
+      "name": "DenseVegetationInitialTrudgeOn",
+      "parameterized": false,
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.REST.FIGHT",
+      "name": "DenseVegetationRestFight",
+      "parameterized": false,
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DOLL_ROOM.INITIAL.EXAMINE",
+      "name": "DollRoomInitialExamine",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.INITIAL.RANDOM",
+      "name": "DollRoomInitialRandom",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.INITIAL.TAKE_SOME_TIME",
+      "name": "DollRoomInitialTakeSomeTime",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.TAKE.TAKE",
+      "name": "DollRoomTakeTake",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK.INITIAL.DARK",
+      "name": "DoorsOfLightAndDarkInitialDark",
+      "parameterized": false,
+      "source": "Models/Events/DoorsOfLightAndDark.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK.INITIAL.LIGHT",
+      "name": "DoorsOfLightAndDarkInitialLight",
+      "parameterized": false,
+      "source": "Models/Events/DoorsOfLightAndDark.cs"
+    },
+    {
+      "key": "DROWNING_BEACON.INITIAL.BOTTLE",
+      "name": "DrowningBeaconInitialBottle",
+      "parameterized": false,
+      "source": "Models/Events/DrowningBeacon.cs"
+    },
+    {
+      "key": "DROWNING_BEACON.INITIAL.CLIMB",
+      "name": "DrowningBeaconInitialClimb",
+      "parameterized": false,
+      "source": "Models/Events/DrowningBeacon.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.ALL.LOCKED",
+      "name": "EndlessConveyorAllLocked",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.ALL.{id}",
+      "name": "EndlessConveyorAllId",
+      "parameterized": true,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.GRAB_SOMETHING_OFF_THE_BELT.LEAVE",
+      "name": "EndlessConveyorGrabSomethingOffTheBeltLeave",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.INITIAL.OBSERVE_CHEF",
+      "name": "EndlessConveyorInitialObserveChef",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "FAKE_MERCHANT.NFakeMerchant.HideScreen",
+      "name": "FakeMerchantNFakeMerchantHideScreen",
+      "parameterized": false,
+      "source": "Nodes/Events/Custom/NFakeMerchant.cs"
+    },
+    {
+      "key": "FAKE_MERCHANT.NFakeMerchant.MerchantRelicEntry",
+      "name": "FakeMerchantNFakeMerchantMerchantRelicEntry",
+      "parameterized": false,
+      "source": "Models/Events/FakeMerchant.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES.INITIAL.ENTER_YOUR_HOLE",
+      "name": "FieldOfManSizedHolesInitialEnterYourHole",
+      "parameterized": false,
+      "source": "Models/Events/FieldOfManSizedHoles.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES.INITIAL.RESIST",
+      "name": "FieldOfManSizedHolesInitialResist",
+      "parameterized": false,
+      "source": "Models/Events/FieldOfManSizedHoles.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.INITIAL.ACCEPT",
+      "name": "GraveOfTheForgottenInitialAccept",
+      "parameterized": false,
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.INITIAL.CONFRONT",
+      "name": "GraveOfTheForgottenInitialConfront",
+      "parameterized": false,
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.INITIAL.CONFRONT_LOCKED",
+      "name": "GraveOfTheForgottenInitialConfrontLocked",
+      "parameterized": false,
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS.{pageName}.{relic.Id.Entry}",
+      "name": "HungryForMushroomsPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON.INITIAL.STUDY",
+      "name": "InfestedAutomatonInitialStudy",
+      "parameterized": false,
+      "source": "Models/Events/InfestedAutomaton.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON.INITIAL.TOUCH_CORE",
+      "name": "InfestedAutomatonInitialTouchCore",
+      "parameterized": false,
+      "source": "Models/Events/InfestedAutomaton.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE.INITIAL.JOIN_FORCES",
+      "name": "JungleMazeAdventureInitialJoinForces",
+      "parameterized": false,
+      "source": "Models/Events/JungleMazeAdventure.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE.INITIAL.SOLO_QUEST",
+      "name": "JungleMazeAdventureInitialSoloQuest",
+      "parameterized": false,
+      "source": "Models/Events/JungleMazeAdventure.cs"
+    },
+    {
+      "key": "LOST_WISP.INITIAL.CLAIM",
+      "name": "LostWispInitialClaim",
+      "parameterized": false,
+      "source": "Models/Events/LostWisp.cs"
+    },
+    {
+      "key": "LOST_WISP.INITIAL.SEARCH",
+      "name": "LostWispInitialSearch",
+      "parameterized": false,
+      "source": "Models/Events/LostWisp.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.INITIAL.OFFER_TRIBUTE",
+      "name": "LuminousChoirInitialOfferTribute",
+      "parameterized": false,
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.INITIAL.OFFER_TRIBUTE_LOCKED",
+      "name": "LuminousChoirInitialOfferTributeLocked",
+      "parameterized": false,
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.INITIAL.REACH_INTO_THE_FLESH",
+      "name": "LuminousChoirInitialReachIntoTheFlesh",
+      "parameterized": false,
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "MOCK_EVENT_MODEL.INITIAL.TEST",
+      "name": "MockEventModelInitialTest",
+      "parameterized": false,
+      "source": "Models/Events/Mocks/MockEventModel.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE.INITIAL.GROUP",
+      "name": "MorphicGroveInitialGroup",
+      "parameterized": false,
+      "source": "Models/Events/MorphicGrove.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE.INITIAL.LONER",
+      "name": "MorphicGroveInitialLoner",
+      "parameterized": false,
+      "source": "Models/Events/MorphicGrove.cs"
+    },
+    {
+      "key": "NEOW.{pageName}.{relic.Id.Entry}",
+      "name": "NeowPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "NONUPEIPE.{pageName}.{relic.Id.Entry}",
+      "name": "NonupeipePageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "OROBAS.INITIAL.OPTION_POOL_3_LOCKED",
+      "name": "OrobasInitialOptionPool3Locked",
+      "parameterized": false,
+      "source": "Models/Events/Orobas.cs"
+    },
+    {
+      "key": "OROBAS.{pageName}.{relic.Id.Entry}",
+      "name": "OrobasPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "PAEL.{pageName}.{relic.Id.Entry}",
+      "name": "PaelPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "POTION_COURIER.INITIAL.GRAB_POTIONS",
+      "name": "PotionCourierInitialGrabPotions",
+      "parameterized": false,
+      "source": "Models/Events/PotionCourier.cs"
+    },
+    {
+      "key": "POTION_COURIER.INITIAL.RANSACK",
+      "name": "PotionCourierInitialRansack",
+      "parameterized": false,
+      "source": "Models/Events/PotionCourier.cs"
+    },
+    {
+      "key": "PUNCH_OFF.INITIAL.I_CAN_TAKE_THEM",
+      "name": "PunchOffInitialICanTakeThem",
+      "parameterized": false,
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "PUNCH_OFF.INITIAL.NAB",
+      "name": "PunchOffInitialNab",
+      "parameterized": false,
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "PUNCH_OFF.I_CAN_TAKE_THEM.FIGHT",
+      "name": "PunchOffICanTakeThemFight",
+      "parameterized": false,
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL.GOLD",
+      "name": "RanwidTheElderInitialGold",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL.POTION",
+      "name": "RanwidTheElderInitialPotion",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL.POTION_LOCKED",
+      "name": "RanwidTheElderInitialPotionLocked",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL.RELIC",
+      "name": "RanwidTheElderInitialRelic",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL.RELIC_LOCKED",
+      "name": "RanwidTheElderInitialRelicLocked",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "REFLECTIONS.INITIAL.SHATTER",
+      "name": "ReflectionsInitialShatter",
+      "parameterized": false,
+      "source": "Models/Events/Reflections.cs"
+    },
+    {
+      "key": "REFLECTIONS.INITIAL.TOUCH_A_MIRROR",
+      "name": "ReflectionsInitialTouchAMirror",
+      "parameterized": false,
+      "source": "Models/Events/Reflections.cs"
+    },
+    {
+      "key": "RELIC_TRADER.INITIAL.BOTTOM",
+      "name": "RelicTraderInitialBottom",
+      "parameterized": false,
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "RELIC_TRADER.INITIAL.MIDDLE",
+      "name": "RelicTraderInitialMiddle",
+      "parameterized": false,
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "RELIC_TRADER.INITIAL.TOP",
+      "name": "RelicTraderInitialTop",
+      "parameterized": false,
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "RELIC_TRADER.PROCEED",
+      "name": "RelicTraderProceed",
+      "parameterized": false,
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE.INITIAL.GORGE",
+      "name": "RoomFullOfCheeseInitialGorge",
+      "parameterized": false,
+      "source": "Models/Events/RoomFullOfCheese.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE.INITIAL.SEARCH",
+      "name": "RoomFullOfCheeseInitialSearch",
+      "parameterized": false,
+      "source": "Models/Events/RoomFullOfCheese.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.INITIAL.ENJOY_TEA",
+      "name": "RoundTeaPartyInitialEnjoyTea",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.INITIAL.PICK_FIGHT",
+      "name": "RoundTeaPartyInitialPickFight",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.PICK_FIGHT.CONTINUE_FIGHT",
+      "name": "RoundTeaPartyPickFightContinueFight",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED.INITIAL.EAT",
+      "name": "SapphireSeedInitialEat",
+      "parameterized": false,
+      "source": "Models/Events/SapphireSeed.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED.INITIAL.PLANT",
+      "name": "SapphireSeedInitialPlant",
+      "parameterized": false,
+      "source": "Models/Events/SapphireSeed.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.NO_OPTIONS",
+      "name": "SelfHelpBookInitialNoOptions",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_ENTIRE_BOOK",
+      "name": "SelfHelpBookInitialReadEntireBook",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_ENTIRE_BOOK_LOCKED",
+      "name": "SelfHelpBookInitialReadEntireBookLocked",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_PASSAGE",
+      "name": "SelfHelpBookInitialReadPassage",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_PASSAGE_LOCKED",
+      "name": "SelfHelpBookInitialReadPassageLocked",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_THE_BACK",
+      "name": "SelfHelpBookInitialReadTheBack",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL.READ_THE_BACK_LOCKED",
+      "name": "SelfHelpBookInitialReadTheBackLocked",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.HOLD_ON_{holdOnSuffix}.HOLD_ON_{holdOnSuffix2}",
+      "name": "SlipperyBridgeHoldOnHoldOnSuffixHoldOnHoldOnSuffix2",
+      "parameterized": true,
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.INITIAL.HOLD_ON_0",
+      "name": "SlipperyBridgeInitialHoldOn0",
+      "parameterized": false,
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.INITIAL.OVERCOME",
+      "name": "SlipperyBridgeInitialOvercome",
+      "parameterized": false,
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL.INITIAL.DRINK",
+      "name": "SpiralingWhirlpoolInitialDrink",
+      "parameterized": false,
+      "source": "Models/Events/SpiralingWhirlpool.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL.INITIAL.OBSERVE",
+      "name": "SpiralingWhirlpoolInitialObserve",
+      "parameterized": false,
+      "source": "Models/Events/SpiralingWhirlpool.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER.INITIAL.LET_IT_IN",
+      "name": "SpiritGrafterInitialLetItIn",
+      "parameterized": false,
+      "source": "Models/Events/SpiritGrafter.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER.INITIAL.REJECTION",
+      "name": "SpiritGrafterInitialRejection",
+      "parameterized": false,
+      "source": "Models/Events/SpiritGrafter.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.INITIAL.LIFT",
+      "name": "StoneOfAllTimeInitialLift",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.INITIAL.LIFT_LOCKED",
+      "name": "StoneOfAllTimeInitialLiftLocked",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.INITIAL.PUSH",
+      "name": "StoneOfAllTimeInitialPush",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.INITIAL.PUSH_LOCKED",
+      "name": "StoneOfAllTimeInitialPushLocked",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE.INITIAL.DIVE_INTO_WATER",
+      "name": "SunkenStatueInitialDiveIntoWater",
+      "parameterized": false,
+      "source": "Models/Events/SunkenStatue.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE.INITIAL.GRAB_SWORD",
+      "name": "SunkenStatueInitialGrabSword",
+      "parameterized": false,
+      "source": "Models/Events/SunkenStatue.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY.INITIAL.FIRST_CHEST",
+      "name": "SunkenTreasuryInitialFirstChest",
+      "parameterized": false,
+      "source": "Models/Events/SunkenTreasury.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY.INITIAL.SECOND_CHEST",
+      "name": "SunkenTreasuryInitialSecondChest",
+      "parameterized": false,
+      "source": "Models/Events/SunkenTreasury.cs"
+    },
+    {
+      "key": "SYMBIOTE.INITIAL.APPROACH",
+      "name": "SymbioteInitialApproach",
+      "parameterized": false,
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "SYMBIOTE.INITIAL.APPROACH_LOCKED",
+      "name": "SymbioteInitialApproachLocked",
+      "parameterized": false,
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "SYMBIOTE.INITIAL.KILL_WITH_FIRE",
+      "name": "SymbioteInitialKillWithFire",
+      "parameterized": false,
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.DECIPHER.GIVE_UP",
+      "name": "TabletOfTruthDecipherGiveUp",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.DECIPHER_{DecipherCount}.DECIPHER",
+      "name": "TabletOfTruthDecipherDecipherCountDecipher",
+      "parameterized": true,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.INITIAL.DECIPHER_1",
+      "name": "TabletOfTruthInitialDecipher1",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.INITIAL.SMASH",
+      "name": "TabletOfTruthInitialSmash",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TANX.{pageName}.{relic.Id.Entry}",
+      "name": "TanxPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL.BONE_TEA",
+      "name": "TeaMasterInitialBoneTea",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL.BONE_TEA_LOCKED",
+      "name": "TeaMasterInitialBoneTeaLocked",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL.EMBER_TEA",
+      "name": "TeaMasterInitialEmberTea",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL.EMBER_TEA_LOCKED",
+      "name": "TeaMasterInitialEmberTeaLocked",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL.TEA_OF_DISCOURTESY",
+      "name": "TeaMasterInitialTeaOfDiscourtesy",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEZCATARA.{pageName}.{relic.Id.Entry}",
+      "name": "TezcataraPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_ARCHITECT.PROCEED",
+      "name": "TheArchitectProceed",
+      "parameterized": false,
+      "source": "Models/Events/TheArchitect.cs"
+    },
+    {
+      "key": "THE_ARCHITECT.dialogue.{CurrentLineIndex}",
+      "name": "TheArchitectDialogueCurrentLineIndex",
+      "parameterized": true,
+      "source": "Models/Events/TheArchitect.cs"
+    },
+    {
+      "key": "THE_FUTURE_OF_POTIONS.INITIAL.POTION",
+      "name": "TheFutureOfPotionsInitialPotion",
+      "parameterized": false,
+      "source": "Models/Events/TheFutureOfPotions.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.DONE.RETURN_THE_KEY",
+      "name": "TheLanternKeyDoneReturnTheKey",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.INITIAL.KEEP_THE_KEY",
+      "name": "TheLanternKeyInitialKeepTheKey",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.INITIAL.RETURN_THE_KEY",
+      "name": "TheLanternKeyInitialReturnTheKey",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.KEEP_THE_KEY.FIGHT",
+      "name": "TheLanternKeyKeepTheKeyFight",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE.INITIAL.NAB_THE_MAP",
+      "name": "TheLegendsWereTrueInitialNabTheMap",
+      "parameterized": false,
+      "source": "Models/Events/TheLegendsWereTrue.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE.INITIAL.SLOWLY_FIND_AN_EXIT",
+      "name": "TheLegendsWereTrueInitialSlowlyFindAnExit",
+      "parameterized": false,
+      "source": "Models/Events/TheLegendsWereTrue.cs"
+    },
+    {
+      "key": "THIS_OR_THAT.INITIAL.ORNATE",
+      "name": "ThisOrThatInitialOrnate",
+      "parameterized": false,
+      "source": "Models/Events/ThisOrThat.cs"
+    },
+    {
+      "key": "THIS_OR_THAT.INITIAL.PLAIN",
+      "name": "ThisOrThatInitialPlain",
+      "parameterized": false,
+      "source": "Models/Events/ThisOrThat.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_CARD_TYPE.ATTACK",
+      "name": "TinkerTimeChooseCardTypeAttack",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_CARD_TYPE.POWER",
+      "name": "TinkerTimeChooseCardTypePower",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_CARD_TYPE.SKILL",
+      "name": "TinkerTimeChooseCardTypeSkill",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.CHAOS",
+      "name": "TinkerTimeChooseRiderChaos",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.CHOKING",
+      "name": "TinkerTimeChooseRiderChoking",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.CURIOUS",
+      "name": "TinkerTimeChooseRiderCurious",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.ENERGIZED",
+      "name": "TinkerTimeChooseRiderEnergized",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.EXPERTISE",
+      "name": "TinkerTimeChooseRiderExpertise",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.IMPROVEMENT",
+      "name": "TinkerTimeChooseRiderImprovement",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.SAPPING",
+      "name": "TinkerTimeChooseRiderSapping",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.VIOLENCE",
+      "name": "TinkerTimeChooseRiderViolence",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER.WISDOM",
+      "name": "TinkerTimeChooseRiderWisdom",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.INITIAL.CHOOSE_CARD_TYPE",
+      "name": "TinkerTimeInitialChooseCardType",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TRASH_HEAP.INITIAL.DIVE_IN",
+      "name": "TrashHeapInitialDiveIn",
+      "parameterized": false,
+      "source": "Models/Events/TrashHeap.cs"
+    },
+    {
+      "key": "TRASH_HEAP.INITIAL.GRAB",
+      "name": "TrashHeapInitialGrab",
+      "parameterized": false,
+      "source": "Models/Events/TrashHeap.cs"
+    },
+    {
+      "key": "TRIAL.INITIAL.ACCEPT",
+      "name": "TrialInitialAccept",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.INITIAL.REJECT",
+      "name": "TrialInitialReject",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.MERCHANT.GUILTY",
+      "name": "TrialMerchantGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.MERCHANT.INNOCENT",
+      "name": "TrialMerchantInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NOBLE.GUILTY",
+      "name": "TrialNobleGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NOBLE.INNOCENT",
+      "name": "TrialNobleInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NONDESCRIPT.GUILTY",
+      "name": "TrialNondescriptGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NONDESCRIPT.INNOCENT",
+      "name": "TrialNondescriptInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.REJECT.ACCEPT",
+      "name": "TrialRejectAccept",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.REJECT.DOUBLE_DOWN",
+      "name": "TrialRejectDoubleDown",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "UNREST_SITE.INITIAL.KILL",
+      "name": "UnrestSiteInitialKill",
+      "parameterized": false,
+      "source": "Models/Events/UnrestSite.cs"
+    },
+    {
+      "key": "UNREST_SITE.INITIAL.REST",
+      "name": "UnrestSiteInitialRest",
+      "parameterized": false,
+      "source": "Models/Events/UnrestSite.cs"
+    },
+    {
+      "key": "VAKUU.{pageName}.{relic.Id.Entry}",
+      "name": "VakuuPageNameRelicIdEntry",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.INITIAL.UNLOCK_CAGE",
+      "name": "WarHistorianRepyInitialUnlockCage",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.INITIAL.UNLOCK_CHEST",
+      "name": "WarHistorianRepyInitialUnlockChest",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL.BLOODY_INK",
+      "name": "WaterloggedScriptoriumInitialBloodyInk",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL.PRICKLY_SPONGE",
+      "name": "WaterloggedScriptoriumInitialPricklySponge",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL.PRICKLY_SPONGE_LOCKED",
+      "name": "WaterloggedScriptoriumInitialPricklySpongeLocked",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL.TENTACLE_QUILL",
+      "name": "WaterloggedScriptoriumInitialTentacleQuill",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL.TENTACLE_QUILL_LOCKED",
+      "name": "WaterloggedScriptoriumInitialTentacleQuillLocked",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.BARGAIN_BIN",
+      "name": "WelcomeToWongosInitialBargainBin",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.BARGAIN_BIN_LOCKED",
+      "name": "WelcomeToWongosInitialBargainBinLocked",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.FEATURED_ITEM",
+      "name": "WelcomeToWongosInitialFeaturedItem",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.FEATURED_ITEM_LOCKED",
+      "name": "WelcomeToWongosInitialFeaturedItemLocked",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.LEAVE",
+      "name": "WelcomeToWongosInitialLeave",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.MYSTERY_BOX",
+      "name": "WelcomeToWongosInitialMysteryBox",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL.MYSTERY_BOX_LOCKED",
+      "name": "WelcomeToWongosInitialMysteryBoxLocked",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELLSPRING.INITIAL.BATHE",
+      "name": "WellspringInitialBathe",
+      "parameterized": false,
+      "source": "Models/Events/Wellspring.cs"
+    },
+    {
+      "key": "WELLSPRING.INITIAL.BOTTLE",
+      "name": "WellspringInitialBottle",
+      "parameterized": false,
+      "source": "Models/Events/Wellspring.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW.INITIAL.GOLD",
+      "name": "WhisperingHollowInitialGold",
+      "parameterized": false,
+      "source": "Models/Events/WhisperingHollow.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW.INITIAL.HUG",
+      "name": "WhisperingHollowInitialHug",
+      "parameterized": false,
+      "source": "Models/Events/WhisperingHollow.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.INITIAL.BIRD",
+      "name": "WoodCarvingsInitialBird",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.INITIAL.SNAKE",
+      "name": "WoodCarvingsInitialSnake",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.INITIAL.SNAKE_LOCKED",
+      "name": "WoodCarvingsInitialSnakeLocked",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.INITIAL.TORUS",
+      "name": "WoodCarvingsInitialTorus",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.INITIAL.ARACHNID_ACUPUNCTURE",
+      "name": "ZenWeaverInitialArachnidAcupuncture",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.INITIAL.BREATHING_TECHNIQUES",
+      "name": "ZenWeaverInitialBreathingTechniques",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.INITIAL.EMOTIONAL_AWARENESS",
+      "name": "ZenWeaverInitialEmotionalAwareness",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.INITIAL.LOCKED",
+      "name": "ZenWeaverInitialLocked",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    }
+  ],
+  "pages": [
+    {
+      "key": "ABYSSAL_BATHS.ABSTAIN",
+      "name": "AbyssalBathsAbstain",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.ALL",
+      "name": "AbyssalBathsAll",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.DEATH_WARNING",
+      "name": "AbyssalBathsDeathWarning",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.EXIT_BATHS",
+      "name": "AbyssalBathsExitBaths",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.IMMERSE",
+      "name": "AbyssalBathsImmerse",
+      "parameterized": false,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.INITIAL",
+      "name": "AbyssalBathsInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ABYSSAL_BATHS.LINGER{LingerCount}",
+      "name": "AbyssalBathsLingerLingerCount",
+      "parameterized": true,
+      "source": "Models/Events/AbyssalBaths.cs"
+    },
+    {
+      "key": "AMALGAMATOR.COMBINE_DEFENDS",
+      "name": "AmalgamatorCombineDefends",
+      "parameterized": false,
+      "source": "Models/Events/Amalgamator.cs"
+    },
+    {
+      "key": "AMALGAMATOR.COMBINE_STRIKES",
+      "name": "AmalgamatorCombineStrikes",
+      "parameterized": false,
+      "source": "Models/Events/Amalgamator.cs"
+    },
+    {
+      "key": "AMALGAMATOR.INITIAL",
+      "name": "AmalgamatorInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS.INITIAL",
+      "name": "AromaOfChaosInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS.LET_GO",
+      "name": "AromaOfChaosLetGo",
+      "parameterized": false,
+      "source": "Models/Events/AromaOfChaos.cs"
+    },
+    {
+      "key": "AROMA_OF_CHAOS.MAINTAIN_CONTROL",
+      "name": "AromaOfChaosMaintainControl",
+      "parameterized": false,
+      "source": "Models/Events/AromaOfChaos.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.DEFEAT",
+      "name": "BattlewornDummyDefeat",
+      "parameterized": false,
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.INITIAL",
+      "name": "BattlewornDummyInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "BATTLEWORN_DUMMY.VICTORY",
+      "name": "BattlewornDummyVictory",
+      "parameterized": false,
+      "source": "Models/Events/BattlewornDummy.cs"
+    },
+    {
+      "key": "BRAIN_LEECH.INITIAL",
+      "name": "BrainLeechInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "BRAIN_LEECH.RIP",
+      "name": "BrainLeechRip",
+      "parameterized": false,
+      "source": "Models/Events/BrainLeech.cs"
+    },
+    {
+      "key": "BRAIN_LEECH.SHARE_KNOWLEDGE",
+      "name": "BrainLeechShareKnowledge",
+      "parameterized": false,
+      "source": "Models/Events/BrainLeech.cs"
+    },
+    {
+      "key": "BUGSLAYER.EXTERMINATION",
+      "name": "BugslayerExtermination",
+      "parameterized": false,
+      "source": "Models/Events/Bugslayer.cs"
+    },
+    {
+      "key": "BUGSLAYER.INITIAL",
+      "name": "BugslayerInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "BUGSLAYER.SQUASH",
+      "name": "BugslayerSquash",
+      "parameterized": false,
+      "source": "Models/Events/Bugslayer.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST.EAT",
+      "name": "ByrdonisNestEat",
+      "parameterized": false,
+      "source": "Models/Events/ByrdonisNest.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST.INITIAL",
+      "name": "ByrdonisNestInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "BYRDONIS_NEST.TAKE",
+      "name": "ByrdonisNestTake",
+      "parameterized": false,
+      "source": "Models/Events/ByrdonisNest.cs"
+    },
+    {
+      "key": "COLORFUL_PHILOSOPHERS.DONE",
+      "name": "ColorfulPhilosophersDone",
+      "parameterized": false,
+      "source": "Models/Events/ColorfulPhilosophers.cs"
+    },
+    {
+      "key": "COLORFUL_PHILOSOPHERS.INITIAL",
+      "name": "ColorfulPhilosophersInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.EXTRACT_CURRENT_PRIZE",
+      "name": "ColossalFlowerExtractCurrentPrize",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.EXTRACT_INSTEAD",
+      "name": "ColossalFlowerExtractInstead",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.INITIAL",
+      "name": "ColossalFlowerInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.POLLINOUS_CORE",
+      "name": "ColossalFlowerPollinousCore",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_2",
+      "name": "ColossalFlowerReachDeeper2",
+      "parameterized": false,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "COLOSSAL_FLOWER.REACH_DEEPER_{NumberOfDigs}",
+      "name": "ColossalFlowerReachDeeperNumberOfDigs",
+      "parameterized": true,
+      "source": "Models/Events/ColossalFlower.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.CrystalSphereMinigame",
+      "name": "CrystalSphereCrystalSphereMinigame",
+      "parameterized": false,
+      "source": "Events/Custom/CrystalSphereEvent/CrystalSphereMinigame.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.FINISH",
+      "name": "CrystalSphereFinish",
+      "parameterized": false,
+      "source": "Models/Events/CrystalSphere.cs"
+    },
+    {
+      "key": "CRYSTAL_SPHERE.INITIAL",
+      "name": "CrystalSphereInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DARV.INITIAL",
+      "name": "DarvInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DARV.{pageName}",
+      "name": "DarvPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.INITIAL",
+      "name": "DenseVegetationInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.REST",
+      "name": "DenseVegetationRest",
+      "parameterized": false,
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DENSE_VEGETATION.TRUDGE_ON",
+      "name": "DenseVegetationTrudgeOn",
+      "parameterized": false,
+      "source": "Models/Events/DenseVegetation.cs"
+    },
+    {
+      "key": "DEPRECATED_ANCIENT_EVENT.INITIAL",
+      "name": "DeprecatedAncientEventInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DEPRECATED_EVENT.INITIAL",
+      "name": "DeprecatedEventInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DOLL_ROOM.DAUGHTER_OF_WIND",
+      "name": "DollRoomDaughterOfWind",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.EXAMINE",
+      "name": "DollRoomExamine",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.FABLE",
+      "name": "DollRoomFable",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.INITIAL",
+      "name": "DollRoomInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DOLL_ROOM.MR_STRUGGLES",
+      "name": "DollRoomMrStruggles",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.TAKE",
+      "name": "DollRoomTake",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOLL_ROOM.TAKE_SOME_TIME",
+      "name": "DollRoomTakeSomeTime",
+      "parameterized": false,
+      "source": "Models/Events/DollRoom.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK.DARK",
+      "name": "DoorsOfLightAndDarkDark",
+      "parameterized": false,
+      "source": "Models/Events/DoorsOfLightAndDark.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK.INITIAL",
+      "name": "DoorsOfLightAndDarkInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "DOORS_OF_LIGHT_AND_DARK.LIGHT",
+      "name": "DoorsOfLightAndDarkLight",
+      "parameterized": false,
+      "source": "Models/Events/DoorsOfLightAndDark.cs"
+    },
+    {
+      "key": "DROWNING_BEACON.BOTTLE",
+      "name": "DrowningBeaconBottle",
+      "parameterized": false,
+      "source": "Models/Events/DrowningBeacon.cs"
+    },
+    {
+      "key": "DROWNING_BEACON.CLIMB",
+      "name": "DrowningBeaconClimb",
+      "parameterized": false,
+      "source": "Models/Events/DrowningBeacon.cs"
+    },
+    {
+      "key": "DROWNING_BEACON.INITIAL",
+      "name": "DrowningBeaconInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.ALL",
+      "name": "EndlessConveyorAll",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.GRAB_SOMETHING_OFF_THE_BELT",
+      "name": "EndlessConveyorGrabSomethingOffTheBelt",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.INITIAL",
+      "name": "EndlessConveyorInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.LEAVE",
+      "name": "EndlessConveyorLeave",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "ENDLESS_CONVEYOR.OBSERVE_CHEF",
+      "name": "EndlessConveyorObserveChef",
+      "parameterized": false,
+      "source": "Models/Events/EndlessConveyor.cs"
+    },
+    {
+      "key": "FAKE_MERCHANT.INITIAL",
+      "name": "FakeMerchantInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "FAKE_MERCHANT.NFakeMerchant",
+      "name": "FakeMerchantNFakeMerchant",
+      "parameterized": false,
+      "source": "Models/Events/FakeMerchant.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES.ENTER_YOUR_HOLE",
+      "name": "FieldOfManSizedHolesEnterYourHole",
+      "parameterized": false,
+      "source": "Models/Events/FieldOfManSizedHoles.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES.INITIAL",
+      "name": "FieldOfManSizedHolesInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "FIELD_OF_MAN_SIZED_HOLES.RESIST",
+      "name": "FieldOfManSizedHolesResist",
+      "parameterized": false,
+      "source": "Models/Events/FieldOfManSizedHoles.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.ACCEPT",
+      "name": "GraveOfTheForgottenAccept",
+      "parameterized": false,
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.CONFRONT",
+      "name": "GraveOfTheForgottenConfront",
+      "parameterized": false,
+      "source": "Models/Events/GraveOfTheForgotten.cs"
+    },
+    {
+      "key": "GRAVE_OF_THE_FORGOTTEN.INITIAL",
+      "name": "GraveOfTheForgottenInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS.BIG_MUSHROOM",
+      "name": "HungryForMushroomsBigMushroom",
+      "parameterized": false,
+      "source": "Models/Events/HungryForMushrooms.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS.FRAGRANT_MUSHROOM",
+      "name": "HungryForMushroomsFragrantMushroom",
+      "parameterized": false,
+      "source": "Models/Events/HungryForMushrooms.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS.INITIAL",
+      "name": "HungryForMushroomsInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "HUNGRY_FOR_MUSHROOMS.{pageName}",
+      "name": "HungryForMushroomsPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON.INITIAL",
+      "name": "InfestedAutomatonInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON.STUDY",
+      "name": "InfestedAutomatonStudy",
+      "parameterized": false,
+      "source": "Models/Events/InfestedAutomaton.cs"
+    },
+    {
+      "key": "INFESTED_AUTOMATON.TOUCH_CORE",
+      "name": "InfestedAutomatonTouchCore",
+      "parameterized": false,
+      "source": "Models/Events/InfestedAutomaton.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE.INITIAL",
+      "name": "JungleMazeAdventureInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE.JOIN_FORCES",
+      "name": "JungleMazeAdventureJoinForces",
+      "parameterized": false,
+      "source": "Models/Events/JungleMazeAdventure.cs"
+    },
+    {
+      "key": "JUNGLE_MAZE_ADVENTURE.SOLO_QUEST",
+      "name": "JungleMazeAdventureSoloQuest",
+      "parameterized": false,
+      "source": "Models/Events/JungleMazeAdventure.cs"
+    },
+    {
+      "key": "LOST_WISP.CLAIM",
+      "name": "LostWispClaim",
+      "parameterized": false,
+      "source": "Models/Events/LostWisp.cs"
+    },
+    {
+      "key": "LOST_WISP.INITIAL",
+      "name": "LostWispInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "LOST_WISP.SEARCH",
+      "name": "LostWispSearch",
+      "parameterized": false,
+      "source": "Models/Events/LostWisp.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.INITIAL",
+      "name": "LuminousChoirInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.OFFER_TRIBUTE",
+      "name": "LuminousChoirOfferTribute",
+      "parameterized": false,
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "LUMINOUS_CHOIR.REACH_INTO_THE_FLESH",
+      "name": "LuminousChoirReachIntoTheFlesh",
+      "parameterized": false,
+      "source": "Models/Events/LuminousChoir.cs"
+    },
+    {
+      "key": "MOCK_EVENT_MODEL.INITIAL",
+      "name": "MockEventModelInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE.GROUP",
+      "name": "MorphicGroveGroup",
+      "parameterized": false,
+      "source": "Models/Events/MorphicGrove.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE.INITIAL",
+      "name": "MorphicGroveInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "MORPHIC_GROVE.LONER",
+      "name": "MorphicGroveLoner",
+      "parameterized": false,
+      "source": "Models/Events/MorphicGrove.cs"
+    },
+    {
+      "key": "NEOW.DONE",
+      "name": "NeowDone",
+      "parameterized": false,
+      "source": "Models/Events/Neow.cs"
+    },
+    {
+      "key": "NEOW.INITIAL",
+      "name": "NeowInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "NEOW.{pageName}",
+      "name": "NeowPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "NONUPEIPE.INITIAL",
+      "name": "NonupeipeInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "NONUPEIPE.{pageName}",
+      "name": "NonupeipePageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "OROBAS.INITIAL",
+      "name": "OrobasInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "OROBAS.{pageName}",
+      "name": "OrobasPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "PAEL.INITIAL",
+      "name": "PaelInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "PAEL.{pageName}",
+      "name": "PaelPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "POTION_COURIER.GRAB_POTIONS",
+      "name": "PotionCourierGrabPotions",
+      "parameterized": false,
+      "source": "Models/Events/PotionCourier.cs"
+    },
+    {
+      "key": "POTION_COURIER.INITIAL",
+      "name": "PotionCourierInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "POTION_COURIER.RANSACK",
+      "name": "PotionCourierRansack",
+      "parameterized": false,
+      "source": "Models/Events/PotionCourier.cs"
+    },
+    {
+      "key": "PUNCH_OFF.INITIAL",
+      "name": "PunchOffInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "PUNCH_OFF.I_CAN_TAKE_THEM",
+      "name": "PunchOffICanTakeThem",
+      "parameterized": false,
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "PUNCH_OFF.NAB",
+      "name": "PunchOffNab",
+      "parameterized": false,
+      "source": "Models/Events/PunchOff.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.GOLD",
+      "name": "RanwidTheElderGold",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.INITIAL",
+      "name": "RanwidTheElderInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.POTION",
+      "name": "RanwidTheElderPotion",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "RANWID_THE_ELDER.RELIC",
+      "name": "RanwidTheElderRelic",
+      "parameterized": false,
+      "source": "Models/Events/RanwidTheElder.cs"
+    },
+    {
+      "key": "REFLECTIONS.INITIAL",
+      "name": "ReflectionsInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "REFLECTIONS.SHATTER",
+      "name": "ReflectionsShatter",
+      "parameterized": false,
+      "source": "Models/Events/Reflections.cs"
+    },
+    {
+      "key": "REFLECTIONS.TOUCH_A_MIRROR",
+      "name": "ReflectionsTouchAMirror",
+      "parameterized": false,
+      "source": "Models/Events/Reflections.cs"
+    },
+    {
+      "key": "RELIC_TRADER.DONE",
+      "name": "RelicTraderDone",
+      "parameterized": false,
+      "source": "Models/Events/RelicTrader.cs"
+    },
+    {
+      "key": "RELIC_TRADER.INITIAL",
+      "name": "RelicTraderInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE.GORGE",
+      "name": "RoomFullOfCheeseGorge",
+      "parameterized": false,
+      "source": "Models/Events/RoomFullOfCheese.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE.INITIAL",
+      "name": "RoomFullOfCheeseInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ROOM_FULL_OF_CHEESE.SEARCH",
+      "name": "RoomFullOfCheeseSearch",
+      "parameterized": false,
+      "source": "Models/Events/RoomFullOfCheese.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.CONTINUE_FIGHT",
+      "name": "RoundTeaPartyContinueFight",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.ENJOY_TEA",
+      "name": "RoundTeaPartyEnjoyTea",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.INITIAL",
+      "name": "RoundTeaPartyInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "ROUND_TEA_PARTY.PICK_FIGHT",
+      "name": "RoundTeaPartyPickFight",
+      "parameterized": false,
+      "source": "Models/Events/RoundTeaParty.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED.EAT",
+      "name": "SapphireSeedEat",
+      "parameterized": false,
+      "source": "Models/Events/SapphireSeed.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED.INITIAL",
+      "name": "SapphireSeedInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SAPPHIRE_SEED.PLANT",
+      "name": "SapphireSeedPlant",
+      "parameterized": false,
+      "source": "Models/Events/SapphireSeed.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.INITIAL",
+      "name": "SelfHelpBookInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.NO_OPTIONS",
+      "name": "SelfHelpBookNoOptions",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.READ_ENTIRE_BOOK",
+      "name": "SelfHelpBookReadEntireBook",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.READ_PASSAGE",
+      "name": "SelfHelpBookReadPassage",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SELF_HELP_BOOK.READ_THE_BACK",
+      "name": "SelfHelpBookReadTheBack",
+      "parameterized": false,
+      "source": "Models/Events/SelfHelpBook.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.HOLD_ON_{holdOnSuffix}",
+      "name": "SlipperyBridgeHoldOnHoldOnSuffix",
+      "parameterized": true,
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.INITIAL",
+      "name": "SlipperyBridgeInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SLIPPERY_BRIDGE.OVERCOME",
+      "name": "SlipperyBridgeOvercome",
+      "parameterized": false,
+      "source": "Models/Events/SlipperyBridge.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL.DRINK",
+      "name": "SpiralingWhirlpoolDrink",
+      "parameterized": false,
+      "source": "Models/Events/SpiralingWhirlpool.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL.INITIAL",
+      "name": "SpiralingWhirlpoolInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SPIRALING_WHIRLPOOL.OBSERVE",
+      "name": "SpiralingWhirlpoolObserve",
+      "parameterized": false,
+      "source": "Models/Events/SpiralingWhirlpool.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER.INITIAL",
+      "name": "SpiritGrafterInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER.LET_IT_IN",
+      "name": "SpiritGrafterLetItIn",
+      "parameterized": false,
+      "source": "Models/Events/SpiritGrafter.cs"
+    },
+    {
+      "key": "SPIRIT_GRAFTER.REJECTION",
+      "name": "SpiritGrafterRejection",
+      "parameterized": false,
+      "source": "Models/Events/SpiritGrafter.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.INITIAL",
+      "name": "StoneOfAllTimeInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.LIFT",
+      "name": "StoneOfAllTimeLift",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "STONE_OF_ALL_TIME.PUSH",
+      "name": "StoneOfAllTimePush",
+      "parameterized": false,
+      "source": "Models/Events/StoneOfAllTime.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE.DIVE_INTO_WATER",
+      "name": "SunkenStatueDiveIntoWater",
+      "parameterized": false,
+      "source": "Models/Events/SunkenStatue.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE.GRAB_SWORD",
+      "name": "SunkenStatueGrabSword",
+      "parameterized": false,
+      "source": "Models/Events/SunkenStatue.cs"
+    },
+    {
+      "key": "SUNKEN_STATUE.INITIAL",
+      "name": "SunkenStatueInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY.FIRST_CHEST",
+      "name": "SunkenTreasuryFirstChest",
+      "parameterized": false,
+      "source": "Models/Events/SunkenTreasury.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY.INITIAL",
+      "name": "SunkenTreasuryInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SUNKEN_TREASURY.SECOND_CHEST",
+      "name": "SunkenTreasurySecondChest",
+      "parameterized": false,
+      "source": "Models/Events/SunkenTreasury.cs"
+    },
+    {
+      "key": "SYMBIOTE.APPROACH",
+      "name": "SymbioteApproach",
+      "parameterized": false,
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "SYMBIOTE.INITIAL",
+      "name": "SymbioteInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "SYMBIOTE.KILL_WITH_FIRE",
+      "name": "SymbioteKillWithFire",
+      "parameterized": false,
+      "source": "Models/Events/Symbiote.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.DECIPHER",
+      "name": "TabletOfTruthDecipher",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.DECIPHER_{DecipherCount}",
+      "name": "TabletOfTruthDecipherDecipherCount",
+      "parameterized": true,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.GIVE_UP",
+      "name": "TabletOfTruthGiveUp",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.INITIAL",
+      "name": "TabletOfTruthInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TABLET_OF_TRUTH.SMASH",
+      "name": "TabletOfTruthSmash",
+      "parameterized": false,
+      "source": "Models/Events/TabletOfTruth.cs"
+    },
+    {
+      "key": "TANX.INITIAL",
+      "name": "TanxInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TANX.{pageName}",
+      "name": "TanxPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TEA_MASTER.DONE",
+      "name": "TeaMasterDone",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEA_MASTER.INITIAL",
+      "name": "TeaMasterInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TEA_MASTER.TEA_OF_DISCOURTESY",
+      "name": "TeaMasterTeaOfDiscourtesy",
+      "parameterized": false,
+      "source": "Models/Events/TeaMaster.cs"
+    },
+    {
+      "key": "TEZCATARA.INITIAL",
+      "name": "TezcataraInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TEZCATARA.{pageName}",
+      "name": "TezcataraPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_ARCHITECT.INITIAL",
+      "name": "TheArchitectInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_ARCHITECT.dialogue.{CurrentLineIndex}",
+      "name": "TheArchitectDialogueCurrentLineIndex",
+      "parameterized": true,
+      "source": "Models/Events/TheArchitect.cs"
+    },
+    {
+      "key": "THE_FUTURE_OF_POTIONS.DONE",
+      "name": "TheFutureOfPotionsDone",
+      "parameterized": false,
+      "source": "Models/Events/TheFutureOfPotions.cs"
+    },
+    {
+      "key": "THE_FUTURE_OF_POTIONS.INITIAL",
+      "name": "TheFutureOfPotionsInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.DONE",
+      "name": "TheLanternKeyDone",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.INITIAL",
+      "name": "TheLanternKeyInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_LANTERN_KEY.KEEP_THE_KEY",
+      "name": "TheLanternKeyKeepTheKey",
+      "parameterized": false,
+      "source": "Models/Events/TheLanternKey.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE.INITIAL",
+      "name": "TheLegendsWereTrueInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE.NAB_THE_MAP",
+      "name": "TheLegendsWereTrueNabTheMap",
+      "parameterized": false,
+      "source": "Models/Events/TheLegendsWereTrue.cs"
+    },
+    {
+      "key": "THE_LEGENDS_WERE_TRUE.SLOWLY_FIND_AN_EXIT",
+      "name": "TheLegendsWereTrueSlowlyFindAnExit",
+      "parameterized": false,
+      "source": "Models/Events/TheLegendsWereTrue.cs"
+    },
+    {
+      "key": "THIS_OR_THAT.INITIAL",
+      "name": "ThisOrThatInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "THIS_OR_THAT.ORNATE",
+      "name": "ThisOrThatOrnate",
+      "parameterized": false,
+      "source": "Models/Events/ThisOrThat.cs"
+    },
+    {
+      "key": "THIS_OR_THAT.PLAIN",
+      "name": "ThisOrThatPlain",
+      "parameterized": false,
+      "source": "Models/Events/ThisOrThat.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_CARD_TYPE",
+      "name": "TinkerTimeChooseCardType",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.CHOOSE_RIDER",
+      "name": "TinkerTimeChooseRider",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.DONE",
+      "name": "TinkerTimeDone",
+      "parameterized": false,
+      "source": "Models/Events/TinkerTime.cs"
+    },
+    {
+      "key": "TINKER_TIME.INITIAL",
+      "name": "TinkerTimeInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TRASH_HEAP.DIVE_IN",
+      "name": "TrashHeapDiveIn",
+      "parameterized": false,
+      "source": "Models/Events/TrashHeap.cs"
+    },
+    {
+      "key": "TRASH_HEAP.GRAB",
+      "name": "TrashHeapGrab",
+      "parameterized": false,
+      "source": "Models/Events/TrashHeap.cs"
+    },
+    {
+      "key": "TRASH_HEAP.INITIAL",
+      "name": "TrashHeapInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TRIAL.INITIAL",
+      "name": "TrialInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "TRIAL.MERCHANT",
+      "name": "TrialMerchant",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.MERCHANT_GUILTY",
+      "name": "TrialMerchantGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.MERCHANT_INNOCENT",
+      "name": "TrialMerchantInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NOBLE",
+      "name": "TrialNoble",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NOBLE_GUILTY",
+      "name": "TrialNobleGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NOBLE_INNOCENT",
+      "name": "TrialNobleInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NONDESCRIPT",
+      "name": "TrialNondescript",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NONDESCRIPT_GUILTY",
+      "name": "TrialNondescriptGuilty",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.NONDESCRIPT_INNOCENT",
+      "name": "TrialNondescriptInnocent",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "TRIAL.REJECT",
+      "name": "TrialReject",
+      "parameterized": false,
+      "source": "Models/Events/Trial.cs"
+    },
+    {
+      "key": "UNREST_SITE.INITIAL",
+      "name": "UnrestSiteInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "UNREST_SITE.KILL",
+      "name": "UnrestSiteKill",
+      "parameterized": false,
+      "source": "Models/Events/UnrestSite.cs"
+    },
+    {
+      "key": "UNREST_SITE.REST",
+      "name": "UnrestSiteRest",
+      "parameterized": false,
+      "source": "Models/Events/UnrestSite.cs"
+    },
+    {
+      "key": "VAKUU.INITIAL",
+      "name": "VakuuInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "VAKUU.{pageName}",
+      "name": "VakuuPageName",
+      "parameterized": true,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.EXTRA_UNLOCK_CAGE",
+      "name": "WarHistorianRepyExtraUnlockCage",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.EXTRA_UNLOCK_CHEST",
+      "name": "WarHistorianRepyExtraUnlockChest",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.INITIAL",
+      "name": "WarHistorianRepyInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.UNLOCK_CAGE",
+      "name": "WarHistorianRepyUnlockCage",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WAR_HISTORIAN_REPY.UNLOCK_CHEST",
+      "name": "WarHistorianRepyUnlockChest",
+      "parameterized": false,
+      "source": "Models/Events/WarHistorianRepy.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.BLOODY_INK",
+      "name": "WaterloggedScriptoriumBloodyInk",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.INITIAL",
+      "name": "WaterloggedScriptoriumInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.PRICKLY_SPONGE",
+      "name": "WaterloggedScriptoriumPricklySponge",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WATERLOGGED_SCRIPTORIUM.TENTACLE_QUILL",
+      "name": "WaterloggedScriptoriumTentacleQuill",
+      "parameterized": false,
+      "source": "Models/Events/WaterloggedScriptorium.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.AFTER_BUY",
+      "name": "WelcomeToWongosAfterBuy",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.AFTER_BUY_BADGE_COUNTER",
+      "name": "WelcomeToWongosAfterBuyBadgeCounter",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.AFTER_BUY_RECEIVE_BADGE",
+      "name": "WelcomeToWongosAfterBuyReceiveBadge",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.INITIAL",
+      "name": "WelcomeToWongosInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WELCOME_TO_WONGOS.LEAVE",
+      "name": "WelcomeToWongosLeave",
+      "parameterized": false,
+      "source": "Models/Events/WelcomeToWongos.cs"
+    },
+    {
+      "key": "WELLSPRING.BATHE",
+      "name": "WellspringBathe",
+      "parameterized": false,
+      "source": "Models/Events/Wellspring.cs"
+    },
+    {
+      "key": "WELLSPRING.BOTTLE",
+      "name": "WellspringBottle",
+      "parameterized": false,
+      "source": "Models/Events/Wellspring.cs"
+    },
+    {
+      "key": "WELLSPRING.INITIAL",
+      "name": "WellspringInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW.GOLD",
+      "name": "WhisperingHollowGold",
+      "parameterized": false,
+      "source": "Models/Events/WhisperingHollow.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW.HUG",
+      "name": "WhisperingHollowHug",
+      "parameterized": false,
+      "source": "Models/Events/WhisperingHollow.cs"
+    },
+    {
+      "key": "WHISPERING_HOLLOW.INITIAL",
+      "name": "WhisperingHollowInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.BIRD",
+      "name": "WoodCarvingsBird",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.INITIAL",
+      "name": "WoodCarvingsInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.SNAKE",
+      "name": "WoodCarvingsSnake",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "WOOD_CARVINGS.TORUS",
+      "name": "WoodCarvingsTorus",
+      "parameterized": false,
+      "source": "Models/Events/WoodCarvings.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.ARACHNID_ACUPUNCTURE",
+      "name": "ZenWeaverArachnidAcupuncture",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.BREATHING_TECHNIQUES",
+      "name": "ZenWeaverBreathingTechniques",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.EMOTIONAL_AWARENESS",
+      "name": "ZenWeaverEmotionalAwareness",
+      "parameterized": false,
+      "source": "Models/Events/ZenWeaver.cs"
+    },
+    {
+      "key": "ZEN_WEAVER.INITIAL",
+      "name": "ZenWeaverInitial",
+      "parameterized": false,
+      "source": "Models/EventModel.cs"
+    }
+  ],
+  "parameterized_identity": "A source template is one typed identity; actual retained object/page parameters are separate public fields, never expanded into guessed vocabulary.",
+  "public_bosses": [
+    {
+      "key": "CEREMONIAL_BEAST_BOSS",
+      "name": "CeremonialBeastBoss",
+      "sha256": "423692a5d8cfdc20af64817ee972c93ca9089da3d6403de7d8e3955a03c3af25",
+      "source": "Models/Encounters/CeremonialBeastBoss.cs"
+    },
+    {
+      "key": "THE_KIN_BOSS",
+      "name": "TheKinBoss",
+      "sha256": "eae6f5da4e04c1512fdd01f24838f5e659812162088259f4764573d057df076f",
+      "source": "Models/Encounters/TheKinBoss.cs"
+    },
+    {
+      "key": "VANTOM_BOSS",
+      "name": "VantomBoss",
+      "sha256": "e72862d131895f8f2c8cb79e98d10d95d04454e874f4eaba8e94a7f0c0b3834b",
+      "source": "Models/Encounters/VantomBoss.cs"
+    },
+    {
+      "key": "LAGAVULIN_MATRIARCH_BOSS",
+      "name": "LagavulinMatriarchBoss",
+      "sha256": "a9acc143be107e4608acb4072487b5647321e385860770ace3197d0b5775a420",
+      "source": "Models/Encounters/LagavulinMatriarchBoss.cs"
+    },
+    {
+      "key": "SOUL_FYSH_BOSS",
+      "name": "SoulFyshBoss",
+      "sha256": "a5cc41556f7878a644b630643f71a0bd43cb396a75fbcb7fe48640bf7607cd89",
+      "source": "Models/Encounters/SoulFyshBoss.cs"
+    },
+    {
+      "key": "WATERFALL_GIANT_BOSS",
+      "name": "WaterfallGiantBoss",
+      "sha256": "a45cdecd5a82caf08df5377c3c0375a9f56267515382f0155570cdda0e5e3297",
+      "source": "Models/Encounters/WaterfallGiantBoss.cs"
+    },
+    {
+      "key": "KAISER_CRAB_BOSS",
+      "name": "KaiserCrabBoss",
+      "sha256": "07c9dfac1e3d99521efc9d55550e3aa089259f28a677ff71b5d456f632117e55",
+      "source": "Models/Encounters/KaiserCrabBoss.cs"
+    },
+    {
+      "key": "KNOWLEDGE_DEMON_BOSS",
+      "name": "KnowledgeDemonBoss",
+      "sha256": "7e6f57fd52e38caa7a85f2824a6982049e3cf449cfdfd4864fa101a9b4eb75ad",
+      "source": "Models/Encounters/KnowledgeDemonBoss.cs"
+    },
+    {
+      "key": "THE_INSATIABLE_BOSS",
+      "name": "TheInsatiableBoss",
+      "sha256": "ea72f7e7e41fceb2c2afb65bf91e47cd1ec876b69be880df5d0b7f311ac6f217",
+      "source": "Models/Encounters/TheInsatiableBoss.cs"
+    },
+    {
+      "key": "AEONGLASS_BOSS",
+      "name": "AeonglassBoss",
+      "sha256": "4a4bce9de986094ad8f24c56ddafe18741fd0ef92867b405993bd946f1a04fba",
+      "source": "Models/Encounters/AeonglassBoss.cs"
+    },
+    {
+      "key": "QUEEN_BOSS",
+      "name": "QueenBoss",
+      "sha256": "a951d1d566e97cd332ddb614b084bcfde242e8d5ca31839ec2a411943e76bc55",
+      "source": "Models/Encounters/QueenBoss.cs"
+    },
+    {
+      "key": "TEST_SUBJECT_BOSS",
+      "name": "TestSubjectBoss",
+      "sha256": "4b0128135b7281f606ad8142c996e3061c387640f2285854db351945745aa39f",
+      "source": "Models/Encounters/TestSubjectBoss.cs"
+    }
+  ],
+  "reward_kinds": [
+    "Card",
+    "Gold",
+    "Potion",
+    "Relic",
+    "RemoveCard",
+    "SpecialCard"
+  ],
+  "source_sha256": {
+    "Events/Custom/CrystalSphereEvent/CrystalSphereMinigame.cs": "baa94483342f1dbcd8bd951fecd2b92a63d889b65e59c4e949498dd7c20ff6c0",
+    "Models/EventModel.cs": "f85f56f41f5825cdcd4488fcc8913844e4a29875107761be3164198c7d441ee3",
+    "Models/Events/AbyssalBaths.cs": "ebcb36c1df59090dfa8a0e935cf0e29923d5a183ea5f8371b47dcc0b777a5e8b",
+    "Models/Events/Amalgamator.cs": "3fe52907ba8957a1782348dc840aaec7536e51e8c4c63378c26237df7585060d",
+    "Models/Events/AromaOfChaos.cs": "bebbe67ed13d94fb5546c87d92262ace605c52f5c88ab5a6b01f970581fc2dfb",
+    "Models/Events/BattlewornDummy.cs": "7c04b3378f79bd9e9748a9ae036733e98d51b9fd91cb695f2a5e70f9313f2f02",
+    "Models/Events/BrainLeech.cs": "d6f957ad5896de396fcf0b2d0df2dfd77b640a28628d56de76cd26234c247bbb",
+    "Models/Events/Bugslayer.cs": "772fd742b0fefeb21a2f849a9d78524e5b7291bf99306cc71c9cd71fe34ce11b",
+    "Models/Events/ByrdonisNest.cs": "408c80d0f97fd369e56b9209a65a24da66992e1c2259937b5a152631eac6d40e",
+    "Models/Events/ColorfulPhilosophers.cs": "275cd45e34eea3221c5335ac5742918518f9c60ae5ec0fa262a27436a892b38f",
+    "Models/Events/ColossalFlower.cs": "48c00377a1e1532d771fc9631e3567820db60cba2ff51b7f71ea5ab761c7d081",
+    "Models/Events/CrystalSphere.cs": "888afb8462f2f32c0dab110f3f7aa50964382e17d5fa24b8ed6e47c0876b182e",
+    "Models/Events/Darv.cs": "6d723632ea4bab226855a8fcb28d67384c0f738834ec1369c185b58be709b22e",
+    "Models/Events/DenseVegetation.cs": "30111c5079d078af1d77fab3c0f1a412e9f9dc2bf046ab101eb7ab77af07d9e9",
+    "Models/Events/DeprecatedAncientEvent.cs": "6759cf195b5fa2ce1b154fb2c6ca5524d6a5ecea00a820c1f62dfd2f025dcff9",
+    "Models/Events/DeprecatedEvent.cs": "bfd92e4b5b4987a9b807565aa43a535fd6ae8a9aa2c09e83ace84590710c42e7",
+    "Models/Events/DollRoom.cs": "c206c212ce29fd493152563f493be3f6a54688b580a08713d634ff056de25167",
+    "Models/Events/DoorsOfLightAndDark.cs": "dd3d4ffd117c133f5ffb9970517bee466fbf64a62047c05a01cf47891c5bcbb1",
+    "Models/Events/DrowningBeacon.cs": "2e50668cc813075fae1ed03fc7b39453a5f25e7bfa5b4d4cea6d6f011002ff8c",
+    "Models/Events/EndlessConveyor.cs": "91c415ee23cbfae484972eab507855f1650573cb1748beb2a39329e51defaff3",
+    "Models/Events/FakeMerchant.cs": "38ccce730fd58ff8f49bfe7e4c4c7cd69981dd78ebf5e7c747647be8c729cd2b",
+    "Models/Events/FieldOfManSizedHoles.cs": "32e713203454c923b43f45a6f9d34ee95beadb9ab0f64e40928ae91a5febd590",
+    "Models/Events/GraveOfTheForgotten.cs": "651ff2f100b9964313a2d6b23e15104a86e4458509adbbc0c2602aac09481be6",
+    "Models/Events/HungryForMushrooms.cs": "da5872f6298892d71e7bcf571842bc39ffe0d15521ead55da84aa356066c487c",
+    "Models/Events/InfestedAutomaton.cs": "e6bebde83ee0efbd36afb0411ec75816efac07095848e3cb75f61bb0a77403b3",
+    "Models/Events/JungleMazeAdventure.cs": "fbb2e55cce3e00b56e0aca83b6b21240850c694def99033fdae0b27846503f6d",
+    "Models/Events/LostWisp.cs": "df8684ee5931787ed00b8dd7e57aaf26309254d63177dc62e83ea43f01ac0306",
+    "Models/Events/LuminousChoir.cs": "c680ab0135aadf18e00e8e757e47e9b915f691887f153b996b4a6886c2c56b01",
+    "Models/Events/Mocks/MockEventModel.cs": "b50b384680ac8373e5e19d3a15b1867eda7a6fd2024df498cf1e025229bd2bcf",
+    "Models/Events/MorphicGrove.cs": "673f0f585cb8a2c164dde8ec68214b0e156c70d047fbbdd9470d73cb1d74918a",
+    "Models/Events/Neow.cs": "d365ee761a8f09982d4ce7791718b4d7170e6348f98e5d2c0c47db4d6b8c6700",
+    "Models/Events/Nonupeipe.cs": "2e20507e3f6b7f16f507feafb0a6860e23bec7a6b602fa5e344f46540655eb31",
+    "Models/Events/Orobas.cs": "164bc6a7dc9ed79fc09d59c99bdf61e2bfcb235f4ae8d835c5620fc1037ddf6f",
+    "Models/Events/Pael.cs": "54008fb185c0b04760b5b2896111827dc48d173dd1683f10afc695782d8c50b3",
+    "Models/Events/PotionCourier.cs": "5a26b63bbbf329c1ac7dee6a5c6d82768f5a3d3d7def574b5d36db39fe0c45d5",
+    "Models/Events/PunchOff.cs": "2fc438670321160d8ea36f504a50bcf37429c810718e95c8113d00211f879c8e",
+    "Models/Events/RanwidTheElder.cs": "424bda743112481d340538b3002072edd3084e65eb95b56a72a5092f903adfb8",
+    "Models/Events/Reflections.cs": "bb894825b5321da122b6620e0085275dd655dd0cef0ebd798fad8417b1345f1c",
+    "Models/Events/RelicTrader.cs": "5419dab9b0224633381e754fd78157e352c77e8a79f2ebd0281ada39dbffc28c",
+    "Models/Events/RoomFullOfCheese.cs": "c3988dd9110666b53507081e4ea19e0b63fec43bafbe702855758bf820c9d72c",
+    "Models/Events/RoundTeaParty.cs": "9e6b3396f6e9a297fd649190cae40ef990b9fedc3cdce5177ff7fb9f3b6762ac",
+    "Models/Events/SapphireSeed.cs": "746ef166fc1a60c67da2927152d867a52211a1b9d5556cbd4d5e2f87ded95cf8",
+    "Models/Events/SelfHelpBook.cs": "efaa3eeaf96fb3ca30477b12e1598bdb8374d58b87880f8129efa888ee6ed46e",
+    "Models/Events/SlipperyBridge.cs": "2b1863f7d08b809c55eba455bd8482c71ea85e1c848ae3f71eeedd3283ddc818",
+    "Models/Events/SpiralingWhirlpool.cs": "a4b472bc58f0e0884c8873aaec97d8e2e6e0eddbf084413356e3c024e8d08955",
+    "Models/Events/SpiritGrafter.cs": "8581027042de5886e930d3c92ca1ac813a50b767f1f404c6e19252a73677eb84",
+    "Models/Events/StoneOfAllTime.cs": "5c588be3bdaa05134b0d49a9018d0cb6768d8a81bf9d32e71e58016d62f39354",
+    "Models/Events/SunkenStatue.cs": "3a0220ca5d9637dc92900f6e2380caf6b0229b7d1f73ee4323c94fd87260ac2c",
+    "Models/Events/SunkenTreasury.cs": "eb117f6e7b2b8b8e211599f157fa99617e5f834e1dce7c8b0db6569901c9aa77",
+    "Models/Events/Symbiote.cs": "eb2f1b0bc9c18dbca1770e3149629eeb840559d151053479b903a96db19dcb1d",
+    "Models/Events/TabletOfTruth.cs": "9771d5cb6f7c76ba38b4f343160c0e113ac13a067403164fba54992da5d20dee",
+    "Models/Events/Tanx.cs": "6ecc93471b8c7824f00015989c2b89a286f64e90ae304fbe5d752be4ff03851c",
+    "Models/Events/TeaMaster.cs": "fc390aab07ab209f6e9526de52642bf1b5008e60c4e3c5cb5297904cae536198",
+    "Models/Events/Tezcatara.cs": "35d671c2231fd8bd7d44732b05b90e3bf35a9db7afbd89ef59769aa4100b360c",
+    "Models/Events/TheArchitect.cs": "bcd6bbbd0041c895b80b4381cc4bfcfe64692e8e26bdf37938df952cb2a131ce",
+    "Models/Events/TheFutureOfPotions.cs": "29476d44a49abe759cea9431480601c11310e63ba5e8fce7d666c8ff88a9b83a",
+    "Models/Events/TheLanternKey.cs": "7a0b9d1f3db5a66c29639e25a3924568f720258397dce14ef1ba052c8120d154",
+    "Models/Events/TheLegendsWereTrue.cs": "a1dd9b37e6d882bdcf2e3ea06672ced16d95792e15b5d7b296e86705b6943c00",
+    "Models/Events/ThisOrThat.cs": "4402a2f72326ffecc103ea1f2bd246cd86f07bb63df929bd362f44dc12dc70d3",
+    "Models/Events/TinkerTime.cs": "db8b5abc58b8ef68282c124fbcf6ff22c97564dced34f2ce670816794c89de3a",
+    "Models/Events/TrashHeap.cs": "cccbf83cbcf62f352d7bf4bf940e270fda64219bacb20a8d96fdcc8eb7dfd2a3",
+    "Models/Events/Trial.cs": "e6cd8c7064e003270ba689bb721ce6e8bbf6adca6b11ff6aec4dde043106d9fd",
+    "Models/Events/UnrestSite.cs": "9d86af0cf155f27fbe3c7093cad2893af563267c409429df03a5da8c9d4add62",
+    "Models/Events/Vakuu.cs": "7187cc5d11ed7f9c5aa06fd35a498c17bfbce335122777f861f3c3137c0c5717",
+    "Models/Events/WarHistorianRepy.cs": "1e88ffab7cd63423e6c7b7b07afe6ab8683b689cb1f4b3b22d336be3716ac299",
+    "Models/Events/WaterloggedScriptorium.cs": "06f6e6a0fc8821ad02411ca8481479496ddb42b1cf72b0e77e904173b8b4e4f0",
+    "Models/Events/WelcomeToWongos.cs": "60f6e916e718960d1d5c117ccd134337e725c9fffd114cd4765d4ca96c7f23b8",
+    "Models/Events/Wellspring.cs": "c57cfe5da7bc023f4758c518741d61f205eebd0da6d3b4d501cd8d599428d0d9",
+    "Models/Events/WhisperingHollow.cs": "d854997fa77fba0ab818afceb0acbe4b4a22fed40e3e9ff92e94a8bb9eb6ffe9",
+    "Models/Events/WoodCarvings.cs": "55912c1de946e15f2259d69f69333e8831f8fa4ae75cc760ff386186fcc03dfa",
+    "Models/Events/ZenWeaver.cs": "c06fba76f9c342710be0306dddf2df8dcb885802a4b59afd3737940a60de8bf5",
+    "Nodes/Events/Custom/NFakeMerchant.cs": "133e9b074a194734f05715d60614c4098ba7125a4bd76f4791f4171acbf5ff83",
+    "Rewards/RewardType.cs": "b9d803828678f32f4b85882c72dafb1d8dc7d6b47a283923a3a168a5f96923de"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "scope": "team_combat",
+  "visibility": "union of communicating teammates' own hands and public combat state; no hidden draw order, RNG, seeds or future moves",
+  "state": "one canonical absolute-seat projection, with all owners' live piles",
+  "candidates": "complete seat-tagged union; one joint softmax; source and target handles refer to shared state",
+  "authentication": "shared episode/generation stamp plus candidate owner, authenticated roster net ID and exact native binding",
+  "capacity": "four complete 512-candidate seat blocks; explicit overflow, never truncation",
+  "protocol": "enemy-turn acknowledgements are automatic queue work, not policy samples"
+}

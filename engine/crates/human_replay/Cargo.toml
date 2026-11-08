@@ -1,0 +1,13 @@
+[package]
+name = "sts2_human_replay"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+
+[dependencies]
+sts2_sim = { path = "../sim" }
+sts2_native_obs = { path = "../native_obs" }
+serde_json = "=1.0.154"
+serde = "=1.0.229"
+flate2 = "=1.1.10"
+sha2 = "=0.11.1"

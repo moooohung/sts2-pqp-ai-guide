@@ -1,0 +1,43 @@
+# Generated source+kind admission evidence. Census-generated rows are appended below the header.
+# r8-v1 SPECIAL_CARD requires kind extra_reward_csharp_r8_v1 from original-DLL whole-screen evidence.
+# No qualifying DLL capture exists yet; an extra_reward (r7-wire) row cannot admit this source.
+# Neow's Fury requires combat_choice_csharp_r8_v2: original-DLL before/after
+# candidates, legal mask and ordered retrieval, >=200 comparable / >=50 seeds / 0 counterexamples.
+# Certificate: runs/neows_fury_csharp_r8_v2.zip; seeds 4..289, disjoint from held-out.
+# One comparable is a complete selection; unrelated later run stops are retained, not counted.
+kind	source	comparable	matches	distinct_seeds	counterexamples	not_comparable	unclassified_gameplay_differences	unclassified_wire_differences	natural_count	targeted_count	proof_revision
+combat_choice_csharp_r8_v2	card:NEOWS_FURY	632	632	54	0	194	0	0	158	474	c69b3e5a606109137e7d80b8ac79ab6a7bf4dca5
+run_selector	event:ROOM_FULL_OF_CHEESE	234	234	234	0	86	0	0	0	234	integ-32cf2a7-reproof
+run_selector_inventory	event:ROOM_FULL_OF_CHEESE	227	227	227	0	93	0	0	0	227	integ-32cf2a7-reproof
+event_option_table	event:TABLET_OF_TRUTH	296	296	296	0	24	0	0	0	296	events-classified-1m
+run_selector	event:BRAIN_LEECH	297	297	297	0	23	0	0	0	297	selector-classified-v2
+run_selector	event:WATERLOGGED_SCRIPTORIUM	217	217	217	0	14	0	0	0	217	selector-classified-v2
+run_selector	event.aroma_of_chaos.select	220	220	220	0	27	0	0	0	220	selector-classified-v2
+run_selector	event.sapphire_seed.select	279	279	279	0	27	0	0	0	279	selector-classified-v2
+run_selector	event.wood_carvings.enchant	262	262	262	0	29	0	0	0	262	selector-classified-v2
+run_selector	relic:PRECARIOUS_SHEARS	303	303	303	0	17	0	0	0	303	inventory-classified-v2
+run_selector	shop:remove	236	236	236	0	14	0	0	0	236	selector-classified-v2
+run_selector_inventory	event:BRAIN_LEECH	291	291	291	0	38	0	0	0	291	inventory-classified-v2+inventory-disjoint10m-v1
+run_selector_inventory	event.aroma_of_chaos.select	240	240	240	0	39	0	0	0	240	inventory-classified-v2+inventory-disjoint10m-v1
+run_selector_inventory	event.wood_carvings.enchant	269	269	269	0	42	0	0	0	269	inventory-classified-v2+inventory-disjoint10m-v1
+run_selector_inventory	event:WATERLOGGED_SCRIPTORIUM	200	200	200	0	24	0	0	0	200	inventory-classified-v2+inventory-disjoint10m-v1
+run_selector	event.spiraling_whirlpool.enchant	278	278	278	0	38	0	0	0	278	selector-classified-v2+inventory-disjoint10m-v1
+run_selector	event.doors_of_light_and_dark.remove	216	216	216	0	68	0	0	0	216	selector-classified-v2+inventory-disjoint10m-v1
+public_power_counter	power:HARDENED_SHELL	722	722	69	0	8	0	0	48	674	power-counter-export100-after6ca05c9+random1m-v1
+public_power_counter	power:SLOW	1484	1484	83	0	18	0	0	47	1437	power-counter-export100-after6ca05c9+random1m-v1
+run_selector_inventory	event.sapphire_seed.select	320	320	320	0	0	0	0	0	320	event_selector_inventory_unfiltered_4m_1d673be
+run_selector	event:ENDLESS_CONVEYOR	245	245	245	0	0	0	0	0	245	event_selector_inventory_unfiltered_4m_1d673be+event_selector_conveyor_unfiltered_2m_1d673be
+run_selector_inventory	event:ENDLESS_CONVEYOR	237	237	237	0	0	0	0	0	237	event_selector_inventory_unfiltered_4m_1d673be+event_selector_conveyor_unfiltered_2m_1d673be
+run_selector	event.self_help_book.sharp	320	320	320	0	0	0	0	0	320	self_help_scoped_2m_81aba92
+run_selector_inventory	event.self_help_book.sharp	320	320	320	0	0	0	0	0	320	self_help_scoped_2m_81aba92
+run_selector	event.self_help_book.nimble	320	320	320	0	0	0	0	0	320	self_help_scoped_2m_81aba92+frozen_nimble_185
+run_selector_inventory	event.self_help_book.nimble	320	320	320	0	0	0	0	0	320	self_help_scoped_2m_81aba92+frozen_nimble_185
+run_selector	event.self_help_book.swift	234	234	234	0	0	0	0	0	234	selectors_power_targeted_8c9a426
+run_selector_inventory	event.self_help_book.swift	265	265	265	0	0	0	0	0	265	selectors_power_targeted_8c9a426
+public_power_counter	power:TENDER	2283	2283	82	0	0	0	0	0	2283	r8_counter_prompt_fixed-b79f9a0+orb-toxic-mittens
+public_power_counter	power:AUTOMATION	60952	60952	102	0	445	0	0	0	60952	r8_counter_integrated_affliction_fixed-44df3a8+affliction-markers
+public_power_counter	power:PANACHE	1447	1447	178	0	0	0	0	0	1447	3c454663-final-helper-pure-reference
+run_selector	event.orobas.add	3168	3168	198	0	1760	0	0	0	3168	472ec986-orobas-visibility-alternate-inventory
+run_selector	event.orobas.enchant	294	294	294	0	159	0	0	0	294	472ec986-orobas-visibility-alternate-inventory
+run_selector_inventory	event.orobas.add	1841	1841	114	0	874	0	0	0	1841	472ec986-orobas-visibility-alternate-inventory
+run_selector_inventory	event.orobas.enchant	218	218	172	0	113	0	0	0	218	472ec986-orobas-visibility-alternate-inventory

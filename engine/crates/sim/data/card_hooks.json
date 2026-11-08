@@ -1,0 +1,125 @@
+{
+ "hooks": {
+  "after_attack_hooks": [
+   "FLATTEN"
+  ],
+  "after_card_drawn_hooks": [
+   "KINGLY_KICK",
+   "KINGLY_PUNCH",
+   "VOID"
+  ],
+  "after_card_entered_combat_hooks": [
+   "BANSHEES_CRY",
+   "FLATTEN",
+   "MIDNIGHT",
+   "PINPOINT",
+   "STOMP"
+  ],
+  "after_card_exhausted_hooks": [
+   "DRUM_OF_BATTLE_CARD",
+   "MIDNIGHT"
+  ],
+  "after_card_generated_for_combat_hooks": [
+   "ROCKET_PUNCH"
+  ],
+  "after_card_played_hooks": [
+   "BANSHEES_CRY",
+   "PINPOINT"
+  ],
+  "after_combat_end_hooks": [
+   "GUILTY"
+  ],
+  "after_death_hooks": [
+   "MELANCHOLY"
+  ],
+  "after_map_generated_hooks": [
+   "SPOILS_MAP"
+  ],
+  "after_turn_end_hooks": [
+   "I_AM_INVINCIBLE"
+  ],
+  "before_card_played_hooks": [
+   "STOMP"
+  ],
+  "before_hand_draw_hooks": [
+   "BOMBARDMENT",
+   "HOWL_FROM_BEYOND"
+  ],
+  "before_room_entered_hooks": [
+   "DOWSING"
+  ],
+  "chosen_hooks": [
+   "DISINTEGRATION",
+   "MIND_ROT",
+   "SLOTH_STATUS",
+   "WASTE_AWAY"
+  ],
+  "gains_block_hooks": [
+   "MAD_SCIENCE"
+  ],
+  "generated_map_hooks": [
+   "SPOILS_MAP"
+  ],
+  "generated_map_late_hooks": [
+   "SPOILS_MAP"
+  ],
+  "late_effects": [
+   "MAKE_IT_SO",
+   "RIGHT_HAND_HAND"
+  ],
+  "next_event_hooks": [
+   "LANTERN_KEY"
+  ],
+  "playability_hooks": [
+   "CLASH",
+   "GRAND_FINALE",
+   "HIGH_FIVE"
+  ],
+  "quest_complete_hooks": [
+   "SPOILS_MAP"
+  ],
+  "rest_site_options_hooks": [
+   "BYRDONIS_EGG"
+  ],
+  "should_play_hooks": [
+   "ENTHRALLED",
+   "NORMALITY"
+  ],
+  "target_type_hooks": [
+   "MAD_SCIENCE",
+   "SHIV",
+   "SOVEREIGN_BLADE"
+  ],
+  "turn_end_in_hand_hooks": [
+   "BAD_LUCK",
+   "BECKON",
+   "BURN",
+   "DEBT",
+   "DECAY",
+   "DOUBT",
+   "INFECTION",
+   "REGRET",
+   "SHAME",
+   "TOXIC",
+   "WITHER"
+  ],
+  "unknown_room_types_hooks": [
+   "LANTERN_KEY"
+  ]
+ },
+ "extra": {
+  "_SELF_MUTATING_BLOCK_CARD_IDS": [
+   "GENETIC_ALGORITHM"
+  ],
+  "_SELF_MUTATING_DAMAGE_CARD_IDS": [
+   "CLAW",
+   "KINGLY_PUNCH",
+   "MAUL",
+   "RAMPAGE",
+   "SOVEREIGN_BLADE",
+   "THE_BALL",
+   "THE_SCYTHE",
+   "THRASH"
+  ]
+ }
+}

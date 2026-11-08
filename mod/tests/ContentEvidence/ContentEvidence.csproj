@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Same externally pinned game ABI as the production assembly. -->
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../HumanPlayRecorder.csproj" />
+    <!-- Copied next to the test so the game assemblies the mod binds to can be loaded; they stay in bin/. -->
+    <Reference Include="sts2"><HintPath>$(GameData)/sts2.dll</HintPath></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameData)/0Harmony.dll</HintPath></Reference>
+    <Reference Include="GodotSharp"><HintPath>$(GameData)/GodotSharp.dll</HintPath></Reference>
+    <Reference Include="System.IO.Hashing"><HintPath>$(GameData)/System.IO.Hashing.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

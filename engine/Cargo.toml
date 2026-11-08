@@ -1,0 +1,31 @@
+[workspace]
+members = [
+    "crates/wire",
+    "crates/sim",
+    "crates/native_obs",
+    "crates/human_replay",
+    "crates/vecenv",
+    "crates/policy",
+    "crates/aiplay",
+    "crates/advisor_bridge",
+]
+resolver = "3"
+
+# Generated core contains thousands of routines and descriptor types. Development
+# runs keep assertions/overflow checks while omitting debugger metadata.
+# https://doc.rust-lang.org/cargo/reference/profiles.html#debug
+[profile.dev]
+debug = 0
+
+[profile.release]
+opt-level = 3
+codegen-units = 16
+
+# CPU-native simulator: one codegen unit so LLVM can inline across the whole engine.
+[profile.release.package.sts2_sim]
+codegen-units = 1
+
+# Hard pin: upstream optimizer loading uses Device::default (CUDA even for CPU
+# callers). Add explicit-device restoration; retain the upstream default API.
+[patch.crates-io]
+burn-optim = { path = "vendor/burn-optim-0.22.1" }

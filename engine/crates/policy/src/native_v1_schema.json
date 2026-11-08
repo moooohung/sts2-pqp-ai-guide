@@ -1,0 +1,891 @@
+{
+  "schema": {
+    "action_kinds": [
+      "EventChoice",
+      "Move",
+      "LeaveShop",
+      "BuyCard",
+      "BuyRelic",
+      "BuyPotion",
+      "RemoveCard",
+      "RestOption",
+      "EndTurn",
+      "PlayCard",
+      "UsePotion",
+      "DiscardPotion",
+      "Choose",
+      "ConfirmChoice",
+      "Skip",
+      "PickCard",
+      "PickSpecialCard",
+      "RerollCardReward",
+      "SacrificeCardReward",
+      "PickCardBundle",
+      "SkipRewards",
+      "SkipPotion",
+      "PickPotion",
+      "SkipRelic",
+      "PickRelicReward",
+      "OpenReward",
+      "Collect",
+      "UnendTurn",
+      "BeginRemoval",
+      "CancelRemoval",
+      "ChooseNeow",
+      "TakeGoldSkipRemaining",
+      "TreasureOpen",
+      "TreasureVote",
+      "TreasureSkip",
+      "ReadyForEnemyTurn"
+    ],
+    "binding_contract": "DecisionId + authenticated net_id + typed Command + optional exact source/target/offer instance IDs; multi-selection spans reference the same decision's caller-owned selection sidecar.",
+    "candidate_capacity": 512,
+    "candidate_contract": [
+      "action:u16",
+      "model:ContentId",
+      "detail:ContentId[4]",
+      "source:RowHandle",
+      "target:RowHandle",
+      "actor:u8",
+      "flags:u64",
+      "flags_present:u64",
+      "integers:i32[16]",
+      "floats:f32[16]",
+      "integer_present:u16",
+      "float_present:u16",
+      "candidate_present:bitset",
+      "legal:bitset"
+    ],
+    "candidate_numeric": [
+      {
+        "name": "energy_cost",
+        "type": "i32"
+      },
+      {
+        "name": "star_cost",
+        "type": "i32"
+      },
+      {
+        "name": "gold_cost",
+        "type": "i32"
+      },
+      {
+        "name": "amount",
+        "type": "i32"
+      },
+      {
+        "name": "minimum",
+        "type": "i32"
+      },
+      {
+        "name": "maximum",
+        "type": "i32"
+      },
+      {
+        "name": "selected_count",
+        "type": "i32"
+      },
+      {
+        "name": "offer_order",
+        "type": "i32"
+      },
+      {
+        "name": "x",
+        "type": "i32"
+      },
+      {
+        "name": "y",
+        "type": "i32"
+      },
+      {
+        "name": "parameter",
+        "type": "i32"
+      },
+      {
+        "name": "display_damage",
+        "type": "i32"
+      },
+      {
+        "name": "display_block",
+        "type": "i32"
+      }
+    ],
+    "capacity_status": "validated_measured_envelope",
+    "edge_capacity": 16384,
+    "flags": [
+      "Alive",
+      "Ready",
+      "Participating",
+      "Revealed",
+      "Selected",
+      "Upgraded",
+      "OnSale",
+      "Sold",
+      "Used",
+      "Optional",
+      "CanConfirm",
+      "CanCancel",
+      "Skippable",
+      "SingleSelect",
+      "Ordered",
+      "Current",
+      "Reachable",
+      "Visited",
+      "XCost",
+      "StarXCost",
+      "Pet",
+      "Boss",
+      "Complete",
+      "Targetable",
+      "Retained",
+      "Exhausts",
+      "Ethereal",
+      "Innate",
+      "Sly",
+      "Eternal",
+      "Locked",
+      "Consumed",
+      "SkipCompletes"
+    ],
+    "id_lanes": 4,
+    "identity": "namespace + enum.index() + 1; 0 is absent; handles are one-based observation-local references and never embeddings",
+    "max_seats": 4,
+    "native_tables": [
+      "CardId",
+      "RelicId",
+      "PowerId",
+      "PotionId",
+      "MonsterKind",
+      "IntentType",
+      "OrbType",
+      "VarKey",
+      "CardType",
+      "CardRarity",
+      "TargetType",
+      "CardTag",
+      "MapPointType",
+      "RoomType",
+      "PotionRarity",
+      "PotionUsageType",
+      "PotionTargetType",
+      "RelicRarity",
+      "RelicPool",
+      "PowerType",
+      "PowerStackType"
+    ],
+    "numeric_conversion": "i32 is exact native integer; f32 is only an already-f32 source or an explicitly audited finite conversion. Decimal modifiers retain signed base-65536 coefficient limbs and scale; no implicit rounding of prices or effects.",
+    "numeric_lanes": 16,
+    "relations": [
+      "Parent",
+      "Owner",
+      "Source",
+      "Target",
+      "MapConnection",
+      "Member",
+      "SelectedBefore"
+    ],
+    "rows": [
+      {
+        "ids": [
+          "phase",
+          "room_type",
+          "public_boss",
+          ""
+        ],
+        "name": "Global",
+        "numeric": [
+          {
+            "name": "act",
+            "type": "i32"
+          },
+          {
+            "name": "floor",
+            "type": "i32"
+          },
+          {
+            "name": "ascension",
+            "type": "i32"
+          },
+          {
+            "name": "turn",
+            "type": "i32"
+          },
+          {
+            "name": "side",
+            "type": "i32"
+          },
+          {
+            "name": "participating_seats",
+            "type": "i32"
+          },
+          {
+            "name": "owner_seat",
+            "type": "i32"
+          },
+          {
+            "name": "current_x",
+            "type": "i32"
+          },
+          {
+            "name": "current_y",
+            "type": "i32"
+          },
+          {
+            "name": "extra_turn_generation",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "character",
+          "",
+          "",
+          ""
+        ],
+        "name": "Seat",
+        "numeric": [
+          {
+            "name": "absolute_seat",
+            "type": "i32"
+          },
+          {
+            "name": "relative_seat",
+            "type": "i32"
+          },
+          {
+            "name": "hp",
+            "type": "i32"
+          },
+          {
+            "name": "max_hp",
+            "type": "i32"
+          },
+          {
+            "name": "block",
+            "type": "i32"
+          },
+          {
+            "name": "energy",
+            "type": "i32"
+          },
+          {
+            "name": "max_energy",
+            "type": "i32"
+          },
+          {
+            "name": "stars",
+            "type": "i32"
+          },
+          {
+            "name": "gold",
+            "type": "i32"
+          },
+          {
+            "name": "potion_capacity",
+            "type": "i32"
+          },
+          {
+            "name": "hand_count",
+            "type": "i32"
+          },
+          {
+            "name": "draw_count",
+            "type": "i32"
+          },
+          {
+            "name": "discard_count",
+            "type": "i32"
+          },
+          {
+            "name": "exhaust_count",
+            "type": "i32"
+          },
+          {
+            "name": "readiness_generation",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "side",
+          "intent",
+          "",
+          ""
+        ],
+        "name": "Creature",
+        "numeric": [
+          {
+            "name": "hp",
+            "type": "i32"
+          },
+          {
+            "name": "max_hp",
+            "type": "i32"
+          },
+          {
+            "name": "block",
+            "type": "i32"
+          },
+          {
+            "name": "creature_index",
+            "type": "i32"
+          },
+          {
+            "name": "owner_seat",
+            "type": "i32"
+          },
+          {
+            "name": "displayed_damage",
+            "type": "i32"
+          },
+          {
+            "name": "displayed_hits",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "intent_type",
+          "",
+          "",
+          ""
+        ],
+        "name": "Intent",
+        "numeric": [
+          {
+            "name": "displayed_damage",
+            "type": "i32"
+          },
+          {
+            "name": "displayed_hits",
+            "type": "i32"
+          },
+          {
+            "name": "status_cards",
+            "type": "i32"
+          },
+          {
+            "name": "order",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "card_type",
+          "rarity",
+          "target_type",
+          "pile"
+        ],
+        "name": "Card",
+        "numeric": [
+          {
+            "name": "energy_cost",
+            "type": "i32"
+          },
+          {
+            "name": "star_cost",
+            "type": "i32"
+          },
+          {
+            "name": "upgrades",
+            "type": "i32"
+          },
+          {
+            "name": "hand_order",
+            "type": "i32"
+          },
+          {
+            "name": "draw_count",
+            "type": "i32"
+          },
+          {
+            "name": "display_damage",
+            "type": "i32"
+          },
+          {
+            "name": "display_block",
+            "type": "i32"
+          },
+          {
+            "name": "replay_count",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "power_type",
+          "stack_type",
+          "",
+          ""
+        ],
+        "name": "Power",
+        "numeric": [
+          {
+            "name": "amount",
+            "type": "i32"
+          },
+          {
+            "name": "display_counter",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "rarity",
+          "pool",
+          "",
+          ""
+        ],
+        "name": "Relic",
+        "numeric": [
+          {
+            "name": "display_counter",
+            "type": "i32"
+          },
+          {
+            "name": "inventory_order",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "rarity",
+          "usage",
+          "target_type",
+          ""
+        ],
+        "name": "Potion",
+        "numeric": [
+          {
+            "name": "slot",
+            "type": "i32"
+          },
+          {
+            "name": "capacity",
+            "type": "i32"
+          },
+          {
+            "name": "price",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "name": "Orb",
+        "numeric": [
+          {
+            "name": "order",
+            "type": "i32"
+          },
+          {
+            "name": "passive",
+            "type": "i32"
+          },
+          {
+            "name": "evoke",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "name": "Rune",
+        "numeric": [
+          {
+            "name": "order",
+            "type": "i32"
+          },
+          {
+            "name": "amount",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "variable",
+          "effect",
+          "",
+          ""
+        ],
+        "name": "Modifier",
+        "numeric": [
+          {
+            "name": "amount",
+            "type": "number"
+          },
+          {
+            "name": "duration",
+            "type": "i32"
+          },
+          {
+            "name": "decimal_scale",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_0",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_1",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_2",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_3",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_4",
+            "type": "i32"
+          },
+          {
+            "name": "coefficient_5",
+            "type": "i32"
+          },
+          {
+            "name": "sign",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "room_type",
+          "point_type",
+          "",
+          ""
+        ],
+        "name": "MapNode",
+        "numeric": [
+          {
+            "name": "x",
+            "type": "i32"
+          },
+          {
+            "name": "y",
+            "type": "i32"
+          },
+          {
+            "name": "act",
+            "type": "i32"
+          },
+          {
+            "name": "visit_order",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "name": "MapEdge",
+        "numeric": [
+          {
+            "name": "traversal_cost",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "purpose",
+          "effect",
+          "source_pile",
+          ""
+        ],
+        "name": "Choice",
+        "numeric": [
+          {
+            "name": "resolver_stage",
+            "type": "i32"
+          },
+          {
+            "name": "minimum",
+            "type": "i32"
+          },
+          {
+            "name": "maximum",
+            "type": "i32"
+          },
+          {
+            "name": "selected_count",
+            "type": "i32"
+          },
+          {
+            "name": "owner_seat",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "name": "ChoiceOption",
+        "numeric": [
+          {
+            "name": "offer_order",
+            "type": "i32"
+          },
+          {
+            "name": "selected_order",
+            "type": "i32"
+          },
+          {
+            "name": "retrieval_order",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "reward_kind",
+          "",
+          "",
+          ""
+        ],
+        "name": "Reward",
+        "numeric": [
+          {
+            "name": "amount",
+            "type": "i32"
+          },
+          {
+            "name": "reward_order",
+            "type": "i32"
+          },
+          {
+            "name": "remaining_rerolls",
+            "type": "i32"
+          },
+          {
+            "name": "remaining_sacrifices",
+            "type": "i32"
+          },
+          {
+            "name": "reroll_cost",
+            "type": "i32"
+          },
+          {
+            "name": "sacrifice_cost",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "reward_kind",
+          "",
+          "",
+          ""
+        ],
+        "name": "Offer",
+        "numeric": [
+          {
+            "name": "price",
+            "type": "i32"
+          },
+          {
+            "name": "offer_order",
+            "type": "i32"
+          },
+          {
+            "name": "bundle_size",
+            "type": "i32"
+          },
+          {
+            "name": "remaining_uses",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "event",
+          "",
+          "",
+          ""
+        ],
+        "name": "Event",
+        "numeric": [
+          {
+            "name": "stage",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "page",
+          "",
+          "",
+          ""
+        ],
+        "name": "EventPage",
+        "numeric": [
+          {
+            "name": "stage",
+            "type": "i32"
+          },
+          {
+            "name": "parameter",
+            "type": "i32"
+          },
+          {
+            "name": "parameter_y",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "option",
+          "effect",
+          "",
+          ""
+        ],
+        "name": "EventOption",
+        "numeric": [
+          {
+            "name": "option_order",
+            "type": "i32"
+          },
+          {
+            "name": "hp_cost",
+            "type": "i32"
+          },
+          {
+            "name": "max_hp_cost",
+            "type": "i32"
+          },
+          {
+            "name": "gold_cost",
+            "type": "i32"
+          },
+          {
+            "name": "amount",
+            "type": "number"
+          },
+          {
+            "name": "minimum",
+            "type": "i32"
+          },
+          {
+            "name": "maximum",
+            "type": "i32"
+          },
+          {
+            "name": "parameter",
+            "type": "i32"
+          },
+          {
+            "name": "x",
+            "type": "i32"
+          },
+          {
+            "name": "y",
+            "type": "i32"
+          },
+          {
+            "name": "amount_fraction",
+            "type": "f32"
+          },
+          {
+            "name": "amount_fraction_tail",
+            "type": "f32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "service",
+          "",
+          "",
+          ""
+        ],
+        "name": "RestService",
+        "numeric": [
+          {
+            "name": "amount",
+            "type": "i32"
+          },
+          {
+            "name": "price",
+            "type": "i32"
+          },
+          {
+            "name": "remaining_uses",
+            "type": "i32"
+          },
+          {
+            "name": "service_order",
+            "type": "i32"
+          }
+        ]
+      },
+      {
+        "ids": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "name": "Treasure",
+        "numeric": [
+          {
+            "name": "gold",
+            "type": "i32"
+          },
+          {
+            "name": "claimed_count",
+            "type": "i32"
+          },
+          {
+            "name": "vote_count",
+            "type": "i32"
+          },
+          {
+            "name": "offer_order",
+            "type": "i32"
+          }
+        ]
+      }
+    ],
+    "scalar_limit": 16,
+    "selection_capacity": 1024,
+    "state_capacity": 8192,
+    "version": 1,
+    "visibility": "Never encode seeds, RNG state, hidden draw order, unrevealed offers/rooms, hidden monster moves or private teammate hands. Known bits distinguish unknown from zero."
+  },
+  "schema_hash": "98696c6510f51da58b93b6bfa9dff0f8b05d1f0d651e00b598d81b0c4649b22c",
+  "schema_version": 1
+}

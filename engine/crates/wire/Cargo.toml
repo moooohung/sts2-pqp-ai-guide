@@ -1,0 +1,10 @@
+[package]
+name = "sts2_wire"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+description = "r7 observation wire batch layout shared by the vector env and the policy (no dependencies)"
+
+[lib]
+name = "sts2_wire"
+path = "src/lib.rs"

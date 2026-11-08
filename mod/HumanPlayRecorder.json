@@ -1,0 +1,10 @@
+{
+  "id": "HumanPlayRecorder",
+  "name": "pqp AI Guide & Replay",
+  "author": "AVR",
+  "description": "선택지마다 pqp AI 추천 확률을 표시하고, 승천 10 판을 기록해 sts.pqp.me 리플레이와 AI 학습에 씁니다.",
+  "version": "0.1.0",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": false
+}

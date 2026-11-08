@@ -1,0 +1,35 @@
+[package]
+name = "sts2_aiplay"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+description = "Opt-in CPU/WASM native simulator parity boundary for AI play"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[features]
+default = []
+# Native V1-compatible and relational V2 heads; the browser package uses only this.
+native = ["dep:sts2_native_obs", "dep:sts2_human_replay", "dep:sts2_policy", "dep:burn", "dep:getrandom", "dep:serde", "dep:serde_json", "dep:sha2"]
+memory-profile = ["native"]
+
+[dependencies]
+sts2_sim = { path = "../sim" }
+sts2_vecenv = { path = "../vecenv", default-features = false, features = ["native"] }
+sts2_wire = { path = "../wire" }
+sts2_native_obs = { path = "../native_obs", optional = true }
+# Human run replays in the browser theater (recordings from the HumanPlayRecorder mod).
+sts2_human_replay = { path = "../human_replay", optional = true }
+# Same exact native policy implementation and precision-patched Burn as training.
+sts2_policy = { path = "../policy", default-features = false, features = ["obs-v2"], optional = true }
+burn = { version = "=0.22.1", default-features = false, features = ["std", "flex", "safetensors"], optional = true }
+serde = { version = "=1.0.229", features = ["derive"], optional = true }
+serde_json = { version = "=1.0.154", optional = true }
+sha2 = { version = "=0.11.1", optional = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# Registry latest stable checked 2026-10-30; matching CLI version required.
+wasm-bindgen = "=0.2.130"
+# Burn's initialization entropy; gameplay/sampling remain independently seeded.
+getrandom = { version = "=0.4.3", features = ["wasm_js"], optional = true }

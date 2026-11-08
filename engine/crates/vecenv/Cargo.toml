@@ -1,0 +1,30 @@
+[package]
+name = "sts2_vecenv"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+description = "N native simulators stepped in parallel (Rayon): r7 wire written per lane, refusal quarantine, auto-reset"
+
+[lib]
+name = "sts2_vecenv"
+path = "src/lib.rs"
+
+[features]
+default = ["native"]
+native = []
+# Offline recorder only; its recorders and fixtures are not part of this export.
+selector-proof = ["native", "sts2_sim/selector-proof"]
+
+[dependencies]
+# Latest stable release checked with cargo search on 2026-10-25.
+rayon = "=1.12.0"
+# Latest stable checked with cargo search; cached linear-time public-text parsing.
+regex = "=1.13.1"
+sts2_wire = { path = "../wire" }
+sts2_sim = { path = "../sim" }
+
+[dev-dependencies]
+# Official registry latest stable checked for frozen-oracle fixture decoding.
+serde_json = "=1.0.154"
+# Latest stable checked with `cargo search sha2 --limit 1` on 2026-10-27.
+sha2 = "=0.11.1"

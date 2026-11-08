@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- Slay the Spire 2 install directory (the folder that contains data_sts2_windows_x86_64).
+         Pass -p:Sts2GameDir="..." or set the STS2_GAME_DIR environment variable. -->
+    <Sts2GameDir Condition="'$(Sts2GameDir)' == '' and '$(STS2_GAME_DIR)' != ''">$(STS2_GAME_DIR)</Sts2GameDir>
+    <GameData Condition="'$(GameData)' == '' and '$(Sts2GameDir)' != ''">$(Sts2GameDir)/data_sts2_windows_x86_64</GameData>
+  </PropertyGroup>
+</Project>
