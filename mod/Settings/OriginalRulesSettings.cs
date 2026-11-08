@@ -5,9 +5,7 @@ namespace HumanPlayRecorder.Settings;
 public static class OriginalRulesSettings
 {
     sealed record Saved(bool enabled);
-    static readonly string PathName = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "HumanPlayRecorder", "original-rules.json");
+    static readonly string PathName = Path.Combine(Edition.DataDirectory, "original-rules.json");
     static bool? enabled;
     public static event Action? Changed;
     public static bool Enabled

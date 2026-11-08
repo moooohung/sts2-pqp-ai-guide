@@ -17,9 +17,9 @@ namespace HumanPlayRecorder.Settings;
 // "Show run timer" line: its label font, tickbox art, focus reticle, click sounds, hover tip
 // and controller navigation. The cloned tickbox keeps its game script; the patches below stop
 // it from touching the run-timer preference.
-static class ModSettingsUi
+static partial class ModSettingsUi
 {
-    const string ModId = "HumanPlayRecorder";
+    const string ModId = Edition.ModId;
     const string Template = "ShowRunTimer";
     const string RowName = "HumanPlayRecorderAiRecommendations";
     const string StatusName = "HumanPlayRecorderAiStatus";
@@ -54,7 +54,7 @@ static class ModSettingsUi
         RecommendationSettings.ShowRecommendationsChanged += Refresh;
         RecommendationSettings.BadgeVisibilityChanged += Refresh;
         OriginalRulesSettings.Changed += Refresh;
-        SharingSettings.Changed += Refresh;
+        InstallSharing();
         UiText.LanguageChanged += RefreshLanguage;
         UiText.Subscribe();
         UiGuard.Run("mod name hooks", () =>
@@ -63,6 +63,12 @@ static class ModSettingsUi
             Patch(harmony, typeof(NModInfoContainer), nameof(NModInfoContainer.Fill), postfix: nameof(NameModInfo));
         });
     }
+
+    delegate void OptionRow(string name, Func<string> title, Func<bool> read, Action<bool> write,
+        Func<bool> visible, bool disclosure = false, Func<string>? description = null);
+    // Online edition only (ModSettingsUi.Sharing.cs): sharing settings, data deletion and policy links.
+    static partial void InstallSharing();
+    static partial void AddSharingRows(OptionRow option);
 
     // On a failure both prefixes run the game's original, as if the mod were absent.
     static bool OriginalUnlessClone(NRunTimerTickbox __instance) =>
@@ -152,38 +158,7 @@ static class ModSettingsUi
                 () => RecommendationSettings.ShowRecommendations && expanded);
             Insert(rules);
             Insert(rulesDivider);
-            Option(RowName + "TrainingConsent", () => UiText.Get("settings_training_consent"),
-                () => SharingSettings.TrainingConsent, value => SharingSettings.TrainingConsent = value,
-                () => true, description: () => UiText.Get("settings_training_consent_tip"));
-            Option(RowName + "ReplaySaving", () => UiText.Get("settings_replay_saving"),
-                () => SharingSettings.ReplaySaving, value => SharingSettings.ReplaySaving = value,
-                () => true, description: () => UiText.Get("settings_replay_saving_tip"));
-            // Action rows: the tickbox is hidden and a click on the label runs the action once.
-            bool deleteArmed = false;
-            Option(RowName + "DeleteAll", () => UiText.Get(deleteArmed ? "settings_delete_all_confirm" : "settings_delete_all"),
-                () => false, clicked =>
-                {
-                    if (!deleteArmed) { deleteArmed = true; Refresh(); return; }
-                    deleteArmed = false;
-                    _ = Task.Run(async () =>
-                    {
-                        bool done;
-                        try { done = await ReplayLinks.DeleteAllMine(); }
-                        catch (Exception) { done = false; }
-                        if (!done)
-                            Callable.From(() => FirstLaunchNotice.ShowShortNote(UiText.Get("settings_delete_all"),
-                                UiText.Get("replay_delete_failed"))).CallDeferred();
-                    });
-                    Refresh();
-                }, () => true, disclosure: true, description: () => "");
-            foreach (var (suffix, key, url) in new[] {
-                ("Privacy", "settings_privacy_link", "https://pqp.me/privacy/"),
-                ("Terms", "settings_terms_link", "https://pqp.me/terms/") })
-                Option(RowName + suffix, () => UiText.Get(key), () => false, _ =>
-                {
-                    ReplayLinks.Open(url);
-                    Refresh();
-                }, () => true, disclosure: true, description: () => url);
+            AddSharingRows(Option);
             Insert(status);
             Insert(statusDivider);
             rows.Add(Wire(toggle, status: false));

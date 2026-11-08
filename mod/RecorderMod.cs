@@ -26,21 +26,8 @@ public static partial class RecorderMod
     static int sequence;
     static int runLocalSeat;
     static object? terminalSummary;
-    static LiveRunSession? liveSession;
     static RunResult? terminalResult;
     static string? terminalAt;
-    static UploadQueue? uploads;
-    // Release safety interlock, not an in-game preference. The solo seed replay
-    // and four-seat original-DLL transport gates are recorded under evidence/.
-    static readonly bool ReleaseReplayVerified = true;
-    static string DataDirectory = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "HumanPlayRecorder");
-    static LocalStorageBudget Storage = new(DataDirectory);
-    internal static void ConfigureOfflineTestDirectory(string path)
-    {
-        if(!TestMode.IsOn||run is not null)throw new InvalidOperationException("offline test setup only");
-        DataDirectory=path;Storage=new(path);
-    }
     internal static Task LastCompletion { get; private set; } = Task.CompletedTask;
     static readonly SortedDictionary<int, RecordedAction> pendingInputs = new();
     static readonly Dictionary<GameAction, int> executingInputs = new();
@@ -72,33 +59,26 @@ public static partial class RecorderMod
     static readonly HashSet<string> BaseCharacters = [
         "IRONCLAD", "SILENT", "DEFECT", "REGENT", "NECROBINDER"
     ];
-    internal const string NetworkModName = "HumanPlayRecorder-0.1.0";
-    sealed class LobbyNonceState(MessageHandlerDelegate<HumanPlayRunNonceMessage> handler,
-        MessageHandlerDelegate<HumanPlayConsentMessage> consentHandler)
-    {
-        public MessageHandlerDelegate<HumanPlayRunNonceMessage> Handler { get; } = handler;
-        public MessageHandlerDelegate<HumanPlayConsentMessage> ConsentHandler { get; } = consentHandler;
-        public string? Token { get; set; }
-        // Net id -> agreed to training data (PartyConsent): on the host what the clients sent,
-        // on a client what the host forwarded.
-        public Dictionary<ulong, bool> Consent { get; } = new();
-    }
-    // Set by StartMultiplayer for the StartCore call that follows it; solo runs need no agreement.
-    static RunConsent? pendingRunConsent;
-    static object? pendingRunService;
-    static RunConsent? activeRunConsent;
-    static RunHeader? runHeader;
-    static object? runService;
-    static ulong runSelf;
-    static MessageHandlerDelegate<HumanPlayConsentMessage>? runConsentHandler;
-    static ConsentWire.MembershipWatch? runMembership;
-    // The active capture's permission to go on; sharing switched fully off ends it for good.
-    static CaptureLease? captureLease;
-    static readonly Dictionary<StartRunLobby, LobbyNonceState> LobbyNonces = new();
+    internal const string NetworkModName = Edition.NetworkModName;
+
+    // Recording and sharing (online edition, RecorderMod.Sharing.cs). The offline edition has no
+    // implementation of the void ones, and RecorderMod.Offline.cs answers the others.
+    static partial void InstallSharing(Harmony harmony);
+    // Takes the party agreement StartMultiplayer prepared for the StartCore call that follows it.
+    static partial void BeginRunSharing();
+    static partial void ResetRunSharing();
+    static partial void DropLiveSession();
+    static partial void NotifyExcluded(string rejection);
+    static partial void StartCaptureLease(RunHeader? header, LocalJournal capturing);
+    static partial void StartRecording(RunHeader header, (string id, string version, string dll)[] modFiles);
+    static partial void RecordLive(LocalJournal destination, ActionRow row, ref bool recorded);
+    static partial void VerifyRunSharing(LocalJournal closing);
+    static partial void TakeLiveSession(LocalJournal closed, ref Func<Task>? finish);
+
     static string Timestamp() => DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffff'Z'", CultureInfo.InvariantCulture);
     public static void Init()
     {
-        var harmony = new Harmony("me.pqp.humanplayrecorder");
+        var harmony = new Harmony(Edition.HarmonyId);
         InstallAdvisorIntegration(harmony);
         MultiplayerAi.Install(harmony);
         PerRunContentGate.Install(harmony);
@@ -118,13 +98,6 @@ public static partial class RecorderMod
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(StartMultiplayer)));
         harmony.Patch(AccessTools.Method(typeof(RunManager), "SetUpTest"),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(StartTest)));
-        foreach (var constructor in AccessTools.GetDeclaredConstructors(typeof(StartRunLobby)))
-            harmony.Patch(constructor,
-                postfix: new HarmonyMethod(typeof(RecorderMod), nameof(RegisterLobbyNonceHandler)));
-        harmony.Patch(AccessTools.Method(typeof(StartRunLobby), "BeginRunForAllPlayers"),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeLobbyBeginRun)));
-        harmony.Patch(AccessTools.Method(typeof(StartRunLobby), nameof(StartRunLobby.CleanUp)),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(UnregisterLobbyNonceHandler)));
         harmony.Patch(AccessTools.Method(typeof(PlayCardAction), "ExecuteAction"),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeCard)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterTask)));
@@ -154,11 +127,7 @@ public static partial class RecorderMod
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterRest)));
         harmony.Patch(AccessTools.Method(typeof(RunManager), "OnEnded"),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(Ended)));
-        FirstLaunchNotice.Install(harmony);
-        StartupConsent.Enable();
-        ConsentWire.Install(harmony);
-        Settings.SharingSettings.Changed += OwnConsentChanged;
-        RunManager.Instance.RoomEntered += CaptureFloor;
+        InstallSharing(harmony);
     }
     static void AfterRemoteRewardChoice(Player player, uint choiceId,
         ref Task<PlayerChoiceResult> __result)
@@ -177,171 +146,19 @@ public static partial class RecorderMod
     static void StartSingleplayer(RunState state) => StartCore(state, null);
     static void StartTest(RunState state) => StartCore(state,
         state.Players.Count > 1 ? $"oracle-{state.Rng.Seed}-{state.Players.Count}" : null);
-    static void RegisterLobbyNonceHandler(StartRunLobby __instance)
-    {
-        if (!__instance.NetService.Type.IsMultiplayer()) return;
-        if (LobbyNonces.ContainsKey(__instance)) return;
-        MessageHandlerDelegate<HumanPlayRunNonceMessage> handler = (message, senderId) =>
-            ReceiveLobbyNonce(__instance, message, senderId);
-        MessageHandlerDelegate<HumanPlayConsentMessage> consentHandler = (message, senderId) =>
-            ReceiveLobbyConsent(__instance, message, senderId);
-        LobbyNonces.Add(__instance, new(handler, consentHandler));
-        __instance.NetService.RegisterMessageHandler(handler);
-        __instance.NetService.RegisterMessageHandler(consentHandler);
-        // Nothing is sent here: whether the host runs this mod is only known once its handshake was
-        // seen, and a vanilla host must never receive a packet type it does not know.
-        SendOwnConsent(__instance.NetService);
-    }
-    static void UnregisterLobbyNonceHandler(StartRunLobby __instance)
-    {
-        if (!LobbyNonces.Remove(__instance, out var state)) return;
-        __instance.NetService.UnregisterMessageHandler(state.Handler);
-        __instance.NetService.UnregisterMessageHandler(state.ConsentHandler);
-    }
-    // This player's own answer, to the peers that are known to run this mod (ConsentWire).
-    static void SendOwnConsent(object service)
-    {
-        try { ConsentWire.SendOwn(service, Settings.SharingSettings.TrainingConsent); }
-        catch (Exception e) { Godot.GD.Print("[HumanPlayRecorder] consent not sent: " + e.GetType().Name); }
-    }
-    static void OwnConsentChanged()
-    {
-        // Both settings off ends the run being captured; switching one back on does not revive it.
-        captureLease?.Check();
-        foreach (var lobby in LobbyNonces.Keys.ToArray()) SendOwnConsent(lobby.NetService);
-        if (activeRunConsent is { } consent && runService is not null)
-        {
-            SendOwnConsent(runService);
-            consent.Observe(runSelf, Settings.SharingSettings.TrainingConsent);
-        }
-        _ = uploads?.ApplyChoicesAsync();
-    }
-    // Lobby phase. Whose answer this is comes from the connection that delivered it, and only a peer
-    // that runs this mod is believed.
-    static void ReceiveLobbyConsent(StartRunLobby lobby, HumanPlayConsentMessage message, ulong headerSender)
-    {
-        if (!LobbyNonces.TryGetValue(lobby, out var state)) return;
-        TakeConsent(lobby.NetService, headerSender, message.agreed, (origin, agreed) => state.Consent[origin] = agreed);
-    }
-    static void TakeConsent(object service, ulong headerSender, bool agreed, Action<ulong, bool> store)
-    {
-        if (!ConsentWire.TryOrigin(service, headerSender, out ulong origin)) return;
-        if (service is NetHostGameService host)
-        {
-            if (origin == host.NetId || !ConsentWire.HasMod(host.GetVersionInfoForPeer(origin))) return;
-            store(origin, agreed);
-            ConsentWire.Relay(host, origin, agreed);
-        }
-        else store(origin, agreed);
-    }
-    // The run's table: the local answer is always read from the setting, never from what a host forwarded.
-    static RunConsent NewRunConsent(RunState state, object service, IReadOnlyDictionary<ulong, bool> known)
-    {
-        ulong self = service is NetHostGameService host ? host.NetId : ((NetClientGameService)service).NetId;
-        ulong hostId = service is NetClientGameService client ? client.HostNetId : self;
-        runSelf = self;
-        var table = new Dictionary<ulong, bool>(known) { [self] = Settings.SharingSettings.TrainingConsent };
-        return new RunConsent(hostId, state.Players.Select(p => p.NetId), MultiplayerAi.IsAi, table);
-    }
-    static void BeforeLobbyBeginRun(StartRunLobby __instance)
-    {
-        if (__instance.NetService.Type != NetGameType.Host ||
-            __instance.NetService is not NetHostGameService host) return;
-        if (!LobbyNonces.TryGetValue(__instance, out var state))
-        { RegisterLobbyNonceHandler(__instance); state = LobbyNonces[__instance]; }
-        string token = Convert.ToHexStringLower(RandomNumberGenerator.GetBytes(16));
-        state.Token = token;
-        ConsentWire.Announce(host, state.Consent, Settings.SharingSettings.TrainingConsent);
-        var message = new HumanPlayRunNonceMessage { nonce = token };
-        foreach (var peer in __instance.Players.Where(p => p.id != __instance.NetService.NetId))
-        {
-            var version = host.GetVersionInfoForPeer(peer.id);
-            if (version?.otherMods?.Contains(NetworkModName, StringComparer.Ordinal) != true) continue;
-            __instance.NetService.SendMessage(message, peer.id);
-        }
-    }
-    static void ReceiveLobbyNonce(StartRunLobby lobby, HumanPlayRunNonceMessage message, ulong senderId)
-    {
-        if (!LobbyNonces.TryGetValue(lobby, out var state) ||
-            lobby.NetService.Type != NetGameType.Client ||
-            lobby.NetService is not INetClientGameService client ||
-            client.NetClient is null || senderId != client.NetClient.HostNetId ||
-            message.nonce.Length != 32 || !message.nonce.All(Uri.IsHexDigit))
-            return;
-        state.Token = message.nonce.ToLowerInvariant();
-    }
-    static void StartMultiplayer(RunState state, StartRunLobby lobby)
-    {
-        ReleaseRunConsent();
-        if (!LobbyNonces.TryGetValue(lobby, out var nonce) || nonce.Token is not { } token)
-        {
-            // Not even this local stub is written while nothing may be recorded.
-            if (SharingAllowsRecording) QuarantineStart(state, "multiplayer_run_nonce_unavailable");
-            StartCore(state, null);
-            return;
-        }
-        nonce.Token = null; // A nonce is valid for exactly one SetUpNewMultiplayer call.
-        pendingRunConsent = NewRunConsent(state, lobby.NetService, nonce.Consent);
-        pendingRunService = lobby.NetService;
-        StartCore(state, token);
-    }
-    // Recording is allowed only while training consent or replay saving is on, and the session
-    // was not opted out at start-up.
-    static bool SharingAllowsRecording => !StartupConsent.RecordingDeclinedThisSession &&
-        UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving);
-
-    // The run's consent follows it to completion: any change in who plays, or a withdrawal, ends upload eligibility.
-    static void BindRunConsent(RunConsent consent, RunHeader header, object service)
-    {
-        activeRunConsent = consent;
-        runHeader = header;
-        runService = service;
-        consent.Broken += why =>
-        {
-            Godot.GD.Print("[HumanPlayRecorder] multiplayer run no longer uploadable: " + why);
-            header.Admission.Reject();
-            journal?.Invalidate();
-        };
-        if (!consent.Uploadable) { header.Admission.Reject(); journal?.Invalidate(); }
-        runConsentHandler = (message, headerSender) =>
-            TakeConsent(service, headerSender, message.agreed, (origin, agreed) => consent.Observe(origin, agreed));
-        ((INetGameService)service).RegisterMessageHandler(runConsentHandler);
-        // Every recorder, host or client, hears about the others leaving, joining or reconnecting.
-        runMembership = new ConsentWire.MembershipWatch(service, why => consent.MembershipChanged(why));
-    }
-    static void ReleaseRunConsent()
-    {
-        if (runService is INetGameService service && runConsentHandler is not null)
-            service.UnregisterMessageHandler(runConsentHandler);
-        runMembership?.Dispose();
-        runConsentHandler = null; runMembership = null; runService = null;
-        activeRunConsent = null; runHeader = null;
-    }
-    static void QuarantineStart(RunState state, string reason)
-    {
-        Godot.GD.Print("[HumanPlayRecorder] run start skipped: " + reason);
-        var id = Guid.NewGuid().ToString();
-        var incomplete = new LocalJournal(Path.Combine(DataDirectory, "incomplete"), id, Storage);
-        incomplete.Append(new { kind = "entry", schema = "sts2-human-run-v1", run_id = id,
-            seed = state.Rng.Seed.ToString(CultureInfo.InvariantCulture), reason });
-        incomplete.Invalidate();
-        _ = incomplete.DisposeAsync();
-    }
     static void StartCore(RunState state, string? runStartToken)
     {
-        var runConsent = pendingRunConsent;
-        pendingRunConsent = null;
-        bool partyAgreed = runConsent?.Uploadable ?? true;
-        if (runConsent is null) ReleaseRunConsent();
+        BeginRunSharing();
         StopAdvisor();
         advisorRecordingHeader = null;
         string decision = "skipped: initialization incomplete";
         try
         {
             if (journal is not null) { var previous = journal; previous.Invalidate(); _ = previous.DisposeAsync(); }
-            run = null; journal = null; captureLease = null; sequence = 0;
+            run = null; journal = null; sequence = 0;
             terminalSummary = null;
-            liveSession = null; terminalResult = null; terminalAt = null;
+            terminalResult = null; terminalAt = null;
+            ResetRunSharing();
             pendingInputs.Clear();
             executingInputs.Clear(); cancelledInputs.Clear();
             ResetInventoryAdapterState();
@@ -349,20 +166,8 @@ public static partial class RecorderMod
             bool wantsAdvisor = advisorMain is not null &&
                 (Settings.RecommendationSettings.ShowRecommendations || MultiplayerAi.HasAi(state));
             if (wantsAdvisor) Ai.LiveObservation.ObserveRunStart(state);
-            string? recordingRejection = StartupConsent.RecordingDeclinedThisSession
-                ? "declined at start-up" : state.Players.Count > 1 &&
-                    runStartToken is null && !TestMode.IsOn ? "multiplayer_run_nonce_unavailable" : null;
-            // Training consent and replay saving both off: nothing is recorded, not even locally.
-            if (!UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving))
-                recordingRejection ??= "training consent and replay saving are both off";
-            // Everyone must have agreed, or nothing about this party is recorded for upload.
-            if (!partyAgreed)
-            {
-                recordingRejection ??= "multiplayer party has not all agreed to training data";
-                if (!TestMode.IsOn)
-                    Godot.Callable.From(() => FirstLaunchNotice.ShowShortNote(Settings.UiText.Get("mod_name"),
-                        Settings.UiText.Get("mp_upload_skipped_notice"))).CallDeferred();
-            }
+            // Offline edition: always "offline edition", so nothing past the advisor is set up.
+            string? recordingRejection = RecordingRejection(state, runStartToken);
             recordingRejection ??= VanillaGuard.ContentPools.NonNeutralizationReason;
             if (MultiplayerAi.HasAi(state)) recordingRejection = "ai_teammates";
             if (recordingRejection is not null && !wantsAdvisor)
@@ -403,7 +208,7 @@ public static partial class RecorderMod
             if (rejection is not null)
             {
                 decision = "skipped: " + rejection;
-                if(!TestMode.IsOn) FirstLaunchNotice.ShowExcluded(rejection);
+                NotifyExcluded(rejection);
                 recordingRejection ??= rejection;
                 if (!wantsAdvisor) return;
             }
@@ -433,16 +238,8 @@ public static partial class RecorderMod
                 header = null;
                 recordingRejection ??= "initial replay capture unavailable";
             }
-            journal = new LocalJournal(Path.Combine(DataDirectory,"incomplete"), id, Storage,
-                persist: recordingRejection is null);
-            var capturing = journal;
-            captureLease = new(() => UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving),
-                () => {
-                    Godot.GD.Print("[HumanPlayRecorder] capture stopped: training consent and replay saving were switched off");
-                    header?.Admission.Reject();
-                    capturing.Invalidate();
-                    if (ReferenceEquals(capturing, journal)) liveSession?.Discard();
-                });
+            journal = NewJournal(id, persist: recordingRejection is null);
+            StartCaptureLease(header, journal);
             StartAdvisor(header, state.AscensionLevel, typeof(RunState).Assembly.Location, state, localSeat);
             AttachTreasureSynchronizer();
             if (recordingRejection is not null) {
@@ -455,8 +252,7 @@ public static partial class RecorderMod
                 seed = state.Rng.Seed.ToString(CultureInfo.InvariantCulture),
                 mode, party_size = party.Length, local_seat = localSeat, party,
                 started_at = Timestamp(), replay_certified = false });
-            BeginLiveSession(header!, modFiles);
-            if (runConsent is not null) BindRunConsent(runConsent, header!, pendingRunService!);
+            StartRecording(header!, modFiles);
             decision = $"recording: ascension {state.AscensionLevel}, party_size {party.Length}, local_seat {localSeat}";
         }
         catch (Exception e)
@@ -464,7 +260,7 @@ public static partial class RecorderMod
             journal?.Invalidate();
             RefuseAdvisor("RUN_INITIALIZATION_FAILED");
             run = null;
-            liveSession = null;
+            DropLiveSession();
             decision = RunStartDiagnostics.Failure(e);
         }
         finally { Godot.GD.Print("[HumanPlayRecorder] run start " + decision); }
@@ -692,8 +488,9 @@ public static partial class RecorderMod
             var row = new ActionRow(action.InputSequence!.Value, phase, Timestamp(),
                 action, digest, RecordingFormat.Hash(digest), action.ParentSequence) {before=action.ReplayBefore};
             bool current = ReferenceEquals(destination, journal);
-            if (current && liveSession is { } live) live.Record(destination, row);
-            else destination.Append(row);
+            bool recorded = false;
+            if (current) RecordLive(destination, row, ref recorded);
+            if (!recorded) destination.Append(row);
             if (current) AdvisorCompleted(row);
             RetireInput(action);
             FinishJournalIfReady();
@@ -749,13 +546,7 @@ public static partial class RecorderMod
         // OnEnded can run inside the final awaited action. Closing here before
         // that action's postfix completes would silently drop its last row.
         if (terminalSummary is null || journal is null || pendingInputs.Count != 0) return;
-        if (activeRunConsent is { } consent)
-        {
-            // Completion re-checks the table that agreed at the start; anything else stays on the PC.
-            if (run is not null) consent.Verify(run.Players.Select(p => p.NetId));
-            if (!consent.Uploadable) { runHeader?.Admission.Reject(); journal.Invalidate(); }
-            ReleaseRunConsent();
-        }
+        VerifyRunSharing(journal);
         var contentGate=PerRunContentGate.Active;
         contentGate?.Finish();
         if(contentGate is {Trainable:false}) journal.Invalidate();
@@ -776,15 +567,16 @@ public static partial class RecorderMod
         terminalAdvisorEpoch = advisorEpoch;
         terminalAdvisorDrain = drain;
         terminalSummary = null;
-        LastCompletion = FinishTerminalAfterAdvisorAsync(closed, header, liveSession,
-            terminalResult, terminalAt, RuntimePatchAudit.Entries(), drain, advisorEpoch);
-        journal = null; run = null; captureLease = null;
-        liveSession = null; terminalResult = null; terminalAt = null;
+        Func<Task>? finishSession = null;
+        TakeLiveSession(closed, ref finishSession);
+        LastCompletion = FinishTerminalAfterAdvisorAsync(closed, header, finishSession, drain, advisorEpoch);
+        journal = null; run = null;
+        terminalResult = null; terminalAt = null;
+        ResetRunSharing();
         PerRunContentGate.Active=null;
     }
     static async Task FinishTerminalAfterAdvisorAsync(LocalJournal closed, RunHeader? header,
-        LiveRunSession? session, RunResult? result, string? endedAt, PatchAuditEntry[] finalAudit,
-        Task drain, long epoch)
+        Func<Task>? finishSession, Task drain, long epoch)
     {
         try { await drain; }
         catch (Exception) {
@@ -795,10 +587,8 @@ public static partial class RecorderMod
             if (terminalAdvisorEpoch == epoch) terminalAdvisorDrain = null;
             if (advisorEpoch == epoch) StopAdvisor();
         }
-        if (session is not null && result is not null && endedAt is not null) {
-            session.End(closed, result, endedAt, closed.Complete, finalAudit);
-            await session.Completion.ConfigureAwait(false);
-        } else await closed.DisposeAsync().ConfigureAwait(false);
+        if (finishSession is not null) await finishSession().ConfigureAwait(false);
+        else await closed.DisposeAsync().ConfigureAwait(false);
     }
     static ((string id, string version, string dll)[] files, string? rejection) PrepareRunMods()
     {
@@ -832,48 +622,5 @@ public static partial class RecorderMod
                         unlock.EncountersSeen.Select(e=>e.ToString()).Order(StringComparer.Ordinal).ToArray(),unlock.NumberOfRuns);
                 }).ToArray())
             };
-    }
-    static void BeginLiveSession(RunHeader header, (string id, string version, string dll)[] modFiles)
-    {
-        uploads ??= new UploadQueue(Path.Combine(DataDirectory,
-            TestMode.IsOn || !ReleaseReplayVerified ? "uncertified" : "pending"), budget: Storage);
-        if (ReleaseReplayVerified && !TestMode.IsOn)
-        {
-            uploads.StampReceipt ??= ReplayLinks.Stamp;
-            uploads.Allowed ??= () => UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving);
-            uploads.Accepted ??= ReplayLinks.Announce;
-            _ = uploads.StartAsync();
-        }
-        var game = typeof(RunState).Assembly;
-        UploadMetadata.Validate(header.environment_mods!,header.patch_audit);
-        liveSession = new LiveRunSession(header, game.Location, modFiles, uploads, OnLiveFailure,
-            message => Godot.GD.Print(message));
-    }
-    // "Delete all my data": every upload queue of this install is cancelled and purged (UploadQueue.PurgeAllAsync).
-    internal static async Task PurgeUploadsAsync(DateTimeOffset at)
-    {
-        var current = uploads;
-        foreach (var name in new[] { "pending", "uncertified" })
-        {
-            string path = Path.Combine(DataDirectory, name);
-            if (current is not null && current.IsAt(path)) { await current.PurgeAllAsync(at); continue; }
-            await using var other = new UploadQueue(path, budget: Storage);
-            await other.PurgeAllAsync(at);
-        }
-    }
-    static void OnLiveFailure(Exception error)
-    {
-        if (error is InvalidOperationException { Message: "queue_full" })
-            FirstLaunchNotice.ShowQueueFull();
-    }
-    static void CaptureFloor()
-    {
-        if (run is null || journal is null || liveSession is null) return;
-        try
-        {
-            if (run.TotalFloor > 0) liveSession.Floor(Digest(run),
-                pendingInputs.Count == 0 ? sequence - 1 : pendingInputs.Keys.Min() - 1);
-        }
-        catch (Exception) { journal.Invalidate(); }
     }
 }

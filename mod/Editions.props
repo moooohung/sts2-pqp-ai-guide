@@ -1,0 +1,48 @@
+<Project>
+  <!-- One source, two editions.
+       Online (default): the published Workshop mod with recording, uploads, replays and policy updates.
+       Offline (-p:Edition=Offline): AI recommendations, AI teammates and original rules only, with the
+       policy bundled in the mod folder. The sources below that send, receive or record are not
+       compiled into it at all; tests/OfflineGate fails the build's gate if any network API is referenced. -->
+  <PropertyGroup>
+    <Edition Condition="'$(Edition)' == ''">Online</Edition>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- tests/PackagingCheck reads this to apply the edition's release checks. -->
+    <AssemblyMetadata Include="HumanPlayRecorder.Edition" Value="$(Edition)" />
+    <!-- Network, recording, upload, replay and consent code: online edition only. -->
+    <OnlineOnlySource Include="Ai\PolicyCache.Download.cs" />
+    <OnlineOnlySource Include="UploadQueue.cs;ReplayLinks.cs;ReplayListText.cs;LiveRunSession.cs;CompletedRun.cs;LocalJournal.cs;LocalStorageBudget.cs" />
+    <OnlineOnlySource Include="MultiplayerRunNonce.cs;HumanPlayConsentMessage.cs;ConsentWire.cs;ConsentPopup.cs;PartyConsent.cs;RunConsent.cs;CaptureLease.cs" />
+    <OnlineOnlySource Include="RecorderDisclosure.cs;StartupConsent.cs;StartupContentScan.cs;StartupContentClassifier.cs;RememberedContentMods.cs;GamePopup.cs;DebugUiCapture.cs" />
+    <OnlineOnlySource Include="RecorderMod.Sharing.cs;FirstLaunchNotice.Sharing.cs;PerRunContentGate.Sharing.cs" />
+    <OnlineOnlySource Include="Settings\SharingSettings.cs;Settings\ModSettingsUi.Sharing.cs;VanillaGuard\PatchSuspension.Sessions.cs" />
+    <OnlineOnlySource Include="Editions\Online\**\*.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Edition)' == 'Offline'">
+    <AssemblyName>PqpAiGuideOffline</AssemblyName>
+    <RootNamespace>HumanPlayRecorder</RootNamespace>
+    <DefineConstants>$(DefineConstants);OFFLINE</DefineConstants>
+    <!-- Separate outputs, so the two editions never overwrite each other's build. -->
+    <IntermediateOutputPath>obj\Offline\$(Configuration)\</IntermediateOutputPath>
+    <OutputPath>bin\Offline\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Edition)' == 'Offline'">
+    <Compile Remove="@(OnlineOnlySource)" />
+  </ItemGroup>
+  <!-- No-network gate regression fixtures (tests/GateFixtures/run-gate-fixtures.ps1): -p:GateFixture=<name>
+       compiles one probe into an offline build with its own output folders. Never packaged. -->
+  <PropertyGroup Condition="'$(Edition)' == 'Offline' and '$(GateFixture)' != ''">
+    <IntermediateOutputPath>obj\GateFixture\$(GateFixture)\</IntermediateOutputPath>
+    <OutputPath>bin\GateFixture\$(GateFixture)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Edition)' == 'Offline' and '$(GateFixture)' != ''">
+    <Compile Include="tests\GateFixtures\$(GateFixture).cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Edition)' == 'Online'">
+    <Compile Remove="Editions\Offline\**\*.cs" />
+  </ItemGroup>
+  <Target Name="RequireKnownEdition" BeforeTargets="BeforeBuild">
+    <Error Condition="'$(Edition)' != 'Online' and '$(Edition)' != 'Offline'" Text="Edition must be Online or Offline, not '$(Edition)'." />
+  </Target>
+</Project>

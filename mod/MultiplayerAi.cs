@@ -161,6 +161,8 @@ public static class MultiplayerAi
         if (Characters(target).FirstOrDefault(c => target.Players.All(p => p.character != c)) is { } free)
             seat.character = free;
         var message = new PlayerJoinedMessage { lobbyPlayer = seat };
+        // Allowed send (offline gate boundary, tests/PackagingCheck/OfflineGate.cs): the game's own
+        // multiplayer service, to the players in this game session only; never any other host or URL.
         target.NetService.SendMessage(message);
         joined.Invoke(target, [message, target.NetService.NetId]);
         Submit(target.NetService, id, new LobbyPlayerSetReadyMessage { ready = true });
@@ -296,6 +298,7 @@ public static class MultiplayerAi
         if (target.NetService.Type != NetGameType.Host || !IsAi(id) || target.Players.All(p => p.id != id) ||
             (bool)AccessTools.Field(typeof(StartRunLobby), "_isBeginningRun").GetValue(target)!) return false;
         var message = new PlayerLeftMessage { playerId = id };
+        // Allowed send (offline gate boundary): the game's multiplayer service, this session's players only.
         target.NetService.SendMessage(message);
         left.Invoke(target, [message, target.NetService.NetId]);
         return true;
@@ -322,6 +325,8 @@ public static class MultiplayerAi
     {
         if (service is not NetHostGameService host || !IsAi(player))
             throw new InvalidOperationException("AI inputs require a host-owned virtual peer");
+        // Allowed sends (offline gate boundary): the game's BroadcastMessage to this session's
+        // players and the host's own message bus; never any other host or URL.
         if (message.ShouldBroadcast)
             broadcast.Invoke(host, [message, player, message.Mode.ToChannelId(), player]);
         ((NetMessageBus)bus.GetValue(host)!).SendMessageToAllHandlers(message, player);

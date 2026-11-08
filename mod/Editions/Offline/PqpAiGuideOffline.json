@@ -1,0 +1,10 @@
+{
+  "id": "PqpAiGuideOffline",
+  "name": "pqp AI Guide (Offline)",
+  "author": "AVR",
+  "description": "Offline edition of pqp AI Guide. Shows AI recommendation percentages, with AI teammates and Play by Original Rules. Includes a bundled AI model and never connects to the internet.",
+  "version": "0.1.0",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": false
+}

@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace HumanPlayRecorder.VanillaGuard;
 
-public static class PatchSuspension
+public static partial class PatchSuspension
 {
     // Hard ABI pin: the game's Harmony 2.4.2 PatchInfo/UpdateWrapper contract.
     // Re-adding HarmonyMethods loses patch indices and inner-patch metadata.
@@ -24,7 +24,6 @@ public static class PatchSuspension
     static readonly Dictionary<MethodBase, PatchInfo> published = [];
     static readonly Dictionary<MethodBase, Dictionary<FieldInfo, List<Patch>>> removed = [];
     static List<PatchAuditEntry> audit = [];
-    static readonly ConditionalWeakTable<LiveRunSession, List<PatchAuditEntry>> sessionAudits = new();
     static bool active, changing, runPhase;
 
     public static PatchAuditEntry[] Audit { get { lock (Sync) return audit.ToArray(); } }
@@ -81,17 +80,10 @@ public static class PatchSuspension
             postfix: new HarmonyMethod(typeof(PatchSuspension), nameof(AfterPatch)));
         harmony.Patch(AccessTools.Method(typeof(RecorderMod), "CreateRunHeader"),
             postfix: new HarmonyMethod(typeof(PatchSuspension), nameof(Header)));
-        harmony.Patch(AccessTools.GetDeclaredConstructors(typeof(LiveRunSession)).Single(),
-            postfix: new HarmonyMethod(typeof(PatchSuspension), nameof(Session)));
-        harmony.Patch(AccessTools.Method(typeof(LiveRunSession), nameof(LiveRunSession.End)),
-            prefix: new HarmonyMethod(typeof(PatchSuspension), nameof(FinalAudit)));
+        InstallSessionAudit(harmony);
     }
-    static void Session(LiveRunSession __instance) { if (active) sessionAudits.Add(__instance, audit); }
-    static void FinalAudit(LiveRunSession __instance, ref PatchAuditEntry[]? finalAudit)
-    {
-        if (sessionAudits.TryGetValue(__instance, out var captured))
-            lock (Sync) finalAudit = (finalAudit ?? []).Concat(captured).Distinct().ToArray();
-    }
+    // Online edition: the upload session's final audit (PatchSuspension.Sessions.cs).
+    static partial void InstallSessionAudit(Harmony harmony);
 
     static void Header(ref RunHeader __result) => __result = Stamp(__result);
     public static RunHeader Stamp(RunHeader header) => !active ? header : header with {

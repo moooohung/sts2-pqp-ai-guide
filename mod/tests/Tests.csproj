@@ -7,6 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Recording.cs" Link="Recording.cs" />
+    <Compile Include="..\LocalJournal.cs" Link="LocalJournal.cs" />
+    <Compile Include="..\RunHeader.cs" Link="RunHeader.cs" />
     <Compile Include="..\UploadQueue.cs" Link="UploadQueue.cs" />
     <Compile Include="..\CompletedRun.cs" Link="CompletedRun.cs" />
     <Compile Include="..\LiveRunSession.cs" Link="LiveRunSession.cs" />

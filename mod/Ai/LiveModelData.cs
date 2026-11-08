@@ -47,7 +47,7 @@ internal static class LiveModelData
     }
     static void Injected(Type type)
     {
-        try { ObserveType(new Harmony("me.pqp.advisor.mod-data"), type); }
+        try { ObserveType(new Harmony(Edition.ModDataHarmonyId), type); }
         catch (Exception) { } // Optional observation must not break mod registration.
     }
     static void ObserveType(Harmony harmony, Type type)
@@ -124,6 +124,8 @@ internal static class LiveModelData
         if (getter.GameDeclared) return gameRead();
         if (getter.Backing?.GetValue(model) is T stored) return stored;
         if (TryObserved<T>(model, name, out var observedValue)) return observedValue;
+        // This may run another mod's getter. The game itself calls the same model getters during
+        // play, so reading them here adds no network path of this mod's own (offline gate scope).
         return gameRead();
     }
     static FieldInfo CardField(string name) => cardFields.GetOrAdd(name, n => AccessTools.Field(typeof(CardModel), n));

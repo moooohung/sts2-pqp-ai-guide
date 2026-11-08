@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.Modding;
 
 namespace HumanPlayRecorder;
 
-public sealed class PerRunContentGate
+public sealed partial class PerRunContentGate
 {
     readonly VanillaCatalog baseline;
     readonly Action<string> log;
@@ -27,7 +27,7 @@ public sealed class PerRunContentGate
         if(!baseline.models.TryGetValue(id,out var expected) || expected!=VanillaContent.ModelHash(canonical))
         {
             var owner=ModManager.GetLoadedMods().FirstOrDefault(m=>m.assemblies.Contains(canonical.GetType().Assembly));
-            if (owner?.manifest?.id is { } ownerId) StartupConsent.RememberContentMod(ownerId);
+            if (owner?.manifest?.id is { } ownerId) RememberOwner(ownerId);
             Reject($"content {id}; mod {owner?.manifest?.id ?? (canonical.GetType().Assembly==typeof(ModelDb).Assembly?"vanilla-modified":"unattributed")}");
         }
     }
@@ -43,10 +43,12 @@ public sealed class PerRunContentGate
             if(!baseline.models.TryGetValue(p.Key,out var expected) || expected!=VanillaContent.ModelHash(p.Value))
             {
                 var owner = ModManager.GetLoadedMods().FirstOrDefault(m => m.assemblies.Contains(p.Value.GetType().Assembly));
-                if (owner?.manifest?.id is { } ownerId) StartupConsent.RememberContentMod(ownerId);
+                if (owner?.manifest?.id is { } ownerId) RememberOwner(ownerId);
                 Reject("content changed at run end "+p.Key);
             }
     }
+    // Online edition: remembered for the start-up recording consent (PerRunContentGate.Sharing.cs).
+    static partial void RememberOwner(string id);
     public static PerRunContentGate? Active;
     public static void Seen(AbstractModel model)=>ObserveSafe(model);
     [ThreadStatic] static bool inspecting;

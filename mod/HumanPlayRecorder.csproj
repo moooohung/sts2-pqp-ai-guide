@@ -5,6 +5,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- -p:Sts2GameDir=<game or game-refs folder>, as in the public repository's build. -->
+    <GameData Condition="'$(GameData)' == '' and '$(Sts2GameDir)' != ''">$(Sts2GameDir)\data_sts2_windows_x86_64</GameData>
     <Version>0.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
@@ -24,8 +26,11 @@
   <Target Name="RequireSts2GameDir" BeforeTargets="ResolveAssemblyReferences">
     <Error Condition="!Exists('$(GameData)/sts2.dll')" Text="Slay the Spire 2 not found. Pass -p:Sts2GameDir=&quot;&lt;game install directory&gt;&quot; or set STS2_GAME_DIR (looked for '$(GameData)/sts2.dll')." />
   </Target>
-  <Target Name="VerifyReleaseEntryPoint" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-    <Exec Command="dotnet run --project &quot;$(MSBuildProjectDirectory)\tests\PackagingCheck\PackagingCheck.csproj&quot; -c Release -- --expect-release &quot;$(TargetPath)&quot;" />
+  <!-- -p:Edition=Offline builds the offline edition from this same source (Editions.props). -->
+  <Import Project="Editions.props" />
+  <!-- STS2_GAME_DATA: the offline gate scans this sts2.dll for game methods that reach the network. -->
+  <Target Name="VerifyReleaseEntryPoint" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' and '$(GateFixture)' == ''">
+    <Exec Command="dotnet run --project &quot;$(MSBuildProjectDirectory)\tests\PackagingCheck\PackagingCheck.csproj&quot; -c Release -- --expect-release &quot;$(TargetPath)&quot;" EnvironmentVariables="STS2_GAME_DATA=$(GameData)" />
   </Target>
   <Target Name="RequireReleaseSourceCommit" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Release'">
     <Error Condition="'$(RecorderSourceCommit)' == ''" Text="Release requires -p:RecorderSourceCommit=&lt;reviewed source commit&gt;." />

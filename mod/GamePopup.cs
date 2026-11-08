@@ -7,8 +7,6 @@ using MegaCrit.Sts2.addons.mega_text;
 
 namespace HumanPlayRecorder;
 
-public sealed record GamePopupButton(string Text, Action OnPressed);
-
 // Shows text in the game's own modal: res://scenes/ui/generic_popup.tscn
 // (NGenericPopup > NVerticalPopup, popup_vertical panel art, NPopupYesNoButton
 // confirm/cancel buttons with their hover/click sounds and hotkeys) inside

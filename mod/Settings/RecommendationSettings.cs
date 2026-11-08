@@ -11,9 +11,7 @@ public static class RecommendationSettings
     sealed record Saved(bool? show_recommendations,
         Dictionary<RecommendationCategory, bool>? categories = null, bool top_pick_only = false);
 
-    static readonly string FilePath = Path.Combine(
-        System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData),
-        "HumanPlayRecorder", "ui-settings.json");
+    static readonly string FilePath = Path.Combine(Edition.DataDirectory, "ui-settings.json");
     static bool? show;
     static Saved? saved;
     static Saved Preferences => saved ??= Load();

@@ -313,7 +313,7 @@ internal static class WireInterop
                 }
                 // Built from the live caches each time, so mod types registered after the first scope are kept.
                 var messages = VanillaFirstCache<INetMessage>(INetMessageSubtypes.All.ToList(), savedMessageCache,
-                    typeof(AiShopPurchaseMessage), typeof(HumanPlayConsentMessage), typeof(HumanPlayRunNonceMessage));
+                    Edition.ModMessageTypes);
                 MessageCacheField.SetValue(null, messages);
                 for (int id = VanillaMessages.Count; id < messages.Count; id++)
                     if (messages.TryGetTypeFromId(id, out var type))

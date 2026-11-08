@@ -50,6 +50,9 @@ public static partial class RecorderMod
         // the native packet type, location and AI sender stay unchanged.
         var bus = (NetMessageBus)AccessTools.Field(typeof(NetHostGameService), "_messageBus").GetValue(host)!;
         byte[] bytes = bus.SerializeMessage(sender, message, out int length);
+        // Allowed sends (offline gate boundary, tests/PackagingCheck/OfflineGate.cs): the game's own
+        // NetHost to this session's connected players, then the host's own message bus; never any
+        // other host or URL.
         foreach (var peer in host.ConnectedPeers.Where(peer => peer.readyForBroadcasting && !MultiplayerAi.IsAi(peer.peerId)))
             host.NetHost!.SendMessageToClient(peer.peerId, bytes, length,
                 NetTransferMode.Reliable, NetTransferMode.Reliable.ToChannelId());

@@ -139,7 +139,7 @@ public static partial class RecorderMod
         AdvisorTrace("starting live advisor seat=" + seat);
         if (!ReferenceEquals(run, state)) {
             if (journal is { } previous) { previous.Invalidate(); _ = previous.DisposeAsync(); }
-            journal = null; liveSession = null;
+            journal = null; DropLiveSession();
             terminalSummary = null; terminalResult = null; terminalAt = null;
             sequence = 0;
             pendingInputs.Clear(); executingInputs.Clear(); cancelledInputs.Clear();
@@ -148,8 +148,7 @@ public static partial class RecorderMod
         }
         run = state;
         runLocalSeat = seat;
-        journal ??= new LocalJournal(Path.Combine(DataDirectory, "incomplete"),
-            Guid.NewGuid().ToString(), Storage, persist: false);
+        journal ??= NewJournal(Guid.NewGuid().ToString(), persist: false);
         StartAdvisor(null, state.AscensionLevel, typeof(RunState).Assembly.Location, state, seat);
     }
 
@@ -194,7 +193,7 @@ public static partial class RecorderMod
                     if (first && protectedJournal is { Complete: true }) protectedJournal.Invalidate();
                 });
                 AiAdvisor.BeginRun(start, "public-beta+" + hash.Result[..8],
-                    seat, Path.Combine(DataDirectory, "policy-cache"));
+                    seat, PolicyDirectory);
                 if (!advisorReplayable) AiAdvisor.UseLiveState();
                 advisorLoaded = true;
                 MarkAdvisorDirty();

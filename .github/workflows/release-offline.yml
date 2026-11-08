@@ -1,0 +1,91 @@
+# Builds the offline edition (no network, AI model bundled) and publishes it as a GitHub Release,
+# its only distribution channel (it is not on the Steam Workshop).
+# Runs on version tags and by hand. There is deliberately no pull_request trigger: the job reads the
+# GAME_REFS_DEPLOY_KEY secret (read-only deploy key of the private moooohung/sts2-game-refs).
+name: Release offline edition
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-offline-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write # gh release create
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: src
+          persist-credentials: false
+
+      - name: Check out game reference assemblies (private)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: moooohung/sts2-game-refs
+          ssh-key: ${{ secrets.GAME_REFS_DEPLOY_KEY }}
+          path: game-refs
+          persist-credentials: false
+
+      # SDK 10 builds the mod (net9.0 is the game's hard ABI pin); SDK 9 brings the .NET 9 runtime
+      # that runs the net9.0 PackagingCheck gate.
+      - name: Set up .NET
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: |
+            9.0.320
+            10.0.403
+
+      - name: Build, gate and package
+        run: >
+          ./src/tools/build-offline-release.ps1
+          -Repo src -GameRefs game-refs -SourceCommit '${{ github.sha }}'
+          -Version '${{ github.ref_name }}' -Output out
+          -RequireFinalText:$${{ startsWith(github.ref, 'refs/tags/v') }}
+
+      - name: Keep the build
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pqp-ai-guide-offline-${{ github.ref_name }}
+          path: |
+            out/*.zip
+            out/*.zip.sha256
+            out/release.json
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          $release = Get-Content -Raw out/release.json | ConvertFrom-Json
+          $notes = Get-Content -Raw src/.github/release-notes-offline.md
+          if ($notes.Contains('TODO_COPY')) { throw 'release notes are still a TODO_COPY placeholder' }
+          $fields = @{
+            VERSION = $release.version; ZIP = $release.zip; ZIP_SHA256 = $release.zip_sha256
+            CHECKPOINT_ID = $release.checkpoint_id; WEIGHTS_SHA256 = $release.weights_sha256
+            SOURCE_COMMIT = $release.source_commit
+          }
+          foreach ($key in $fields.Keys) { $notes = $notes.Replace("{{$key}}", [string]$fields[$key]) }
+          if ($notes -match '\{\{[A-Z_]+\}\}') { throw "unfilled release-notes field: $($Matches[0])" }
+          Set-Content -Path out/notes.md -Value $notes
+          gh release create '${{ github.ref_name }}' "out/$($release.zip)" "out/$($release.zip).sha256" `
+            --repo '${{ github.repository }}' --verify-tag `
+            --title "pqp AI Guide (Offline) ${{ github.ref_name }}" --notes-file out/notes.md

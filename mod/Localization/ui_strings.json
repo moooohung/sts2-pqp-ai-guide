@@ -1,5 +1,10 @@
 {
   "eng": {
+    "offline_mod_name": "pqp AI Guide (Offline)",
+    "offline_mod_description": "Shows pqp AI recommendation percentages for cards, relics, potions, events, rest sites, shops, map paths, and combat, with AI teammates and Play by Original Rules. The AI model is included and the mod never uses the network.",
+    "offline_settings_ai_categories_description": "Choose which recommendation badges to show. The advisor keeps computing.",
+    "offline_ai_status_updating": "Loading AI model...",
+    "offline_mp_ai_local_only_note": "Host-controlled AI • Unready to change AI seats.",
     "recording_scope": "When replay saving is on, eligible runs at every Ascension (0–10) are uploaded for replay, while AI training uses only A10 runs when you have agreed to share training data. When both settings are off, nothing is recorded or uploaded, and multiplayer runs are uploaded only when every player has the mod and agreed.",
     "settings_ai_categories_expand": "▶ AI recommendation categories (expand)",
     "settings_ai_categories_collapse": "▼ AI recommendation categories (collapse)",
@@ -73,6 +78,11 @@
     "mp_ai_local_only_note": "Host-controlled AI • AI runs are not uploaded as human play. Unready to change AI seats."
   },
   "kor": {
+    "offline_mod_name": "피큐피 AI 가이드 (오프라인)",
+    "offline_mod_description": "카드, 유물, 포션, 이벤트, 휴식 장소, 상점, 지도 경로 및 전투 선택지에 pqp AI 추천 확률을 표시하며, AI 동료와 ‘원본 규칙으로 플레이’를 지원합니다. AI 모델이 내장되어 있으며 네트워크에 연결하지 않습니다.",
+    "offline_settings_ai_categories_description": "표시할 추천 배지를 고릅니다. AI는 계속 계산합니다.",
+    "offline_ai_status_updating": "AI 모델 불러오는 중...",
+    "offline_mp_ai_local_only_note": "호스트가 조종하는 AI • 준비를 해제하면 AI 자리를 변경할 수 있습니다.",
     "recording_scope": "리플레이 저장이 켜져 있으면 조건을 만족하는 모든 승천(0–10) 런을 리플레이로 업로드하며, AI 학습에는 데이터 제공에 동의한 A10 런만 사용합니다. 두 설정을 모두 끄면 아무것도 기록하거나 업로드하지 않으며, 멀티플레이 런은 전원이 모드를 설치하고 동의한 경우에만 업로드됩니다.",
     "settings_ai_categories_expand": "▶ AI 추천 항목 세부 설정 (펼치기)",
     "settings_ai_categories_collapse": "▼ AI 추천 항목 세부 설정 (접기)",
@@ -146,6 +156,11 @@
     "mp_ai_local_only_note": "호스트가 조종하는 AI • AI 런은 인간 플레이로 업로드하지 않습니다. 준비를 해제하면 AI 자리를 변경할 수 있습니다."
   },
   "jpn": {
+    "offline_mod_name": "pqp AIガイド（オフライン）",
+    "offline_mod_description": "カード、レリック、ポーション、イベント、休憩所、ショップ、マップ経路、戦闘の選択肢にpqp AIの推奨確率を表示し、AI仲間と「オリジナルのルールでプレイ」に対応します。AIモデルを内蔵し、ネットワークには一切接続しません。",
+    "offline_settings_ai_categories_description": "表示する推奨バッジを選びます。AIの計算は継続します。",
+    "offline_ai_status_updating": "AIモデルを読み込み中...",
+    "offline_mp_ai_local_only_note": "ホスト操作のAI • 準備を解除するとAI枠を変更できます。",
     "recording_scope": "リプレイ保存がオンの場合、条件を満たすすべてのアセンション（0–10）のランをリプレイ用にアップロードし、AI学習にはデータ提供に同意したA10のランのみ使用します。両方の設定をオフにすると何も記録・アップロードされず、マルチプレイは全員がMODを導入し同意した場合のみアップロードされます。",
     "settings_ai_categories_expand": "▶ AI推奨の項目別設定（開く）",
     "settings_ai_categories_collapse": "▼ AI推奨の項目別設定（閉じる）",
@@ -219,6 +234,11 @@
     "mp_ai_local_only_note": "ホスト操作のAI • AI入りのランは人間のプレイとして送信されません。準備を解除するとAI枠を変更できます。"
   },
   "zhs": {
+    "offline_mod_name": "pqp AI指南（离线版）",
+    "offline_mod_description": "在卡牌、遗物、药水、事件、休息处、商店、地图路线与战斗选择中显示 pqp AI 推荐概率，并支持 AI 队友与“按原版规则游玩”。内置 AI 模型，完全不连接网络。",
+    "offline_settings_ai_categories_description": "选择要显示的推荐标记。AI仍会继续计算。",
+    "offline_ai_status_updating": "正在加载 AI 模型...",
+    "offline_mp_ai_local_only_note": "由房主控制的 AI • 取消准备后可更改 AI 席位。",
     "recording_scope": "开启回放保存时，符合条件的所有进阶（0–10）对局都会上传为回放；AI 训练仅在您同意提供数据时使用 A10 对局。两项设置都关闭时不会记录或上传任何内容，且多人对局仅在所有玩家均安装模组并同意时才会上传。",
     "settings_ai_categories_expand": "▶ AI推荐分类设置（展开）",
     "settings_ai_categories_collapse": "▼ AI推荐分类设置（收起）",
@@ -292,6 +312,11 @@
     "mp_ai_local_only_note": "由房主控制的 AI • AI 对局不会作为人类游玩上传。取消准备后可更改 AI 席位。"
   },
   "zht": {
+    "offline_mod_name": "pqp AI指南（離線版）",
+    "offline_mod_description": "在卡牌、遺物、藥水、事件、休息處、商店、地圖路線與戰鬥選擇中顯示 pqp AI 推薦機率，並支援 AI 隊友與「依原版規則遊玩」。內建 AI 模型，完全不連線至網路。",
+    "offline_settings_ai_categories_description": "選擇要顯示的推薦標記。AI仍會繼續計算。",
+    "offline_ai_status_updating": "正在載入 AI 模型...",
+    "offline_mp_ai_local_only_note": "由房主控制的 AI • 取消準備後可變更 AI 席位。",
     "recording_scope": "開啟重播儲存時，符合條件的所有進階（0–10）對局都會上傳為重播；AI 訓練僅在您同意提供資料時使用 A10 對局。兩項設定都關閉時不會記錄或上傳任何內容，且多人對局僅在所有玩家均安裝模組並同意時才會上傳。",
     "settings_ai_categories_expand": "▶ AI推薦分類設定（展開）",
     "settings_ai_categories_collapse": "▼ AI推薦分類設定（收合）",
@@ -365,6 +390,11 @@
     "mp_ai_local_only_note": "由房主控制的 AI • AI 對局不會作為人類遊玩上傳。取消準備後可變更 AI 席位。"
   },
   "deu": {
+    "offline_mod_name": "pqp KI-Guide (Offline)",
+    "offline_mod_description": "Zeigt pqp-KI-Empfehlungen für Karten, Relikte, Tränke, Ereignisse, Raststätten, Händler, Kartenrouten und Kämpfe samt KI-Teamkollegen und „Nach Originalregeln spielen“. Das KI-Modell ist enthalten; die Mod nutzt keinerlei Netzwerkverbindung.",
+    "offline_settings_ai_categories_description": "Wähle die angezeigten Empfehlungsmarkierungen. Die KI berechnet weiter.",
+    "offline_ai_status_updating": "KI-Modell wird geladen...",
+    "offline_mp_ai_local_only_note": "Hostgesteuerte KI • Zum Ändern der KI-Plätze Bereitschaft aufheben.",
     "recording_scope": "Wenn das Speichern von Replays aktiviert ist, werden geeignete Läufe auf jeder Aufstiegsstufe (0–10) als Replay hochgeladen; für das KI-Training werden nur A10-Läufe verwendet, sofern du zugestimmt hast. Sind beide Einstellungen aus, wird nichts aufgezeichnet oder hochgeladen, und Mehrspieler-Läufe werden nur hochgeladen, wenn alle Spieler die Mod haben und zugestimmt haben.",
     "settings_ai_categories_expand": "▶ KI-Empfehlungen nach Kategorie (aufklappen)",
     "settings_ai_categories_collapse": "▼ KI-Empfehlungen nach Kategorie (zuklappen)",
@@ -438,6 +468,11 @@
     "mp_ai_local_only_note": "Hostgesteuerte KI • KI-Läufe werden nicht als menschliche Spiele hochgeladen. Zum Ändern der KI-Plätze Bereitschaft aufheben."
   },
   "esp": {
+    "offline_mod_name": "pqp Guía IA (Sin conexión)",
+    "offline_mod_description": "Muestra porcentajes de recomendación de la IA de pqp en cartas, reliquias, pociones, eventos, zonas de descanso, tiendas, rutas del mapa y combate, con compañeros de IA y «Jugar con las reglas originales». Incluye el modelo de IA y nunca se conecta a la red.",
+    "offline_settings_ai_categories_description": "Elige qué indicadores de recomendación mostrar. La IA sigue calculando.",
+    "offline_ai_status_updating": "Cargando modelo de IA...",
+    "offline_mp_ai_local_only_note": "IA controlada por el anfitrión • Cancela la preparación para cambiar sus lugares.",
     "recording_scope": "Cuando el guardado de repeticiones está activado, las partidas aptas de cualquier ascensión (0–10) se suben como repetición, mientras que el entrenamiento de la IA solo usa partidas A10 cuando aceptaste compartir datos. Si ambas opciones están desactivadas, no se graba ni se sube nada, y las partidas multijugador solo se suben cuando todos los jugadores tienen el mod y aceptaron.",
     "settings_ai_categories_expand": "▶ Categorías de recomendaciones de IA (desplegar)",
     "settings_ai_categories_collapse": "▼ Categorías de recomendaciones de IA (plegar)",
@@ -511,6 +546,11 @@
     "mp_ai_local_only_note": "IA controlada por el anfitrión • Las partidas con IA no se suben como juego humano. Cancela la preparación para cambiar sus lugares."
   },
   "spa": {
+    "offline_mod_name": "pqp Guía IA (Sin conexión)",
+    "offline_mod_description": "Muestra porcentajes de recomendación de la IA de pqp en cartas, reliquias, pociones, eventos, lugares de descanso, tiendas, rutas del mapa y combate, con compañeros de IA y «Jugar con las reglas originales». Incluye el modelo de IA y nunca se conecta a la red.",
+    "offline_settings_ai_categories_description": "Elige qué indicadores de recomendación mostrar. La IA sigue calculando.",
+    "offline_ai_status_updating": "Cargando modelo de IA...",
+    "offline_mp_ai_local_only_note": "IA controlada por el anfitrión • Cancela la preparación para cambiar sus plazas.",
     "recording_scope": "Cuando el guardado de repeticiones está activado, las partidas aptas de cualquier ascensión (0–10) se suben como repetición, mientras que el entrenamiento de la IA solo usa partidas A10 cuando has aceptado compartir datos. Si ambas opciones están desactivadas, no se graba ni se sube nada, y las partidas multijugador solo se suben cuando todos los jugadores tienen el mod y han aceptado.",
     "settings_ai_categories_expand": "▶ Categorías de recomendaciones de IA (expandir)",
     "settings_ai_categories_collapse": "▼ Categorías de recomendaciones de IA (contraer)",
@@ -584,6 +624,11 @@
     "mp_ai_local_only_note": "IA controlada por el anfitrión • Las partidas con IA no se suben como juego humano. Cancela la preparación para cambiar sus plazas."
   },
   "fra": {
+    "offline_mod_name": "pqp Guide IA (Hors ligne)",
+    "offline_mod_description": "Affiche les pourcentages de recommandation de l’IA pqp pour les cartes, reliques, potions, événements, sites de repos, boutiques, itinéraires sur la carte et combats, avec coéquipiers IA et « Jouer selon les règles d’origine ». Le modèle IA est inclus et le mod n’utilise jamais le réseau.",
+    "offline_settings_ai_categories_description": "Choisissez les indicateurs de conseil à afficher. L’IA poursuit ses calculs.",
+    "offline_ai_status_updating": "Chargement du modèle IA...",
+    "offline_mp_ai_local_only_note": "IA contrôlée par l’hôte • Annulez « Prêt » pour modifier les places IA.",
     "recording_scope": "Lorsque l’enregistrement des replays est activé, les parties admissibles de toute ascension (0–10) sont envoyées en replay, tandis que l’entraînement de l’IA utilise uniquement les parties A10 lorsque vous avez accepté de partager vos données. Lorsque les deux options sont désactivées, rien n’est enregistré ni envoyé, et les parties multijoueur ne sont envoyées que si tous les joueurs ont le mod et ont accepté.",
     "settings_ai_categories_expand": "▶ Catégories de conseils IA (développer)",
     "settings_ai_categories_collapse": "▼ Catégories de conseils IA (réduire)",
@@ -657,6 +702,11 @@
     "mp_ai_local_only_note": "IA contrôlée par l’hôte • Les parties avec IA ne sont pas envoyées comme parties humaines. Annulez « Prêt » pour modifier les places IA."
   },
   "ind": {
+    "offline_mod_name": "pqp Panduan AI (Offline)",
+    "offline_mod_description": "Menampilkan persentase rekomendasi AI pqp untuk kartu, relik, ramuan, peristiwa, tempat istirahat, toko, rute peta, dan pertempuran, dengan rekan AI dan “Main dengan Aturan Asli”. Model AI sudah disertakan dan mod tidak pernah menggunakan jaringan.",
+    "offline_settings_ai_categories_description": "Pilih penanda rekomendasi yang ditampilkan. AI tetap menghitung.",
+    "offline_ai_status_updating": "Memuat model AI...",
+    "offline_mp_ai_local_only_note": "AI dikendalikan host • Batalkan status siap untuk mengubah kursi AI.",
     "recording_scope": "Saat penyimpanan replay aktif, run yang memenuhi syarat pada setiap Ascension (0–10) diunggah untuk replay, sedangkan pelatihan AI hanya menggunakan run A10 jika Anda setuju membagikan data pelatihan. Saat kedua pengaturan mati, tidak ada yang direkam atau diunggah, dan run multipemain hanya diunggah jika setiap pemain memasang mod dan menyetujui.",
     "settings_ai_categories_expand": "▶ Kategori rekomendasi AI (buka)",
     "settings_ai_categories_collapse": "▼ Kategori rekomendasi AI (tutup)",
@@ -730,6 +780,11 @@
     "mp_ai_local_only_note": "AI dikendalikan host • Run AI tidak diunggah sebagai permainan manusia. Batalkan status siap untuk mengubah kursi AI."
   },
   "ita": {
+    "offline_mod_name": "pqp Guida IA (Offline)",
+    "offline_mod_description": "Mostra le percentuali di consiglio dell’IA pqp per carte, reliquie, pozioni, eventi, luoghi di riposo, negozi, percorsi sulla mappa e combattimento, con compagni IA e «Gioca con le regole originali». Il modello IA è incluso e la mod non usa mai la rete.",
+    "offline_settings_ai_categories_description": "Scegli quali indicatori dei consigli mostrare. L’IA continua a calcolare.",
+    "offline_ai_status_updating": "Caricamento modello IA...",
+    "offline_mp_ai_local_only_note": "IA controllata dall’host • Annulla «Pronto» per cambiare i posti IA.",
     "recording_scope": "Quando il salvataggio dei replay è attivo, le partite idonee a ogni Ascensione (0–10) vengono caricate per il replay, mentre l’addestramento dell’IA usa solo le partite A10 quando hai acconsentito a condividere i dati. Quando entrambe le impostazioni sono disattivate, non viene registrato né caricato nulla, e le partite multigiocatore vengono caricate solo quando tutti i giocatori hanno la mod e hanno accettato.",
     "settings_ai_categories_expand": "▶ Categorie dei consigli IA (espandi)",
     "settings_ai_categories_collapse": "▼ Categorie dei consigli IA (comprimi)",
@@ -803,6 +858,11 @@
     "mp_ai_local_only_note": "IA controllata dall’host • Le partite con IA non vengono caricate come partite umane. Annulla «Pronto» per cambiare i posti IA."
   },
   "pol": {
+    "offline_mod_name": "pqp Przewodnik SI (Offline)",
+    "offline_mod_description": "Pokazuje procentowe rekomendacje SI pqp dla kart, reliktów, mikstur, wydarzeń, miejsc odpoczynku, sklepów, tras na mapie i walki, z towarzyszami SI i opcją „Graj według oryginalnych zasad”. Model SI jest wbudowany, a mod nigdy nie łączy się z siecią.",
+    "offline_settings_ai_categories_description": "Wybierz wyświetlane znaczniki rekomendacji. SI nadal wykonuje obliczenia.",
+    "offline_ai_status_updating": "Wczytywanie modelu SI...",
+    "offline_mp_ai_local_only_note": "SI sterowana przez gospodarza • Wyłącz gotowość, aby zmienić miejsca SI.",
     "recording_scope": "Gdy zapisywanie powtórek jest włączone, kwalifikujące się rozgrywki na każdym poziomie Wniebowstąpienia (0–10) są przesyłane jako powtórki, natomiast trenowanie SI wykorzystuje wyłącznie rozgrywki A10, jeśli wyrazisz zgodę na udostępnianie danych. Gdy oba ustawienia są wyłączone, nic nie jest nagrywane ani przesyłane, a rozgrywki wieloosobowe są przesyłane tylko wtedy, gdy każdy gracz ma moda i wyraził zgodę.",
     "settings_ai_categories_expand": "▶ Kategorie rekomendacji SI (rozwiń)",
     "settings_ai_categories_collapse": "▼ Kategorie rekomendacji SI (zwiń)",
@@ -876,6 +936,11 @@
     "mp_ai_local_only_note": "SI sterowana przez gospodarza • Rozgrywki z SI nie są wysyłane jako gra ludzi. Wyłącz gotowość, aby zmienić miejsca SI."
   },
   "ptb": {
+    "offline_mod_name": "pqp Guia de IA (Offline)",
+    "offline_mod_description": "Exibe porcentagens de recomendação da IA pqp em cartas, relíquias, poções, eventos, locais de descanso, lojas, rotas do mapa e combate, com aliados de IA e “Jogar com as regras originais”. O modelo de IA está incluído e o mod nunca usa a rede.",
+    "offline_settings_ai_categories_description": "Escolha quais indicadores de recomendação exibir. A IA continua calculando.",
+    "offline_ai_status_updating": "Carregando modelo da IA...",
+    "offline_mp_ai_local_only_note": "IA controlada pelo anfitrião • Cancele a prontidão para alterar os lugares da IA.",
     "recording_scope": "Quando o salvamento de replays está ativo, partidas elegíveis em qualquer Ascensão (0–10) são enviadas para replay, enquanto o treinamento da IA usa apenas partidas A10 quando você concorda em compartilhar dados. Quando ambas as configurações estão desativadas, nada é gravado ou enviado, e partidas multijogador só são enviadas quando todos os jogadores têm o mod e concordaram.",
     "settings_ai_categories_expand": "▶ Categorias de recomendações da IA (expandir)",
     "settings_ai_categories_collapse": "▼ Categorias de recomendações da IA (recolher)",
@@ -949,6 +1014,11 @@
     "mp_ai_local_only_note": "IA controlada pelo anfitrião • Partidas com IA não são enviadas como jogo humano. Cancele a prontidão para alterar os lugares da IA."
   },
   "rus": {
+    "offline_mod_name": "pqp Гид ИИ (офлайн)",
+    "offline_mod_description": "Показывает вероятности рекомендаций ИИ pqp для карт, реликвий, зелий, событий, мест отдыха, магазинов, маршрутов на карте и боя, с ИИ-союзниками и опцией «Играть по оригинальным правилам». Модель ИИ встроена, мод никогда не подключается к сети.",
+    "offline_settings_ai_categories_description": "Выберите, какие метки рекомендаций показывать. ИИ продолжит расчёты.",
+    "offline_ai_status_updating": "Загрузка модели ИИ...",
+    "offline_mp_ai_local_only_note": "ИИ под управлением хоста • Отмените готовность, чтобы изменить места ИИ.",
     "recording_scope": "Когда сохранение повторов включено, подходящие забеги на любом уровне Вознесения (0–10) загружаются для повтора, а для обучения ИИ используются только забеги A10 при вашем согласии. Когда обе настройки отключены, ничего не записывается и не загружается, а сетевые забеги загружаются только тогда, когда у всех игроков установлен мод и дано согласие.",
     "settings_ai_categories_expand": "▶ Категории советов ИИ (развернуть)",
     "settings_ai_categories_collapse": "▼ Категории советов ИИ (свернуть)",
@@ -1022,6 +1092,11 @@
     "mp_ai_local_only_note": "ИИ под управлением хоста • Забеги с ИИ не отправляются как игра человека. Отмените готовность, чтобы изменить места ИИ."
   },
   "tha": {
+    "offline_mod_name": "pqp ไกด์ AI (ออฟไลน์)",
+    "offline_mod_description": "แสดงเปอร์เซ็นต์คำแนะนำจาก pqp AI สำหรับการ์ด วัตถุโบราณ ยา เหตุการณ์ จุดพัก ร้านค้า เส้นทางบนแผนที่ และการต่อสู้ พร้อมเพื่อนร่วมทีม AI และ “เล่นตามกฎต้นฉบับ” มีโมเดล AI ในตัวและไม่เชื่อมต่อเครือข่าย",
+    "offline_settings_ai_categories_description": "เลือกป้ายคำแนะนำที่ต้องการแสดง AI ยังคงคำนวณต่อไป",
+    "offline_ai_status_updating": "กำลังโหลดโมเดล AI...",
+    "offline_mp_ai_local_only_note": "AI ควบคุมโดยโฮสต์ • ยกเลิกพร้อมเพื่อเปลี่ยนที่นั่ง AI",
     "recording_scope": "เมื่อเปิดการบันทึกรีเพลย์ รอบที่เข้าเกณฑ์ในทุกระดับแอสเซนชัน (0–10) จะถูกอัปโหลดเป็นรีเพลย์ ส่วนการฝึก AI จะใช้เฉพาะรอบ A10 เมื่อคุณยินยอมให้แชร์ข้อมูล เมื่อปิดทั้งสองการตั้งค่าจะไม่มีการบันทึกหรืออัปโหลดใดๆ และรอบผู้เล่นหลายคนจะอัปโหลดเฉพาะเมื่อผู้เล่นทุกคนมีม็อดและยินยอมเท่านั้น",
     "settings_ai_categories_expand": "▶ หมวดคำแนะนำ AI (ขยาย)",
     "settings_ai_categories_collapse": "▼ หมวดคำแนะนำ AI (ย่อ)",
@@ -1095,6 +1170,11 @@
     "mp_ai_local_only_note": "AI ควบคุมโดยโฮสต์ • ไม่อัปโหลดรอบที่มี AI เป็นการเล่นของมนุษย์ ยกเลิกพร้อมเพื่อเปลี่ยนที่นั่ง AI"
   },
   "tur": {
+    "offline_mod_name": "pqp YZ Rehberi (Çevrimdışı)",
+    "offline_mod_description": "Kartlar, yadigârlar, iksirler, olaylar, dinlenme yerleri, dükkânlar, harita rotaları ve savaş seçimleri için pqp YZ öneri yüzdelerini YZ takım arkadaşları ve “Orijinal Kurallarla Oyna” ile birlikte gösterir. YZ modeli dâhildir ve mod hiçbir zaman ağ bağlantısı kullanmaz.",
+    "offline_settings_ai_categories_description": "Gösterilecek öneri işaretlerini seç. Yapay zekâ hesaplamaya devam eder.",
+    "offline_ai_status_updating": "YZ modeli yükleniyor...",
+    "offline_mp_ai_local_only_note": "Sunucu kontrollü YZ • YZ koltuklarını değiştirmek için hazır durumunu kaldırın.",
     "recording_scope": "Tekrar kaydetme açıkken, kayıt koşullarını sağlayan tüm Yükseliş (0–10) koşuları tekrar için yüklenir; YZ eğitimi ise yalnızca veri paylaşımını kabul ettiğinde A10 koşularını kullanır. Her iki ayar da kapalıyken hiçbir şey kaydedilmez veya yüklenmez ve çok oyunculu koşular yalnızca tüm oyuncular moda sahipse ve onay vermişse yüklenir.",
     "settings_ai_categories_expand": "▶ Yapay zekâ öneri kategorileri (genişlet)",
     "settings_ai_categories_collapse": "▼ Yapay zekâ öneri kategorileri (daralt)",

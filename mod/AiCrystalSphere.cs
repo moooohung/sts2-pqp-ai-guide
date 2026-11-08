@@ -73,6 +73,8 @@ public static partial class RecorderMod
             rewardType = MegaCrit.Sts2.Core.Rewards.RewardType.Card, cardModel = card, wasSkipped = false,
             location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation
         };
+        // Allowed send (offline gate boundary, tests/PackagingCheck/OfflineGate.cs): the game's own
+        // BroadcastMessage, to the players in this game session only; never any other host or URL.
         AccessTools.Method(typeof(NetHostGameService), "BroadcastMessage").MakeGenericMethod(typeof(INetMessage))
             .Invoke(RunManager.Instance.NetService, [message, player.NetId, message.Mode.ToChannelId(), player.NetId]);
         return false;

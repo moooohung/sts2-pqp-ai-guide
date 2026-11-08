@@ -24,9 +24,16 @@ public static class UiText
     public static string Get(string key)
     {
         Subscribe();
+        // An edition's own wording ("offline_<key>") replaces the shared text where it exists.
+        if (Edition.TextVariant is { } variant && Lookup(variant + key) is { } edition) return edition;
+        return Lookup(key) ?? key;
+    }
+
+    static string? Lookup(string key)
+    {
         if (tables.TryGetValue(Language, out var table) && table.TryGetValue(key, out var text)) return text;
         if (tables.TryGetValue(Fallback, out table) && table.TryGetValue(key, out text)) return text;
-        return key;
+        return null;
     }
 
     public static string Format(string key, string value) => Get(key).Replace("{0}", value);

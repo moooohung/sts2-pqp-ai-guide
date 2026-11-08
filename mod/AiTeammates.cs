@@ -572,6 +572,8 @@ public static partial class RecorderMod
             price = entries[index].Cost, location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation };
         if (RunManager.Instance.NetService is INetHostGameService host)
         {
+            // Allowed send (offline gate boundary, tests/PackagingCheck/OfflineGate.cs): the game's own
+            // multiplayer service, to the players in this game session only; never any other host or URL.
             foreach (var peer in HumanPeers(host).Where(peer => RecorderPeer(host, peer)))
                 host.SendMessage(message, peer);
         }
@@ -593,6 +595,7 @@ public static partial class RecorderMod
         where T : INetMessage
     {
         var send = sendWithSender.MakeGenericMethod(typeof(T));
+        // Allowed send (offline gate boundary): the game's SendMessageToClientInternal, this session's players only.
         foreach (var peer in peers.Where(peer => !RecorderPeer(host, peer)))
             send.Invoke(host, [message, peer, message.Mode.ToChannelId(), (ulong?)sender]);
     }
