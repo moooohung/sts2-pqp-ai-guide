@@ -99,10 +99,8 @@ static class OfflineAllowlist
         [(Mod + "VanillaGuard.WireInterop::CaptureModelCache", GetValue)] = 1,
         [(Mod + "VanillaGuard.WireInterop::ApplyModelCache", SetValue)] = 1,
         [(Mod + "VanillaGuard.WireInterop::Begin", SetValue)] = 2,
-        // Tooltip text on game UI controls.
-        [(Mod + "MultiplayerAi::ShowTip", SetValue)] = 3,
-        [(Mod + "Recommend.Badge::ShowReason", SetValue)] = 3,
-        [(Mod + "Settings.ModSettingsUi::Tip", SetValue)] = 3,
+        // Tooltip text on game UI controls: the HoverTip setters (settings rows, badge reason tip, lobby tip).
+        [(Mod + "Settings.ModHoverTip::Set", Invoke)] = 1,
 
         // Type and assembly lookups.
         // sts2's file location, to hash the installed game (ReleaseBootstrap).

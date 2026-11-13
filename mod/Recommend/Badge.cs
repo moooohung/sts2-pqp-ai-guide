@@ -186,13 +186,9 @@ sealed class Badge
 
     bool ShowReason(string text)
     {
-        // HoverTip only builds from game LocStrings; its title and text are then replaced.
-        object tip = new HoverTip(new LocString("settings_ui", "SHOW_RUN_TIMER_HEADER"), "");
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Title)).SetValue(tip, UiText.Get(AdviceRefusal.BadgeKey));
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Description)).SetValue(tip, text);
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Id)).SetValue(tip, "pqp_ai_unavailable");
+        var tip = ModHoverTip.Create(UiText.Get(AdviceRefusal.BadgeKey), text, "pqp_ai_unavailable");
         // Null while the game blocks hover tips (card targeting): not shown, so it is tried again next frame.
-        if (NHoverTipSet.CreateAndShow(label, (IHoverTip)tip) is not { } set) return false;
+        if (NHoverTipSet.CreateAndShow(label, tip) is not { } set) return false;
         if (!Layout(set))
         {
             NHoverTipSet.Remove(label);

@@ -3,8 +3,9 @@ using Godot;
 namespace HumanPlayRecorder.Settings;
 
 // The advice UI runs inside the game's own screen code (Harmony patches, signals, game and
-// advisor events). Every such entry point goes through here: a failure is logged once per
-// stage and never reaches the game.
+// advisor events). Every such entry point goes through here: a failure never reaches the game and
+// is written to godot.log in every build with its full exception and stack, once per stage and
+// distinct failure (a different exception at the same stage is logged too).
 static class UiGuard
 {
     static readonly HashSet<string> logged = new();
@@ -26,8 +27,8 @@ static class UiGuard
         try
         {
             lock (logged)
-                if (!logged.Add(stage)) return;
-            GD.Print($"[HumanPlayRecorder] AI advice UI {stage} failed: {e.GetType().Name}: {e.Message}");
+                if (!logged.Add(stage + "\n" + e.GetType().FullName + "\n" + e.Message)) return;
+            GD.Print($"[HumanPlayRecorder] ERROR: UI {stage} failed: {e}");
         }
         catch (Exception) { } // recovery must not throw; a lost log line is the only cost
     }

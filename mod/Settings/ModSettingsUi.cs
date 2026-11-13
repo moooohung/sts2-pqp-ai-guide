@@ -24,14 +24,23 @@ static partial class ModSettingsUi
     const string RowName = "HumanPlayRecorderAiRecommendations";
     const string StatusName = "HumanPlayRecorderAiStatus";
     const string RulesName = "HumanPlayRecorderOriginalRules";
-    static readonly StringName RulesMeta = "hpr_original_rules";
-    static readonly StringName CloneMeta = "hpr_ai_recommendations";
+    // Godot names live apart from the row definitions, so those can be read without a Godot host.
+    static class Meta
+    {
+        internal static readonly StringName Rules = "hpr_original_rules";
+        internal static readonly StringName Clone = "hpr_ai_recommendations";
+    }
     static readonly AccessTools.FieldRef<NRunTimerHoverTip, IHoverTip> hoverTip =
         AccessTools.FieldRefAccess<NRunTimerHoverTip, IHoverTip>("_hoverTip");
 
-    sealed record Row(Node Line, MegaRichTextLabel Label, NTickbox? Tickbox, NRunTimerHoverTip? Tip, bool Status,
-        Func<string>? Title = null, Func<bool>? Read = null, Func<bool>? Visible = null,
-        Node? Divider = null, NSettingsPanel? Panel = null, Func<string>? Description = null);
+    internal enum RowKind { Option, Status }
+    // One row in screen order: its label, its hover tip and what its tickbox reads and writes. AddRows clones a
+    // game line for each; Refresh and the settings-text regression read the texts from here.
+    internal sealed record RowDef(string Name, Func<string> Label, Func<string> TipTitle, Func<string> TipText,
+        Func<bool>? Visible = null, Func<bool>? Read = null, Action<bool>? Write = null, bool Disclosure = false,
+        RowKind Kind = RowKind.Option);
+    sealed record Row(RowDef Def, Node Line, MegaRichTextLabel Label, NTickbox? Tickbox, NRunTimerHoverTip? Tip,
+        Node? Divider, NSettingsPanel Panel);
     static readonly List<Row> rows = new();
     static readonly List<MegaRichTextLabel> modTitles = new();
     static readonly List<(NModInfoContainer Info, Mod Mod)> modInfos = new();
@@ -64,20 +73,20 @@ static partial class ModSettingsUi
         });
     }
 
-    delegate void OptionRow(string name, Func<string> title, Func<bool> read, Action<bool> write,
+    delegate RowDef OptionRow(string name, Func<string> title, Func<bool> read, Action<bool> write,
         Func<bool> visible, bool disclosure = false, Func<string>? description = null);
     // Online edition only (ModSettingsUi.Sharing.cs): sharing settings, data deletion and policy links.
     static partial void InstallSharing();
-    static partial void AddSharingRows(OptionRow option);
+    static partial void AddSharingRows(List<RowDef> defs, OptionRow option);
 
     // On a failure both prefixes run the game's original, as if the mod were absent.
     static bool OriginalUnlessClone(NRunTimerTickbox __instance) =>
-        UiGuard.Run("settings tickbox", () => !__instance.HasMeta(CloneMeta), true);
+        UiGuard.Run("settings tickbox", () => !__instance.HasMeta(Meta.Clone), true);
 
     static bool SetCloneFromSettings(NRunTimerTickbox __instance) => UiGuard.Run("settings tickbox sync", () =>
     {
-        if (!__instance.HasMeta(CloneMeta)) return true;
-        __instance.IsTicked = __instance.HasMeta(RulesMeta)
+        if (!__instance.HasMeta(Meta.Clone)) return true;
+        __instance.IsTicked = __instance.HasMeta(Meta.Rules)
             ? OriginalRulesSettings.Enabled : RecommendationSettings.ShowRecommendations;
         return false;
     }, true);
@@ -99,11 +108,6 @@ static partial class ModSettingsUi
             Node? divider = at < content.GetChildCount() && content.GetChild(at).Name.ToString().Contains("Divider")
                 ? content.GetChild(at) : null;
             if (divider is not null) at++;
-            var toggle = Clone(template, RowName);
-            var rules = Clone(template, RulesName);
-            var status = Clone(template, StatusName);
-            var rulesDivider = Copy(divider, RulesName + "Divider");
-            var statusDivider = Copy(divider, StatusName + "Divider");
             void Insert(Node? node)
             {
                 if (node is null) return;
@@ -111,26 +115,16 @@ static partial class ModSettingsUi
                 added.Add(node);
                 content.MoveChild(node, at++);
             }
-            var toggleDivider = Copy(divider, RowName + "Divider");
-            Insert(toggle);
-            Insert(toggleDivider);
-            bool expanded = false;
-            // Guide off for this game build (game-build.json): no recommendation rows; the status line says why.
-            bool guide = GameBuild.PolicyEnabled;
-            void Option(string name, Func<string> title, Func<bool> read, Action<bool> write,
-                Func<bool> visible, bool disclosure = false, Func<string>? description = null)
+            foreach (var def in Definitions())
             {
-                var line = Clone(template, name);
-                var separator = Copy(divider, name + "Divider");
+                var line = Clone(template, def.Name);
+                var separator = Copy(divider, def.Name + "Divider");
                 Insert(line);
                 Insert(separator);
-                var row = Wire(line, status: false, write) with {
-                    Title = title, Read = read, Visible = visible, Divider = separator, Panel = panel,
-                    Description = description
-                };
-                if (disclosure && row.Tickbox?.GetNodeOrNull<Control>("%TickboxVisuals") is { } visuals)
+                var row = Wire(def, line, separator, panel);
+                if (def.Disclosure && row.Tickbox?.GetNodeOrNull<Control>("%TickboxVisuals") is { } visuals)
                     visuals.Visible = false;
-                if (disclosure && row.Tickbox is { } tickbox)
+                if (def.Disclosure && row.Tickbox is { } tickbox)
                 {
                     row.Label.MouseFilter = Control.MouseFilterEnum.Stop;
                     row.Label.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
@@ -145,30 +139,6 @@ static partial class ModSettingsUi
                 }
                 rows.Add(row);
             }
-            Option(RowName + "Categories",
-                () => UiText.Get(expanded ? "settings_ai_categories_collapse" : "settings_ai_categories_expand"),
-                () => expanded, value => { expanded = value; Refresh(); },
-                () => guide && RecommendationSettings.ShowRecommendations, disclosure: true);
-            foreach (var category in Enum.GetValues<RecommendationCategory>())
-            {
-                Option(RowName + category, () => "    " + UiText.Get("settings_ai_category_" + category),
-                    () => RecommendationSettings.IsEnabled(category),
-                    value => RecommendationSettings.SetEnabled(category, value),
-                    () => guide && RecommendationSettings.ShowRecommendations && expanded);
-            }
-            Option(RowName + "TopPickOnly", () => "    " + UiText.Get("settings_ai_top_pick_only"),
-                () => RecommendationSettings.TopPickOnly, value => RecommendationSettings.TopPickOnly = value,
-                () => guide && RecommendationSettings.ShowRecommendations && expanded);
-            Insert(rules);
-            Insert(rulesDivider);
-            AddSharingRows(Option);
-            Insert(status);
-            Insert(statusDivider);
-            rows.Add(Wire(toggle, status: false) with { Visible = () => guide, Divider = toggleDivider, Panel = panel });
-            rows.Add(Wire(rules, status: false));
-            rows.Add(Wire(status, status: true) with {
-                Visible = () => ShouldShowStatus(StatusText()), Divider = statusDivider, Panel = panel
-            });
             Refresh();
             panel.Call(NSettingsPanel.MethodName.RefreshSize);
             panel.Call(NSettingsPanel.MethodName.UpdateNavigation);
@@ -186,6 +156,43 @@ static partial class ModSettingsUi
         }
     }
 
+    // Screen order. Guide off for this game build (game-build.json): the recommendation rows stay hidden and the
+    // status line says why; consent, replay saving, deletion, local storage and the links are always shown.
+    internal static IReadOnlyList<RowDef> Definitions()
+    {
+        bool guide = GameBuild.PolicyEnabled;
+        bool expanded = false; // per settings screen, like every row's state below
+        string Ai() => UiText.Get("settings_show_ai_recommendations");
+        string AiTip() => (UiText.Get("settings_show_ai_recommendations_description") + "\n\n" + StatusText()).TrimEnd();
+        string CategoriesTip() => UiText.Get("settings_ai_categories_description");
+        RowDef Option(string name, Func<string> label, Func<bool> read, Action<bool> write, Func<bool> visible,
+            bool disclosure = false, Func<string>? description = null) =>
+            new(name, label, label, description ?? CategoriesTip, visible, read, write, disclosure);
+        var defs = new List<RowDef>
+        {
+            new(RowName, Ai, Ai, AiTip, () => guide, () => RecommendationSettings.ShowRecommendations,
+                value => RecommendationSettings.ShowRecommendations = value),
+            Option(RowName + "Categories",
+                () => UiText.Get(expanded ? "settings_ai_categories_collapse" : "settings_ai_categories_expand"),
+                () => expanded, value => { expanded = value; Refresh(); },
+                () => guide && RecommendationSettings.ShowRecommendations, disclosure: true),
+        };
+        foreach (var category in Enum.GetValues<RecommendationCategory>())
+            defs.Add(Option(RowName + category, () => "    " + UiText.Get("settings_ai_category_" + category),
+                () => RecommendationSettings.IsEnabled(category),
+                value => RecommendationSettings.SetEnabled(category, value),
+                () => guide && RecommendationSettings.ShowRecommendations && expanded));
+        defs.Add(Option(RowName + "TopPickOnly", () => "    " + UiText.Get("settings_ai_top_pick_only"),
+            () => RecommendationSettings.TopPickOnly, value => RecommendationSettings.TopPickOnly = value,
+            () => guide && RecommendationSettings.ShowRecommendations && expanded));
+        defs.Add(new(RulesName, () => UiText.Get("settings_original_rules"), () => UiText.Get("settings_original_rules"),
+            () => UiText.Get("settings_original_rules_description"), Read: () => OriginalRulesSettings.Enabled,
+            Write: value => OriginalRulesSettings.Enabled = value));
+        AddSharingRows(defs, Option);
+        defs.Add(new(StatusName, StatusText, Ai, AiTip, () => ShouldShowStatus(StatusText()), Kind: RowKind.Status));
+        return defs;
+    }
+
     const int CopyFlags = (int)(Node.DuplicateFlags.Groups | Node.DuplicateFlags.Scripts | Node.DuplicateFlags.UseInstantiation);
 
     static Node? Copy(Node? source, string name)
@@ -200,29 +207,25 @@ static partial class ModSettingsUi
     static Node Clone(Control template, string name)
     {
         var line = Copy(template, name)!;
-        Find<NRunTimerTickbox>(line)?.SetMeta(CloneMeta, true);
-        if (name == RulesName) Find<NRunTimerTickbox>(line)?.SetMeta(RulesMeta, true);
+        Find<NRunTimerTickbox>(line)?.SetMeta(Meta.Clone, true);
+        if (name == RulesName) Find<NRunTimerTickbox>(line)?.SetMeta(Meta.Rules, true);
         return line;
     }
 
     // Main thread, after the line's _Ready. The status line keeps the cloned tickbox node (it may
     // be the line itself) but hides its art and takes it out of mouse and focus navigation.
-    static Row Wire(Node line, bool status, Action<bool>? write = null)
+    static Row Wire(RowDef def, Node line, Node? divider, NSettingsPanel panel)
     {
         var tickbox = Find<NRunTimerTickbox>(line);
-        if (tickbox is not null && status)
+        if (tickbox is not null && def.Kind == RowKind.Status)
         {
             if (tickbox.GetNodeOrNull<Control>("%TickboxVisuals") is { } visuals) visuals.Visible = false;
             tickbox.MouseFilter = Control.MouseFilterEnum.Ignore;
             tickbox.FocusMode = Control.FocusModeEnum.None;
         }
-        else tickbox?.Connect(NTickbox.SignalName.Toggled, Callable.From<NTickbox>(t =>
-            UiGuard.Run("settings toggle", () => {
-                if (write is not null) write(t.IsTicked);
-                else if (line.Name == RulesName) OriginalRulesSettings.Enabled = t.IsTicked;
-                else RecommendationSettings.ShowRecommendations = t.IsTicked;
-            })));
-        return new(line, line.GetNode<MegaRichTextLabel>("Label"), tickbox, Find<NRunTimerHoverTip>(line), status);
+        else if (def.Write is { } write) tickbox?.Connect(NTickbox.SignalName.Toggled, Callable.From<NTickbox>(t =>
+            UiGuard.Run("settings toggle", () => write(t.IsTicked))));
+        return new(def, line, line.GetNode<MegaRichTextLabel>("Label"), tickbox, Find<NRunTimerHoverTip>(line), divider, panel);
     }
 
     static T? Find<T>(Node root) where T : Node
@@ -241,19 +244,7 @@ static partial class ModSettingsUi
 
     internal static bool IsDisclosureMouseRelease(bool leftButton, bool pressed) => leftButton && !pressed;
 
-    static IHoverTip Tip(bool rules = false, string? title = null, string? description = null)
-    {
-        // HoverTip only builds from game LocStrings; its title and text are then replaced.
-        object tip = new HoverTip(new LocString("settings_ui", "SHOW_RUN_TIMER_HEADER"), "");
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Title)).SetValue(tip,
-            title ?? UiText.Get(rules ? "settings_original_rules" : "settings_show_ai_recommendations"));
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Description)).SetValue(tip,
-            title is not null ? description ?? UiText.Get("settings_ai_categories_description") :
-            rules ? UiText.Get("settings_original_rules_description") :
-            (UiText.Get("settings_show_ai_recommendations_description") + "\n\n" + StatusText()).TrimEnd());
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Id)).SetValue(tip, RowName);
-        return (IHoverTip)tip;
-    }
+    internal static IHoverTip Tip(RowDef def) => ModHoverTip.Create(def.TipTitle(), def.TipText(), RowName);
 
     static string Plain(string text) => text.Replace("[", "[lb]");
 
@@ -263,25 +254,25 @@ static partial class ModSettingsUi
         var resized = new HashSet<NSettingsPanel>();
         foreach (var row in rows)
         {
-            if (row.Visible is { } visible && row.Line is Control control)
+            var def = row.Def;
+            if (def.Visible is { } visible && row.Line is Control control)
             {
                 bool show = visible();
                 if (control.Visible != show)
                 {
                     control.Visible = show;
-                    if (row.Panel is { } panel) resized.Add(panel);
+                    resized.Add(row.Panel);
                 }
                 if (row.Divider is CanvasItem separator) separator.Visible = show;
                 // The game's navigation enumerator checks the parent, not the row's visibility.
                 if (row.Tickbox is { } focus) focus.FocusMode = show ? Control.FocusModeEnum.All : Control.FocusModeEnum.None;
             }
-            bool rules = row.Line.Name == RulesName;
-            row.Label.Text = Plain(row.Title?.Invoke() ?? (row.Status ? StatusText() : UiText.Get(
-                rules ? "settings_original_rules" : "settings_show_ai_recommendations")));
-            if (row.Status) row.Label.Modulate = new Color(1, 1, 1, 0.7f);
-            else if (row.Tickbox is { } tickbox) tickbox.IsTicked =
-                row.Read?.Invoke() ?? (rules ? OriginalRulesSettings.Enabled : RecommendationSettings.ShowRecommendations);
-            if (row.Tip is { } tip && GodotObject.IsInstanceValid(tip)) hoverTip(tip) = Tip(rules, row.Title?.Invoke(), row.Description?.Invoke());
+            row.Label.Text = Plain(def.Label());
+            if (def.Kind == RowKind.Status) row.Label.Modulate = new Color(1, 1, 1, 0.7f);
+            else if (row.Tickbox is { } tickbox && def.Read is { } read) tickbox.IsTicked = read();
+            // Its own guard: a tip that cannot be built never leaves the other rows with the cloned line's text.
+            if (row.Tip is { } tip && GodotObject.IsInstanceValid(tip))
+                UiGuard.Run("settings hover tip", () => hoverTip(tip) = Tip(def));
         }
         foreach (var panel in resized)
         {

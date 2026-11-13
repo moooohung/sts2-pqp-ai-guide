@@ -444,12 +444,8 @@ public static class MultiplayerAi
     }
     static void ShowTip(Control owner, string title, string description)
     {
-        // HoverTip only builds from game LocStrings; its title and text are then replaced.
-        object tip = new HoverTip(new LocString("settings_ui", "SHOW_RUN_TIMER_HEADER"), "");
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Title)).SetValue(tip, title);
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Description)).SetValue(tip, description);
-        AccessTools.Property(typeof(HoverTip), nameof(HoverTip.Id)).SetValue(tip, "pqp_ai_lobby");
-        NHoverTipSet.CreateAndShow(owner, (IHoverTip)tip)?.SetGlobalPosition(owner.GlobalPosition + new Vector2(owner.Size.X + 20f, 0f));
+        NHoverTipSet.CreateAndShow(owner, Settings.ModHoverTip.Create(title, description, "pqp_ai_lobby"))
+            ?.SetGlobalPosition(owner.GlobalPosition + new Vector2(owner.Size.X + 20f, 0f));
     }
     static void RefreshControls()
     {
