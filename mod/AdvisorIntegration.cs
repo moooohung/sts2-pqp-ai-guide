@@ -23,6 +23,13 @@ public static partial class RecorderMod
     static bool AdvisorRequiresLiveContent =>
         !VanillaGuard.ContentPools.IsNeutralized && VanillaGuard.ContentPools.NonNeutralizationReason is not null;
 
+    // Training consent, replay saving, data deletion, local storage, original rules and the mod list name live in
+    // the settings UI, so it never depends on the guide switch below. Harnesses (TestMode) have no Godot host for it.
+    static void InstallSettingsUi(Harmony harmony)
+    {
+        if (!TestMode.IsOn) UiGuard.Run("settings install", () => ModSettingsUi.Install(harmony));
+    }
+
     static void InstallAdvisorIntegration(Harmony harmony) => AdvisorBoundary(() => {
         // Original-DLL verification owns its own advisor and never starts HTTP.
         if (!GameBuild.PolicyEnabled || TestMode.IsOn) return;

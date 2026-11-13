@@ -54,6 +54,55 @@ static class StorageSafetyTests
         finally { Directory.Delete(root, true); }
     }
 
+    // In-game on 1f9dab3: one finished run, its upload rejected by the server (game build not accepted yet), and
+    // the next launch showed "local storage full" because pending/<id>.json.rejected was not counted as handled.
+    public static async Task RejectedNoWarning(RunPayload payload)
+    {
+        string root = Directory.CreateTempSubdirectory("hpr-rejected-warning-").FullName;
+        try
+        {
+            var budget = new LocalStorageBudget(root);
+            string pending = Path.Combine(root, "pending"), incomplete = Path.Combine(root, "incomplete");
+            bool warned = false;
+            string id = Guid.NewGuid().ToString();
+            string body = Path.Combine(pending, id + ".json");
+            string journal = Path.Combine(incomplete, id + ".jsonl");
+            // A finished run's handoff: the journal kept as retained, its payload queued in pending/.
+            Directory.CreateDirectory(incomplete);
+            File.WriteAllText(journal + ".retained", "{\"kind\":\"entry\",\"character\":\"IRONCLAD\"}\n");
+            await using (var queue = new UploadQueue(pending, new QueueHandler { Code = 422, Body = null }, budget)
+                { CapacityWarning = () => warned = true })
+            {
+                await queue.EnqueueAsync(payload with { run_id = id, game_dll_sha256 = GameBuild.Sha256,
+                    training = new(GameBuild.VanillaFingerprint, "trainable") });
+                if (await queue.AttemptAsync(id)) throw new Exception("rejected upload reported success");
+            }
+            if (!File.Exists(body + ".rejected") || !File.Exists(body + ".receipt.rejected") ||
+                File.Exists(body) || !budget.ListRuns().Any(r => r.RunId == id && r.State == LocalRunState.Retained))
+                throw new Exception("test run did not reach the rejected file set with a retained journal: " + string.Join(", ",
+                    Directory.GetFiles(root, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(root, f))));
+            // The exact file set the 1f9dab3 build left: rejected body and receipt, retained journal, no marker.
+            string marker = journal + LocalStorageBudget.ServerRejectedSuffix;
+            File.Delete(marker);
+            await UploadQueue.RecoverRetainedAsync(budget, () => warned = true);
+            if (warned) throw new Exception("a server rejection raised the storage capacity warning");
+            // The rejection outlives the 7-day quarantine of the rejected copies.
+            budget.MarkServerRejected(id);
+            foreach (string file in new[] { body + ".rejected", body + ".receipt.rejected" })
+                File.SetLastWriteTimeUtc(file, DateTime.UtcNow.AddDays(-LocalStorageBudget.StaleDays - 1));
+            await budget.CompactAsync();
+            if (File.Exists(body + ".rejected") || !File.Exists(marker))
+                throw new Exception("quarantine expiry did not run or removed the rejection marker");
+            await UploadQueue.RecoverRetainedAsync(budget, () => warned = true);
+            if (warned) throw new Exception("an expired server rejection raised the storage capacity warning");
+            if (!budget.ListRuns().Any(r => r.RunId == id && r.State == LocalRunState.Retained) ||
+                !await budget.DeleteRunAsync(id) || Directory.GetFiles(root, id + "*", SearchOption.AllDirectories).Length != 0)
+                throw new Exception("a rejected run's journal is not listed or not removed whole by per-run delete");
+            Console.WriteLine("PASS: a server-rejected run stays listed as retained and never raises the storage warning");
+        }
+        finally { Directory.Delete(root, true); }
+    }
+
     public static async Task LocalDelete(RunPayload payload)
     {
         string root = Directory.CreateTempSubdirectory("hpr-local-delete-").FullName;

@@ -4,15 +4,14 @@ using HumanPlayRecorder.Settings;
 
 namespace HumanPlayRecorder.Recommend;
 
-/// <summary>In-game AI recommendation badges and their settings rows.</summary>
+/// <summary>In-game AI recommendation badges. Their settings rows belong to ModSettingsUi, which RecorderMod.Init
+/// installs whether or not the guide is on.</summary>
 public static class Recommendations
 {
     /// <summary>Call once on the game's main thread from RecorderMod.Init, with the recorder's Harmony.</summary>
     public static void Install(Harmony harmony)
     {
-        // The recorder keeps working when the advice UI cannot be installed, and the badges
-        // keep working when the settings rows cannot (and the other way round).
-        UiGuard.Run("settings install", () => ModSettingsUi.Install(harmony));
+        // The recorder keeps working when the advice UI cannot be installed.
         UiGuard.Run("badge install", () =>
         {
             BadgeHooks.Install(harmony);

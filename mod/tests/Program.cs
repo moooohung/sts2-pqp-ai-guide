@@ -199,6 +199,11 @@ if (args is ["--storage-safety", "capacity-warning"])
     await StorageSafetyTests.CapacityWarning(payload);
     return;
 }
+if (args is ["--storage-safety", "rejected-no-warning"])
+{
+    await StorageSafetyTests.RejectedNoWarning(payload);
+    return;
+}
 if (args is ["--storage-safety", "local-delete"])
 {
     await StorageSafetyTests.LocalDelete(payload);
@@ -428,6 +433,7 @@ await StorageSafetyTests.RetentionFailure();
 await StorageSafetyTests.DeleteOrphans();
 await StorageSafetyTests.RetryHandoff(payload);
 await StorageSafetyTests.CapacityWarning(payload);
+await StorageSafetyTests.RejectedNoWarning(payload);
 await StorageSafetyTests.LocalDelete(payload);
 StorageSafetyTests.NoticeDeferral();
 Require(RecorderDisclosure.Text.Contains("catbox.moe") && RecorderDisclosure.Text.Contains("링크를 아는 누구나") &&

@@ -4,7 +4,7 @@ using System.Text.Json;
 namespace HumanPlayRecorder;
 
 // Pending: queued for upload, or a staged handoff the next launch queues. Retained: a kept journal with no
-// payload in any queue; it cannot upload and only the player removes it.
+// payload in any queue (none was queued, or the server refused it); it cannot upload and only the player removes it.
 public enum LocalRunState { Pending, Uncertified, Oversize, Retained }
 public sealed record LocalRun(string RunId, LocalRunState State, long Bytes, DateTime UpdatedUtc,
     string? Character, int? Ascension, int? PartySize);
@@ -73,6 +73,7 @@ public sealed class LocalStorageBudget
         File.Delete(path);
         File.Delete(path + ".retained");
         File.Delete(path + ".rejected");
+        File.Delete(path + ServerRejectedSuffix);
         File.Delete(path + ".payload");
         File.Delete(path + ".payload.partial");
         foreach (var payload in Directory.GetFiles(Path.GetDirectoryName(path)!, Path.GetFileName(path) + ".*.payload*"))
@@ -274,10 +275,13 @@ public sealed class LocalStorageBudget
         return (character, ascension, party);
     }
     // A retained journal with no payload left in any queue cannot upload and is never reclaimed automatically.
-    // A journal still owned (its handoff is running) is not one yet.
+    // A journal still owned (its handoff is running) is not one yet. One whose upload the server refused (its
+    // marker, or a rejected copy left by a build without the marker) is a handled outcome, not a storage problem.
     public bool HasUnqueuedRetainedJournal()
     {
-        foreach (var run in ListRuns().Where(r => r.State == LocalRunState.Retained))
+        var refused = RunFiles().Where(f => f.Path.EndsWith(ServerRejectedSuffix, StringComparison.Ordinal) ||
+            f.Path.EndsWith(".json.rejected", StringComparison.Ordinal)).Select(f => f.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var run in ListRuns().Where(r => r.State == LocalRunState.Retained && !refused.Contains(r.RunId)))
         {
             try { using var owner = OwnJournal(Path.Combine(Root, "incomplete", run.RunId + ".jsonl")); }
             catch (IOException) { continue; }
@@ -303,6 +307,15 @@ public sealed class LocalStorageBudget
             return true;
         }
         finally { gate.Release(); }
+    }
+    // The server terminally refused this run's upload (400/413/422). Kept beside the retained journal so the refusal
+    // outlives the 7-day quarantine of the rejected copies; not ".rejected", which that quarantine expires.
+    internal const string ServerRejectedSuffix = ".server_rejected";
+    internal void MarkServerRejected(string runId)
+    {
+        string journal = Path.Combine(Root, "incomplete", runId + ".jsonl");
+        if (File.Exists(journal) || File.Exists(journal + ".retained"))
+            File.WriteAllBytes(journal + ServerRejectedSuffix, []);
     }
     public void DeleteAcknowledgedJournal(string runId)
     {

@@ -79,6 +79,7 @@ public static partial class RecorderMod
     public static void Init()
     {
         var harmony = new Harmony(Edition.HarmonyId);
+        InstallSettingsUi(harmony);
         InstallAdvisorIntegration(harmony);
         MultiplayerAi.Install(harmony);
         PerRunContentGate.Install(harmony);

@@ -111,9 +111,12 @@ static partial class ModSettingsUi
                 added.Add(node);
                 content.MoveChild(node, at++);
             }
+            var toggleDivider = Copy(divider, RowName + "Divider");
             Insert(toggle);
-            Insert(Copy(divider, RowName + "Divider"));
+            Insert(toggleDivider);
             bool expanded = false;
+            // Guide off for this game build (game-build.json): no recommendation rows; the status line says why.
+            bool guide = GameBuild.PolicyEnabled;
             void Option(string name, Func<string> title, Func<bool> read, Action<bool> write,
                 Func<bool> visible, bool disclosure = false, Func<string>? description = null)
             {
@@ -145,23 +148,23 @@ static partial class ModSettingsUi
             Option(RowName + "Categories",
                 () => UiText.Get(expanded ? "settings_ai_categories_collapse" : "settings_ai_categories_expand"),
                 () => expanded, value => { expanded = value; Refresh(); },
-                () => RecommendationSettings.ShowRecommendations, disclosure: true);
+                () => guide && RecommendationSettings.ShowRecommendations, disclosure: true);
             foreach (var category in Enum.GetValues<RecommendationCategory>())
             {
                 Option(RowName + category, () => "    " + UiText.Get("settings_ai_category_" + category),
                     () => RecommendationSettings.IsEnabled(category),
                     value => RecommendationSettings.SetEnabled(category, value),
-                    () => RecommendationSettings.ShowRecommendations && expanded);
+                    () => guide && RecommendationSettings.ShowRecommendations && expanded);
             }
             Option(RowName + "TopPickOnly", () => "    " + UiText.Get("settings_ai_top_pick_only"),
                 () => RecommendationSettings.TopPickOnly, value => RecommendationSettings.TopPickOnly = value,
-                () => RecommendationSettings.ShowRecommendations && expanded);
+                () => guide && RecommendationSettings.ShowRecommendations && expanded);
             Insert(rules);
             Insert(rulesDivider);
             AddSharingRows(Option);
             Insert(status);
             Insert(statusDivider);
-            rows.Add(Wire(toggle, status: false));
+            rows.Add(Wire(toggle, status: false) with { Visible = () => guide, Divider = toggleDivider, Panel = panel });
             rows.Add(Wire(rules, status: false));
             rows.Add(Wire(status, status: true) with {
                 Visible = () => ShouldShowStatus(StatusText()), Divider = statusDivider, Panel = panel
@@ -230,7 +233,7 @@ static partial class ModSettingsUi
         return null;
     }
 
-    internal static string StatusText() => AdvisorStatusText.Render(
+    internal static string StatusText() => !GameBuild.PolicyEnabled ? UiText.Get("compat_policy_paused") : AdvisorStatusText.Render(
         RecommendationSettings.ShowRecommendations, AiAdvisor.Status, AiAdvisor.LastFailureKind,
         AiAdvisor.LastRefusal, AiAdvisor.CheckpointLabel, UiText.Get, UiText.Format);
 

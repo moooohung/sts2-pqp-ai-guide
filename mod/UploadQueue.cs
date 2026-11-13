@@ -629,6 +629,8 @@ public sealed class UploadQueue : IAsyncDisposable
             }
             if (code is 400 or 413 or 422)
             {
+                // Terminal: the retained journal stays for the player but is no storage problem (no warning).
+                budget.MarkServerRejected(runId);
                 File.Move(path, path + ".rejected");
                 File.Move(receiptPath, receiptPath + ".rejected");
                 File.SetLastWriteTimeUtc(path + ".rejected", DateTime.UtcNow);
