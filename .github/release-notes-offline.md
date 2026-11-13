@@ -1,3 +1,4 @@
+<!-- TODO_COPY: release-notes-offline for the Slay the Spire 2 v0.113.0 build (Writer) -->
 # pqp AI Guide (Offline) {{VERSION}}
 
 **pqp AI Guide (Offline)** (mod ID `PqpAiGuideOffline`) is the standalone offline edition of the *Slay the Spire 2* AI guide mod. It is released exclusively here on GitHub Releases and is never published on the Steam Workshop.

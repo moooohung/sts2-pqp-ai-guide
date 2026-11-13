@@ -12,7 +12,7 @@
     <AssemblyMetadata Include="HumanPlayRecorder.Edition" Value="$(Edition)" />
     <!-- Network, recording, upload, replay and consent code: online edition only. -->
     <OnlineOnlySource Include="Ai\PolicyCache.Download.cs" />
-    <OnlineOnlySource Include="UploadQueue.cs;ReplayLinks.cs;ReplayListText.cs;LiveRunSession.cs;CompletedRun.cs;LocalJournal.cs;LocalStorageBudget.cs" />
+    <OnlineOnlySource Include="UploadQueue.cs;ReplayLinks.cs;ReplayListText.cs;LiveRunSession.cs;CompletedRun.cs;LocalJournal.cs;LocalStorageBudget.cs;LocalStorageView.cs;StorageNotice.cs" />
     <OnlineOnlySource Include="MultiplayerRunNonce.cs;HumanPlayConsentMessage.cs;ConsentWire.cs;ConsentPopup.cs;PartyConsent.cs;RunConsent.cs;CaptureLease.cs" />
     <OnlineOnlySource Include="RecorderDisclosure.cs;StartupConsent.cs;StartupContentScan.cs;StartupContentClassifier.cs;RememberedContentMods.cs;GamePopup.cs;DebugUiCapture.cs" />
     <OnlineOnlySource Include="RecorderMod.Sharing.cs;FirstLaunchNotice.Sharing.cs;PerRunContentGate.Sharing.cs" />

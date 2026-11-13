@@ -33,6 +33,12 @@ static partial class ModSettingsUi
                 });
                 Refresh();
             }, () => true, disclosure: true, description: () => "");
+        // This PC only: the local storage window, separate from the server-wide delete above.
+        Option(RowName + "LocalStorage", () => LocalStorageText.SettingsRow, () => false, _ =>
+        {
+            LocalStorageView.ShowMenu();
+            Refresh();
+        }, () => true, disclosure: true, description: () => LocalStorageText.SettingsRowTip);
         foreach (var (suffix, key, url) in new[] {
             ("Privacy", "settings_privacy_link", "https://pqp.me/privacy/"),
             ("Terms", "settings_terms_link", "https://pqp.me/terms/") })

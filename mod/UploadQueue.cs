@@ -82,9 +82,9 @@ public static class UploadMetadata
         p.active_mods.Select(m=>new EnvironmentMod(m.id,m.version)).Distinct().OrderBy(m=>m.id,StringComparer.Ordinal).ToArray();
     public static void Receipt(UploadReceipt r)
     {
-        if(r.active_mods is null||r.schema is not ("sts2-human-run-v1" or "sts2-human-run-v2")||r.action_schema!="sts2-native-input-v1"||
-            r.game_dll_sha256!="0861bfa1df347538d932f22d580e75420f08082792eb914e53b4882764acdbe9"||
-            r.vanilla_fingerprint!="be4f87d1704bd6880d1b9d5f8f2989f6ed6b024a0e6a22f168b1e50f4e0820b8"||
+        if(r.active_mods is null||r.schema is not ("sts2-human-run-v1" or "sts2-human-run-v2")||!RecordingFormat.KnownActionSchema(r.action_schema)||
+            r.game_dll_sha256!=GameBuild.Sha256||
+            r.vanilla_fingerprint!=GameBuild.VanillaFingerprint||
             r.decision!="trainable"||r.ascension is <0 or >10||r.party_size is <1 or >4||
             r.bytes is <1 or >16777216+65536||
             !UploadQueue.RecordingURL(r.catbox_url,r.sha256)||
@@ -114,9 +114,13 @@ public static class UploadMetadata
 // No API keys, userhash, cookies, credentials, redirects, or file fetches.
 public sealed class UploadQueue : IAsyncDisposable
 {
+    // The uncompressed JSON cap is the binding one: sts.pqp.me rejects a recording whose gzip body
+    // inflates past 16 MiB (humanRecordingRawCap), and its gzip wire cap (16 MiB + 64 KiB) is never
+    // the tighter limit below that. Larger runs stay local as .oversize.
     public const int MaxBodyBytes = 16_777_216;
     public const string UserAgent = "HumanPlayRecorder/0.1.0";
     public string? LastDiagnostic {get;private set;}
+    public Action? CapacityWarning { get; set; }
     // Called on the worker after the server accepted a receipt (replay notice).
     public Action<UploadReceipt>? Accepted {get;set;}
     // Restates the player's current choices on every receipt before it is used, new or saved: replay
@@ -213,6 +217,7 @@ public sealed class UploadQueue : IAsyncDisposable
                 File.Delete(file);
                 budget.DeleteAcknowledgedJournal(queued.Groups[1].Value);
             }
+            await budget.DeleteAllJournalsAsync();
         }
         finally{gate.Release();}
     }
@@ -222,9 +227,8 @@ public sealed class UploadQueue : IAsyncDisposable
     // Unix seconds of the latest "delete all" on this install (0 when never).
     long Barrier()
     {
-        if(barrier<0)
-            barrier=File.Exists(BarrierPath)&&long.TryParse(File.ReadAllText(BarrierPath),System.Globalization.NumberStyles.None,
-                System.Globalization.CultureInfo.InvariantCulture,out var saved)?saved:0;
+        barrier=Math.Max(barrier,File.Exists(BarrierPath)&&long.TryParse(File.ReadAllText(BarrierPath),System.Globalization.NumberStyles.None,
+            System.Globalization.CultureInfo.InvariantCulture,out var saved)?saved:0);
         return barrier;
     }
     static long StartedUnix(RunPayload p)=>DateTimeOffset.Parse(p.started_at,System.Globalization.CultureInfo.InvariantCulture,
@@ -385,7 +389,7 @@ public sealed class UploadQueue : IAsyncDisposable
         byte[] bytes=JsonSerializer.SerializeToUtf8Bytes(new Schedule(retryAfter,failures,cursor));
         string temp=SchedulePath+".partial";
         if(File.Exists(temp))File.Delete(temp);
-        await budget.WriteAsync(temp,bytes,false);
+        await budget.WriteAsync(temp,bytes,false,essential:true);
         File.Move(temp,SchedulePath,true);
     }
     public Task StartAsync()
@@ -393,7 +397,19 @@ public sealed class UploadQueue : IAsyncDisposable
         worker ??= Task.Run(Loop);
         return Task.CompletedTask;
     }
-    public async Task EnqueueAsync(RunPayload payload, CancellationToken ct = default)
+    public Task EnqueueAsync(RunPayload payload, CancellationToken ct = default) => EnqueueDurableAsync(payload, null, ct);
+    internal string RetainedPayloadPath(string runId) =>
+        Path.Combine(budget.Root, "incomplete", runId + ".jsonl." + Path.GetFileName(directory) + ".payload");
+    internal async Task<string?> StageHandoffAsync(RunPayload payload)
+    {
+        string saved = RetainedPayloadPath(payload.run_id);
+        byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(payload, RecordingFormat.Json);
+        string temp = saved + ".partial";
+        await budget.WriteAsync(temp, bytes, false, essential: true);
+        File.Move(temp, saved);
+        return saved;
+    }
+    internal async Task EnqueueDurableAsync(RunPayload payload, string? durable, CancellationToken ct = default)
     {
         if (payload.ai_teammate_seats is { Length: > 0 })
             throw new InvalidOperationException("AI teammate runs cannot upload as human runs");
@@ -417,12 +433,25 @@ public sealed class UploadQueue : IAsyncDisposable
             {
                 if (!(await File.ReadAllBytesAsync(path, ct)).AsSpan().SequenceEqual(bytes))
                     throw new InvalidOperationException("local idempotency conflict");
+                if (durable is not null) File.Delete(durable);
                 return;
             }
             var pending = Directory.GetFiles(directory, "*.json*");
             if (pending.Length >= 100 || pending.Sum(p => new FileInfo(p).Length) + bytes.Length > 256L * 1024 * 1024)
+            {
+                CapacityWarning?.Invoke();
                 throw new InvalidOperationException("queue_full");
-            await SaveNew(path, bytes, ct);
+            }
+            if (durable is null) await SaveNew(path, bytes, ct);
+            else
+            {
+                string expected = RetainedPayloadPath(payload.run_id);
+                if (Path.GetFullPath(durable) != Path.GetFullPath(expected) ||
+                    !(await File.ReadAllBytesAsync(durable, ct)).AsSpan().SequenceEqual(bytes))
+                    throw new InvalidOperationException("durable handoff mismatch");
+                // Same filesystem: promote existing durable bytes, no second allocation/quota.
+                File.Move(durable, path);
+            }
         }
         finally { gate.Release(); }
     }
@@ -511,7 +540,8 @@ public sealed class UploadQueue : IAsyncDisposable
                 payload=payload with{seed=UploadMetadata.Seed(payload.seed),input_seed=payload.input_seed is null?null:UploadMetadata.Seed(payload.seed)};
                 body=JsonSerializer.SerializeToUtf8Bytes(payload,RecordingFormat.Json);
                 if(payload.training is not {decision:"trainable"} ||
-                    payload.training.vanilla_fingerprint!="be4f87d1704bd6880d1b9d5f8f2989f6ed6b024a0e6a22f168b1e50f4e0820b8")
+                    payload.game_dll_sha256!=GameBuild.Sha256 ||
+                    payload.training.vanilla_fingerprint!=GameBuild.VanillaFingerprint)
                     return false; // Pre-gate captures are not silently promoted.
                 UploadMetadata.Validate(UploadMetadata.Mods(payload),payload.patch_audit);
                 // A run that began before "delete all" never leaves the PC.
@@ -705,6 +735,7 @@ public sealed class UploadQueue : IAsyncDisposable
         try
         {
             Directory.CreateDirectory(directory);
+            await RetryRetainedAsync(ct);
             await ExpireHeldAsync(ct);
             if(!scheduleLoaded&&File.Exists(SchedulePath))
             {
@@ -729,6 +760,61 @@ public sealed class UploadQueue : IAsyncDisposable
             return complete;
         }
         catch (Exception) { return false; }
+    }
+    internal async Task RetryRetainedAsync(CancellationToken ct = default)
+    {
+        string incomplete = Path.Combine(budget.Root, "incomplete");
+        if (!Directory.Exists(incomplete)) return;
+        string suffix = "." + Path.GetFileName(directory) + ".payload";
+        foreach (string durable in Directory.GetFiles(incomplete, "*.jsonl" + suffix).Order(StringComparer.Ordinal))
+        {
+            string journal = durable[..^suffix.Length];
+            try { budget.OpenJournal(journal); }
+            catch (IOException) { continue; } // Active handoff or another retry owns it.
+            try
+            {
+                var payload = JsonSerializer.Deserialize<RunPayload>(await File.ReadAllBytesAsync(durable, ct), RecordingFormat.Json)
+                    ?? throw new JsonException("retained payload missing");
+                await EnqueueDurableAsync(payload, durable, ct);
+            }
+            catch (Exception e) when (e is IOException or InvalidOperationException or JsonException or UnauthorizedAccessException)
+            {
+                // A full queue has already raised the capacity warning (EnqueueDurableAsync); nothing else is about space.
+                Console.Error.WriteLine("[HumanPlayRecorder] retained handoff retry failed: " + e.GetType().Name);
+            }
+            finally { budget.CloseJournal(journal); }
+        }
+        // A retained journal without a payload in any queue is never fabricated into one or discarded:
+        // the player removes it in the local storage window.
+        if (budget.HasUnqueuedRetainedJournal()) CapacityWarning?.Invoke();
+    }
+    // Launch: every staged handoff is retried into its own queue; the warning is raised only when a queue had
+    // no room or a retained journal has no payload left in any queue.
+    internal static async Task RecoverRetainedAsync(LocalStorageBudget storage, Action warning)
+    {
+        foreach (var name in new[] { "pending", "uncertified" })
+        {
+            await using var recovery = new UploadQueue(Path.Combine(storage.Root, name), budget: storage)
+                { CapacityWarning = warning };
+            await recovery.RetryRetainedAsync();
+        }
+    }
+    // The local storage window: removes runs from this PC only. The attempt in progress is stopped first, so a
+    // run is never deleted under its own upload; the server and the "delete all" cutoff are untouched.
+    // Returns how many runs were left because their journal is still owned (recording or handoff).
+    public async Task<int> DeleteLocalAsync(IReadOnlyCollection<string> runIds)
+    {
+        choicesCancelled=true;
+        try{inflight?.Cancel();}catch(ObjectDisposedException){}
+        await gate.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            choicesCancelled=false;
+            int left=0;
+            foreach(string id in runIds)if(!await budget.DeleteRunAsync(id))left++;
+            return left;
+        }
+        finally{gate.Release();}
     }
     async Task Loop()
     {

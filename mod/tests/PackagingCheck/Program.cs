@@ -22,34 +22,43 @@ static string TypeName(MetadataReader metadata, EntityHandle handle)
     return handle.Kind.ToString();
 }
 
-// The mod's UI strings ship inside the DLL; the Workshop package carries only the DLL and manifest.
-static bool HasLocalization(PEReader pe, MetadataReader metadata)
+static (int Code, string Output, string Error) Dotnet(params string[] arguments)
+{
+    var start = new System.Diagnostics.ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
+    foreach (string argument in arguments) start.ArgumentList.Add(argument);
+    using var process = System.Diagnostics.Process.Start(start)!;
+    var error = process.StandardError.ReadToEndAsync();
+    string output = process.StandardOutput.ReadToEnd();
+    process.WaitForExit();
+    return (process.ExitCode, output, error.Result);
+}
+
+static byte[]? Resource(PEReader pe, MetadataReader metadata, string name)
 {
     foreach (var handle in metadata.ManifestResources)
     {
         var resource = metadata.GetManifestResource(handle);
-        if (!resource.Implementation.IsNil || metadata.GetString(resource.Name) != "HumanPlayRecorder.ui_strings.json") continue;
+        if (!resource.Implementation.IsNil || metadata.GetString(resource.Name) != name) continue;
         var directory = pe.PEHeaders.CorHeader!.ResourcesDirectory;
         var reader = pe.GetSectionData(directory.RelativeVirtualAddress)
             .GetReader((int)resource.Offset, directory.Size - (int)resource.Offset);
-        using var strings = JsonDocument.Parse(reader.ReadBytes(reader.ReadInt32()));
-        return strings.RootElement.TryGetProperty("eng", out var eng) &&
-            eng.TryGetProperty("mod_name", out var name) && name.ValueKind == JsonValueKind.String;
+        return reader.ReadBytes(reader.ReadInt32());
     }
-    return false;
+    return null;
 }
 
-static (string[] Initializers, bool DecisionLog, bool ReleaseMarker, bool Localization, string? SourceCommit, bool Advisor, string Edition, string AssemblyName) Inspect(string path)
+// The mod's UI strings ship inside the DLL; the Workshop package carries only the DLL and manifest.
+static bool HasLocalization(PEReader pe, MetadataReader metadata)
 {
-    byte[] bytes = File.ReadAllBytes(path);
-    using var pe = new PEReader(new MemoryStream(bytes));
-    var metadata = pe.GetMetadataReader();
-    var initializers = new List<string>();
-    bool releaseMarker = false;
-    string? sourceCommit = null;
-    // Builds from before the edition switch carry no marker and are the online edition.
-    string edition = "Online";
-    string assemblyName = metadata.GetString(metadata.GetAssemblyDefinition().Name);
+    if (Resource(pe, metadata, "HumanPlayRecorder.ui_strings.json") is not { } bytes) return false;
+    using var strings = JsonDocument.Parse(bytes);
+    return strings.RootElement.TryGetProperty("eng", out var eng) &&
+        eng.TryGetProperty("mod_name", out var name) && name.ValueKind == JsonValueKind.String;
+}
+
+static Dictionary<string, string?> AssemblyMetadata(MetadataReader metadata)
+{
+    var values = new Dictionary<string, string?>(StringComparer.Ordinal);
     foreach (var handle in metadata.GetAssemblyDefinition().GetCustomAttributes())
     {
         var attr = metadata.GetCustomAttribute(handle);
@@ -59,10 +68,40 @@ static (string[] Initializers, bool DecisionLog, bool ReleaseMarker, bool Locali
         var blob = metadata.GetBlobReader(attr.Value);
         if (blob.ReadUInt16() != 1) continue;
         string? key = blob.ReadSerializedString(), value = blob.ReadSerializedString();
-        if (key == "HumanPlayRecorder.ReleaseVariant" && value == "release-v1") releaseMarker = true;
-        if (key == "HumanPlayRecorder.SourceCommit") sourceCommit = value;
-        if (key == "HumanPlayRecorder.Edition" && value is not null) edition = value;
+        if (key is not null) values[key] = value;
     }
+    return values;
+}
+
+// The game pin and guide switch the mod enforces at runtime (embedded game-build.json), and the hash of the
+// sts2.dll it was compiled against. Anything missing or malformed throws, so every caller fails closed.
+static (string Pin, bool PolicyEnabled, string Reference) GamePin(string path)
+{
+    using var pe = new PEReader(new MemoryStream(File.ReadAllBytes(path)));
+    var metadata = pe.GetMetadataReader();
+    using var build = JsonDocument.Parse(Resource(pe, metadata, "HumanPlayRecorder.game-build.json")
+        ?? throw new InvalidDataException("mod build lacks its game pin"));
+    string pin = build.RootElement.GetProperty("sha256").GetString()!;
+    if (!build.RootElement.TryGetProperty("policy_enabled", out var policy) ||
+        policy.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+        throw new InvalidDataException("mod build lacks its guide switch");
+    string reference = AssemblyMetadata(metadata).GetValueOrDefault("HumanPlayRecorder.ReferenceSts2Sha256")
+        ?? throw new InvalidDataException("mod build lacks its sts2.dll reference stamp");
+    return (pin, policy.GetBoolean(), reference);
+}
+
+static (string[] Initializers, bool DecisionLog, bool ReleaseMarker, bool Localization, string? SourceCommit, bool Advisor, string Edition, string AssemblyName) Inspect(string path)
+{
+    byte[] bytes = File.ReadAllBytes(path);
+    using var pe = new PEReader(new MemoryStream(bytes));
+    var metadata = pe.GetMetadataReader();
+    var initializers = new List<string>();
+    var assemblyMetadata = AssemblyMetadata(metadata);
+    bool releaseMarker = assemblyMetadata.GetValueOrDefault("HumanPlayRecorder.ReleaseVariant") == "release-v1";
+    string? sourceCommit = assemblyMetadata.GetValueOrDefault("HumanPlayRecorder.SourceCommit");
+    // Builds from before the edition switch carry no marker and are the online edition.
+    string edition = assemblyMetadata.GetValueOrDefault("HumanPlayRecorder.Edition") ?? "Online";
+    string assemblyName = metadata.GetString(metadata.GetAssemblyDefinition().Name);
     foreach (var handle in metadata.TypeDefinitions)
     {
         var type = metadata.GetTypeDefinition(handle);
@@ -264,14 +303,30 @@ static void InspectNative(string path)
     Console.WriteLine("PASS: native advisor x64 DLL, C ABI exports and no search fault injection: " + path);
 }
 
-static (string Hash, string Id, ulong Step) Checkpoint(string directory, string gameHash)
+// The bridge reads gamma as an f32 and refuses it unless 0 < gamma <= 1 (sts2_native
+// crates/aiplay/src/native.rs, WebPolicyMeta), so it is judged here as that f32: a value
+// that is positive only as a double (1e-100) underflows to 0 and the bridge refuses it.
+static bool UsableGamma(string? text, out float gamma)
+{
+    gamma = 0;
+    // Only plain decimal text, a form Rust's f32 parser takes too: .NET's parser also
+    // takes trailing NULs, which Rust refuses.
+    return text is not null &&
+        System.Text.RegularExpressions.Regex.IsMatch(text, @"\A[+-]?([0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][+-]?[0-9]+)?\z") &&
+        float.TryParse(text, System.Globalization.NumberStyles.AllowLeadingSign |
+            System.Globalization.NumberStyles.AllowDecimalPoint | System.Globalization.NumberStyles.AllowExponent,
+            System.Globalization.CultureInfo.InvariantCulture, out gamma) && gamma > 0 && gamma <= 1;
+}
+
+static (string Hash, string Id, ulong Step) Checkpoint(string directory, string gameHash, bool policyEnabled = true)
 {
     using var current = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(directory, "current.json")));
     var manifest = current.RootElement;
     string hash = manifest.GetProperty("weights_sha256").GetString()!;
-    string version = "public-beta+" + gameHash[..8];
+    string expected = "public-beta+" + gameHash[..8];
+    string version = manifest.GetProperty("game_version").GetString()!;
     if (manifest.GetProperty("schema").GetString() != "sts2-policy-web-v2" ||
-        manifest.GetProperty("game_version").GetString() != version ||
+        policyEnabled && version != expected ||
         hash.Length != 64 || hash.Any(c => !char.IsAsciiHexDigitLower(c)))
         throw new InvalidDataException("incompatible bundled checkpoint manifest");
     byte[] weights = File.ReadAllBytes(Path.Combine(directory, hash + ".safetensors"));
@@ -291,12 +346,23 @@ static (string Hash, string Id, ulong Step) Checkpoint(string directory, string 
         throw new InvalidDataException("bundled checkpoint metadata mismatch");
     // Decision-time search discounts with the training gamma; weights exported without it run
     // the plain policy only (AiAdvisor), so a bundled checkpoint must carry it.
-    if (!metadata.TryGetProperty("gamma", out var gammaText) ||
-        !double.TryParse(gammaText.GetString(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double gamma) ||
-        !(gamma > 0 && gamma <= 1))
+    if (!metadata.TryGetProperty("gamma", out var gammaText) || !UsableGamma(gammaText.GetString(), out float gamma))
         throw new InvalidDataException("bundled checkpoint lacks the training gamma decision search needs");
-    Console.WriteLine($"PASS: bundled checkpoint {id} step={step} gamma={gamma.ToString(System.Globalization.CultureInfo.InvariantCulture)} sha256={hash}");
+    string gammaValue = gamma.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    Console.WriteLine(version == expected
+        ? $"PASS: bundled checkpoint {id} step={step} gamma={gammaValue} sha256={hash}"
+        : $"PASS: bundled checkpoint {id} step={step} gamma={gammaValue} sha256={hash} labelled {version} is inert: guide disabled for pin {gameHash[..8]}");
     return (hash, id, step);
+}
+
+// The bundled checkpoint must be labelled for the package's game pin, unless the mod build ships the guide and
+// AI teammates switched off for that pin, in which case the checkpoint is never loaded.
+static (string Hash, string Id, ulong Step) PolicyGate(string managed, string target, string checkpoints)
+{
+    var build = GamePin(managed);
+    if (build.Pin != target || build.Reference != target)
+        throw new InvalidDataException($"mod build pin {build.Pin} / sts2.dll reference {build.Reference} differ from package target {target}");
+    return Checkpoint(checkpoints, target, build.PolicyEnabled);
 }
 
 // Release archive whose bytes depend only on the folder's files and the given time: entries
@@ -351,7 +417,7 @@ static void AssembleOffline(string[] a)
     Attest(a[1], a[2], a[3], a[4]);
     InspectNative(a[2]);
     NativeNetworkGate(a[2]);
-    var checkpoint = Checkpoint(a[5], a[8]);
+    var checkpoint = PolicyGate(a[1], a[8], a[5]);
     RequireAgpl(File.ReadAllText(a[9]));
     var sources = new Dictionary<string, string> {
         [Gate.OfflineModId + ".dll"] = a[1], [Gate.OfflineModId + ".json"] = a[7], ["sts2_advisor_bridge.dll"] = a[2],
@@ -425,8 +491,9 @@ static void CheckOfflinePackage(string packageArg, string managedCommit, string 
     string staged = Path.Combine(root, "mods", Gate.OfflineModId);
     if (Directory.GetFileSystemEntries(Path.Combine(root, "mods")).Length != 1)
         throw new InvalidDataException("mods must hold only the " + Gate.OfflineModId + " folder");
-    var bundled = Checkpoint(Path.Combine(flat, Gate.PolicyFolder), gameHash);
-    var stagedCheckpoint = Checkpoint(Path.Combine(staged, Gate.PolicyFolder), gameHash);
+    string stagedDll = Path.Combine(staged, Gate.OfflineModId + ".dll");
+    var bundled = PolicyGate(stagedDll, gameHash, Path.Combine(flat, Gate.PolicyFolder));
+    var stagedCheckpoint = PolicyGate(stagedDll, gameHash, Path.Combine(staged, Gate.PolicyFolder));
     if (stagedCheckpoint != bundled) throw new InvalidDataException("flat/staged checkpoint mismatch");
     string[] expected = OfflineModFiles(bundled.Hash).Order(StringComparer.Ordinal).ToArray();
     foreach (string folder in new[] { flat, staged })
@@ -435,10 +502,9 @@ static void CheckOfflinePackage(string packageArg, string managedCommit, string 
     foreach (string relative in expected)
         if (!File.ReadAllBytes(Path.Combine(flat, relative)).AsSpan().SequenceEqual(File.ReadAllBytes(Path.Combine(staged, relative))))
             throw new InvalidDataException("flat/staged difference: " + relative);
-    string dll = Path.Combine(staged, Gate.OfflineModId + ".dll");
     string bridge = Path.Combine(staged, "sts2_advisor_bridge.dll");
-    Attest(dll, bridge, managedCommit, bridgeCommit);
-    if (!NoNetwork(dll)) throw new InvalidDataException("offline DLL fails the no-network gate");
+    Attest(stagedDll, bridge, managedCommit, bridgeCommit);
+    if (!NoNetwork(stagedDll)) throw new InvalidDataException("offline DLL fails the no-network gate");
     InspectNative(bridge);
     NativeNetworkGate(bridge);
     using var mod = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(staged, Gate.OfflineModId + ".json")));
@@ -534,8 +600,20 @@ try
     }
     if (args.Length == 2 && args[0] == "--native-network-gate") { NativeNetworkGate(args[1]); return 0; }
     if (args.Length == 3 && args[0] == "--checkpoint") { Checkpoint(args[1], args[2]); return 0; }
+    // The bundled checkpoint judged for the built mod: its pin, reference stamp and guide switch (PolicyGate).
+    if (args.Length == 4 && args[0] == "--policy-gate") { PolicyGate(args[1], args[2], args[3]); return 0; }
     if (args.Length == 11 && args[0] == "--assemble-offline") { AssembleOffline(args[1..]); return 0; }
     if (args.Length == 4 && args[0] == "--package-offline") { CheckOfflinePackage(args[1], args[2], args[3]); return 0; }
+    if (args.Length == 1 && args[0] == "--gamma-cases") {
+        foreach (var (text, usable) in new (string?, bool)[] {
+            ("1", true), ("0.99", true), ("1e-3", true), (null, false), ("", false), ("0", false), ("-0.5", false),
+            ("1e-100", false), ("1.0000001", false), ("NaN", false), ("Infinity", false), (" 1", false),
+            ("1\0", false), ("1\0\0", false), ("1\u00A0", false), ("１", false), ("+1", true), ("1.", true), (".5", true) })
+            if (UsableGamma(text, out _) != usable)
+                throw new Exception($"gamma {text ?? "(missing)"} judged {(usable ? "unusable" : "usable")}");
+        Console.WriteLine("PASS: bundled gamma judged as the bridge's f32 (0 < gamma <= 1)");
+        return 0;
+    }
     if (args.Length == 3 && args[0] == "--checkpoint-rejected") {
         bool rejected = false;
         try { Checkpoint(args[1], args[2]); } catch (Exception) { rejected = true; }
@@ -543,12 +621,113 @@ try
         Console.WriteLine("PASS: missing/corrupt/incompatible bundled checkpoint rejected.");
         return 0;
     }
+    if (args.Length == 2 && args[0] == "--reference-resolution-cases") {
+        // The ReferenceSts2Sha256 stamp must hash the sts2 reference MSBuild actually resolved, a decoy sts2.dll
+        // in the project's candidate files (an archived copy in the tree) must not beat the GameData HintPath, and
+        // a build without an sts2 reference must fail on the reference check.
+        string project = Path.GetFullPath(args[1]);
+        string scratch = Directory.CreateTempSubdirectory("reference-resolution-").FullName;
+        try {
+            var (code, output, _) = Dotnet("msbuild", project, "-getProperty:GameData");
+            if (code != 0) throw new Exception("GameData query failed: " + output);
+            byte[] real = File.ReadAllBytes(Path.Combine(output.Trim(), "sts2.dll"));
+            string decoy = Directory.CreateDirectory(Path.Combine(scratch, "decoy")).FullName;
+            File.WriteAllBytes(Path.Combine(decoy, "sts2.dll"), [.. real, .. new byte[16]]);
+            string realHash = Convert.ToHexStringLower(SHA256.HashData(real));
+            string decoyHash = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(Path.Combine(decoy, "sts2.dll"))));
+            // Returns stdout (the -getItem JSON when requested); a failed build is prefixed with "FAILED " plus both streams.
+            string Build(string name, params string[] extra) {
+                var (exit, log, errors) = Dotnet(["msbuild", project, "-restore", "-t:Build", "-p:Configuration=Debug", "-nodeReuse:false", "-m:2",
+                    $"-p:OutputPath={Path.Combine(scratch, name, "out")}{Path.DirectorySeparatorChar}",
+                    $"-p:IntermediateOutputPath={Path.Combine(scratch, name, "obj")}{Path.DirectorySeparatorChar}", .. extra]);
+                return exit == 0 ? log : "FAILED " + log + errors;
+            }
+            // Builds, then returns the hash of the single sts2 compiler input (ReferencePathWithRefAssemblies, where a
+            // ReferenceAssembly replaces the resolved path) after checking the stamp against it.
+            string Resolved(string name, params string[] extra) {
+                string log = Build(name, [.. extra, "-getItem:ReferencePathWithRefAssemblies"]);
+                if (log.StartsWith("FAILED ", StringComparison.Ordinal)) throw new Exception(name + " build failed: " + log);
+                using var items = JsonDocument.Parse(log[log.IndexOf('{')..]);
+                var resolved = items.RootElement.GetProperty("Items").GetProperty("ReferencePathWithRefAssemblies").EnumerateArray()
+                    .Where(item => Path.GetFileName(item.GetProperty("FullPath").GetString()!).Equals("sts2.dll", StringComparison.OrdinalIgnoreCase) ||
+                        item.TryGetProperty("OriginalItemSpec", out var spec) && spec.GetString()!.Equals("sts2", StringComparison.OrdinalIgnoreCase))
+                    .Select(item => item.GetProperty("FullPath").GetString()!).ToArray();
+                if (resolved.Length != 1) throw new Exception($"{name}: expected one sts2 compiler input, got {resolved.Length}");
+                string hash = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(resolved[0])));
+                using var pe = new PEReader(new MemoryStream(File.ReadAllBytes(Path.Combine(scratch, name, "out", "HumanPlayRecorder.dll"))));
+                string? stamp = AssemblyMetadata(pe.GetMetadataReader()).GetValueOrDefault("HumanPlayRecorder.ReferenceSts2Sha256");
+                if (stamp != hash) throw new Exception($"{name}: stamp {stamp} differs from resolved reference {resolved[0]} ({hash})");
+                Console.WriteLine($"PASS: {name}: stamp equals resolved reference {resolved[0]} ({hash})");
+                return hash;
+            }
+            string candidate = Path.Combine(scratch, "candidate.targets");
+            File.WriteAllText(candidate, $"<Project><ItemGroup><None Include=\"{Path.Combine(decoy, "sts2.dll")}\" /></ItemGroup></Project>");
+            if (Resolved("candidate", $"-p:CustomBeforeMicrosoftCommonTargets={candidate}") != realHash)
+                throw new Exception("decoy sts2.dll in the project's candidate files beat the GameData HintPath");
+            Console.WriteLine("PASS: candidate-file decoy ignored; GameData sts2.dll resolved.");
+            if (Resolved("forced", $"-p:AssemblySearchPaths=\"{decoy};{{HintPathFromItem}};{{TargetFrameworkDirectory}};{{RawFileName}}\"") != decoyHash)
+                throw new Exception("explicit AssemblySearchPaths override did not resolve the decoy");
+            Console.WriteLine("PASS: forced decoy resolved and stamped as the decoy.");
+            // ReferenceAssembly metadata swaps the compiler input while ReferencePath keeps the GameData DLL; the
+            // stamp must follow the compiler input, whatever the substitute file is called.
+            string renamed = Path.Combine(decoy, "sts2-archived.dll");
+            File.Copy(Path.Combine(decoy, "sts2.dll"), renamed);
+            foreach (var (name, substitute) in new[] { ("refassembly", Path.Combine(decoy, "sts2.dll")), ("refassembly-renamed", renamed) }) {
+                string targets = Path.Combine(scratch, name + ".targets");
+                File.WriteAllText(targets, $"<Project><ItemGroup><Reference Update=\"sts2\"><ReferenceAssembly>{substitute}</ReferenceAssembly></Reference></ItemGroup></Project>");
+                if (Resolved(name, $"-p:CustomBeforeMicrosoftCommonTargets={targets}") != decoyHash)
+                    throw new Exception(name + ": ReferenceAssembly substitute was not the sts2 compiler input");
+                Console.WriteLine($"PASS: {name}: substituted compiler input stamped as the decoy.");
+            }
+            string missingLog = Build("missing", $"-p:GameData={Directory.CreateDirectory(Path.Combine(scratch, "empty")).FullName}");
+            if (!missingLog.StartsWith("FAILED ", StringComparison.Ordinal) || !missingLog.Contains("Expected exactly one resolved sts2 reference", StringComparison.Ordinal))
+                throw new Exception("build without an sts2 reference did not fail on the reference check: " + missingLog[^Math.Min(missingLog.Length, 1500)..]);
+            Console.WriteLine("PASS: build without a resolved sts2 reference fails.");
+        } finally { Directory.Delete(scratch, recursive: true); }
+        return 0;
+    }
+    if (args.Length == 3 && args[0] == "--guide-pin-cases") {
+        // Accept: a guide-off release DLL with a checkpoint labelled for another pin. Reject: the same DLL with
+        // the guide switched on, without its switch, or packaged for a target other than its pin.
+        string managed = Path.GetFullPath(args[1]), checkpoints = args[2];
+        var build = GamePin(managed);
+        if (build.PolicyEnabled) throw new Exception("accept case needs a guide-off release DLL");
+        using (var current = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(checkpoints, "current.json"))))
+            if (current.RootElement.GetProperty("game_version").GetString() == "public-beta+" + build.Pin[..8])
+                throw new Exception("accept case needs a checkpoint labelled for another game pin");
+        PolicyGate(managed, build.Pin, checkpoints);
+        byte[] dll = File.ReadAllBytes(managed), off = "\"policy_enabled\": false"u8.ToArray();
+        int at = dll.AsSpan().IndexOf(off);
+        if (at < 0 || dll.AsSpan(at + 1).IndexOf(off) >= 0) throw new Exception("guide switch not found exactly once in the DLL");
+        string otherTarget = build.Pin[..^1] + (build.Pin[^1] == '0' ? '1' : '0');
+        var cases = new (string Name, byte[] Switch, string Target, string Error)[] {
+            ("guide-on", "\"policy_enabled\": true "u8.ToArray(), build.Pin, "incompatible bundled checkpoint manifest"),
+            ("guide-switch-missing", "\"policy_enablex\": false"u8.ToArray(), build.Pin, "mod build lacks its guide switch"),
+            ("other-target", off, otherTarget, "differ from package target"),
+        };
+        string scratch = Directory.CreateTempSubdirectory("guide-pin-cases-").FullName;
+        try {
+            foreach (var (name, guideSwitch, target, error) in cases) {
+                byte[] variant = (byte[])dll.Clone();
+                guideSwitch.CopyTo(variant, at);
+                string path = Path.Combine(scratch, name + ".dll");
+                File.WriteAllBytes(path, variant);
+                string? rejection = null;
+                try { PolicyGate(path, target, checkpoints); } catch (InvalidDataException failure) { rejection = failure.Message; }
+                if (rejection?.Contains(error, StringComparison.Ordinal) != true)
+                    throw new Exception($"{name}: expected rejection '{error}', got {(rejection is null ? "acceptance" : "'" + rejection + "'")}");
+                Console.WriteLine($"PASS: {name} rejected: {rejection}");
+            }
+        } finally { Directory.Delete(scratch, recursive: true); }
+        Console.WriteLine("PASS: guide-off build accepts a checkpoint labelled for another pin; guide-on, switchless and retargeted builds are rejected.");
+        return 0;
+    }
     if (args.Length == 7 && args[0] == "--assemble") {
         Attest(args[2], args[3], args[4], args[5]);
         string package = Path.GetFullPath(args[1]);
         var builtInventory = JsonNode.Parse(File.ReadAllBytes(Path.Combine(package, "package-manifest.json")))!;
         builtInventory["published"] = false;
-        var checkpoint = Checkpoint(args[6], builtInventory["game_dll_sha256"]!.GetValue<string>());
+        var checkpoint = PolicyGate(args[2], builtInventory["game_dll_sha256"]!.GetValue<string>(), args[6]);
         foreach (var entry in builtInventory["files"]!.AsArray()) {
             string relative = entry!["path"]!.GetValue<string>();
             string name = Path.GetFileName(relative);
@@ -637,8 +816,8 @@ try
         !mod.GetProperty("has_dll").GetBoolean() || mod.GetProperty("affects_gameplay").GetBoolean())
         throw new Exception("package manifest is not the release manifest");
     using var inventory = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(root, "package-manifest.json")));
-    var bundled = Checkpoint(Path.Combine(root, "policy-cache"),
-        inventory.RootElement.GetProperty("game_dll_sha256").GetString()!);
+    var bundled = PolicyGate(flat, inventory.RootElement.GetProperty("game_dll_sha256").GetString()!,
+        Path.Combine(root, "policy-cache"));
     var policy = inventory.RootElement.GetProperty("policy_checkpoint");
     if (policy.GetProperty("cache_directory").GetString() != "policy-cache" ||
         policy.GetProperty("checkpoint_id").GetString() != bundled.Id ||

@@ -9,23 +9,18 @@ public static partial class FirstLaunchNotice
 {
     static int scheduled;
     static int exclusionShown;
-
-    internal const string QueueFullText =
-        "플레이 리플레이 기록의 로컬 대기열이 가득 차 새 런 기록을 저장하지 못했습니다.\n" +
-        "네트워크 연결과 sts.pqp.me 상태를 확인한 뒤 게임을 다시 시작하세요.";
-
-    public static void ShowQueueFull()
+    static readonly StorageNotice capacity = new();
+    // Any thread; shown once the main menu is up (MainMenuReady), never lost when requested earlier.
+    public static void ShowStorageCapacity()
     {
-        if (Interlocked.Exchange(ref queueFullScheduled, 1) != 0) return;
-        try { Callable.From(ShowQueueFullDeferred).CallDeferred(); }
-        catch (Exception e)
-        {
-            Console.Error.WriteLine("[HumanPlayRecorder] queue-full notice scheduling failed: " + e.GetType().Name);
-            Interlocked.Exchange(ref queueFullScheduled, 0);
-        }
+        if (!capacity.Request()) return;
+        try { Callable.From(ShowCapacityNow).CallDeferred(); }
+        catch (Exception e) { Console.Error.WriteLine("[HumanPlayRecorder] storage notice scheduling failed: " + e.GetType().Name); }
     }
+    static void ShowCapacityNow() => capacity.Show(() => ShowShortNote(
+        Settings.UiText.Get("storage_capacity_title"), LocalStorageText.CapacityBody,
+        new(LocalStorageText.CapacityManage, LocalStorageView.ShowMenu)));
 
-    static void ShowQueueFullDeferred()=>ShowShortNote("플레이 기록 대기열이 가득 찼습니다",QueueFullText);
     public static void ShowExcluded(string reason)
     {
         if(Interlocked.Exchange(ref exclusionShown,1)!=0)return;
@@ -50,6 +45,9 @@ public static partial class FirstLaunchNotice
     // start-up mod consent; GamePopup shows them one after another in the game's modal container.
     static void MainMenuReady()
     {
+        if (!GameBuild.PolicyEnabled)
+            ShowShortNote(Settings.UiText.Get("mod_name"), Settings.UiText.Get("compat_policy_paused"),
+                closeAfterSeconds: 12);
 #if DEBUG
         if (DebugUiCapture.Active)
         {
@@ -60,6 +58,7 @@ public static partial class FirstLaunchNotice
         Settings.SharingSettings.OfferTrainingConsent();
         ReplayLinks.OfferConsent();
         StartupConsent.OnMainMenuReady();
+        if (capacity.MenuReady()) ShowCapacityNow();
 #if DEBUG
         if (DebugUiCapture.Active)
         {

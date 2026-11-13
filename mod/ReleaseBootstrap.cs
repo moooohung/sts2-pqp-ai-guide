@@ -10,7 +10,7 @@ namespace HumanPlayRecorder;
 [ModInitializer(nameof(Init))]
 public static class ReleaseBootstrap
 {
-    public const string SupportedGameHash = "0861bfa1df347538d932f22d580e75420f08082792eb914e53b4882764acdbe9";
+    public static string SupportedGameHash => GameBuild.Sha256;
     public static void Init()
     {
         if (Edition.StandDownReason() is { } standDown)

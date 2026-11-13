@@ -18,8 +18,9 @@ namespace HumanPlayRecorder;
 
 public static partial class RecorderMod
 {
-    internal static Task<byte[]> PreloadAiPolicy(CancellationToken token) => Task.Run(() =>
-        PolicyCache.Load(PolicyDirectory, "public-beta+0861bfa1", token), token);
+    internal static Task<byte[]> PreloadAiPolicy(CancellationToken token) =>
+        !GameBuild.PolicyEnabled ? Task.FromException<byte[]>(new InvalidOperationException("POLICY_RETRAINING_REQUIRED")) :
+        Task.Run(() => PolicyCache.Load(PolicyDirectory, GameBuild.PolicyTag, token), token);
     static readonly AiFallbackDeadline aiFallbackDeadline = new();
     internal const double AiFallbackSeconds = 5;
     // An AI seat whose advice arrived in time acts at least this long before its fallback fires.

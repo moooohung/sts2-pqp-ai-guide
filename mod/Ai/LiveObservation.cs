@@ -38,7 +38,7 @@ public static partial class LiveObservation
             synchronizer.PlayerVoteChanged += (player, _, vote) => {
                 votes[player] = vote?.coord; known.Add(player); RecorderMod.MarkAdvisorDirty();
             };
-            synchronizer.PlayerVoteCancelled += player => {
+            synchronizer.PlayerVoteCancelled += (player, _) => {
                 votes[player] = null; known.Add(player); RecorderMod.MarkAdvisorDirty();
             };
             // The reference retains accepted votes after travel clears the UI's votes.
@@ -311,9 +311,12 @@ public static partial class LiveObservation
         CardValues(row, preview, "display_damage", "display_block");
         var cardKeywords = !FrameCaptureBudget.Active ? card.Keywords : LiveModelData.Keywords(card);
         var keywords = cardKeywords.Select(k => k.ToString()).ToHashSet(StringComparer.Ordinal);
+        // The card's runtime keywords, keywords applied in play included (Snap's CardCmd.ApplyKeyword
+        // Retain). The descriptor advisor requires Unplayable and RetainKeyword and refuses a card
+        // without them; Retained additionally carries the single-turn retain.
         foreach (var (flag, keyword) in new[] {
             ("Exhausts", "Exhaust"), ("Ethereal", "Ethereal"), ("Innate", "Innate"),
-            ("Sly", "Sly"), ("Eternal", "Eternal")
+            ("Sly", "Sly"), ("Eternal", "Eternal"), ("Unplayable", "Unplayable"), ("RetainKeyword", "Retain")
         }) row.F(flag, keywords.Contains(keyword));
         row.F("Upgraded", card.CurrentUpgradeLevel > 0).F("XCost", LiveModelData.Energy(card).CostsX)
             .F("StarXCost", LiveModelData.Property(card, "HasStarCostX", () => card.HasStarCostX))

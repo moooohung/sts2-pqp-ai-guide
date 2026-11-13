@@ -1,6 +1,11 @@
 using System.Text.Json;
 using HumanPlayRecorder;
 
+if (args is ["--hold-journal", var journalRoot, var journalId])
+{
+    await StorageSafetyTests.HoldJournal(journalRoot, journalId);
+    return;
+}
 
 if (args.Length == 3 && args[0] == "--probe-disabled")
 {
@@ -112,6 +117,18 @@ RecordingFormat.Validate(new("RerollCardReward", 0,
     reward_index: 0, reward_type: "card"));
 RecordingFormat.Validate(new("Collect", 0,
     reward_index: 0, reward_type: "relic", relic_id: "VAJRA"));
+RecordingFormat.Validate(new("OpenChest", 0));
+RecordingFormat.Validate(new("SkipRelic", 0, reward_type: "relic"));
+Require(RecordingFormat.Phase(new("SkipRelic", 0, reward_type: "relic")) == "Treasure" &&
+    RecordingFormat.Phase(new("OpenChest", 0)) == "Treasure" &&
+    RecordingFormat.Phase(new("SkipRelic", 0, reward_index: 1, reward_type: "relic")) == "CardReward",
+    "the solo treasure Skip and chest button are the treasure room's; a relic reward's Skip is the reward screen's");
+Require(RecordingFormat.KnownActionSchema("sts2-native-input-v1") && RecordingFormat.KnownActionSchema("sts2-native-input-v2") &&
+    !RecordingFormat.KnownActionSchema("sts2-native-input-v3"), "readers accept v1 and v2 recordings");
+invalid = false;
+try { RecordingFormat.Validate(new("SkipPotion", 0, reward_type: "potion")); }
+catch (ArgumentException) { invalid = true; }
+Require(invalid, "only the treasure relic Skip omits its reward index");
 invalid = false;
 try { RecordingFormat.Validate(new("PickCardBundle", 0, index: 0)); }
 catch (ArgumentException) { invalid = true; }
@@ -142,6 +159,56 @@ var payload = new RunPayload("sts2-human-run-v1", "sts2-native-input-v1",
     [new(1, 2, 0, digest, RecordingFormat.Hash(digest))],
     new(false, 1, 2, false, 0), "2026-10-26T00:00:00Z", "2026-10-26T00:01:00Z",
     "solo", 1, 0, [new(0, "IRONCLAD")], new string('b', 64));
+if (args is ["--storage-safety", "handoff"])
+{
+    await StorageSafetyTests.Handoff(payload);
+    return;
+}
+if (args is ["--storage-safety", "oversize"])
+{
+    await StorageSafetyTests.Oversize(payload);
+    return;
+}
+if (args is ["--storage-safety", "reservation"])
+{
+    await StorageSafetyTests.Reservation(payload);
+    return;
+}
+if (args is ["--storage-safety", "ownership"])
+{
+    await StorageSafetyTests.Ownership();
+    return;
+}
+if (args is ["--storage-safety", "retention"])
+{
+    await StorageSafetyTests.RetentionFailure();
+    return;
+}
+if (args is ["--storage-safety", "delete-orphans"])
+{
+    await StorageSafetyTests.DeleteOrphans();
+    return;
+}
+if (args is ["--storage-safety", "retry"])
+{
+    await StorageSafetyTests.RetryHandoff(payload);
+    return;
+}
+if (args is ["--storage-safety", "capacity-warning"])
+{
+    await StorageSafetyTests.CapacityWarning(payload);
+    return;
+}
+if (args is ["--storage-safety", "local-delete"])
+{
+    await StorageSafetyTests.LocalDelete(payload);
+    return;
+}
+if (args is ["--storage-safety", "notice"])
+{
+    StorageSafetyTests.NoticeDeferral();
+    return;
+}
 using var envelope = JsonDocument.Parse(JsonSerializer.Serialize(payload, RecordingFormat.Json));
 string[] fields = ["schema", "action_schema", "run_id", "mod_version", "game_version",
     "game_dll_sha256", "character", "ascension", "seed", "active_mods", "actions",
@@ -175,8 +242,8 @@ Require(!lines[0].Contains("NetId") && !lines[0].Contains("Steam") &&
 Console.WriteLine("PASS: lossless combat DTO, required indices/identities, digest mutation, durable journal, privacy DTO");
 Console.WriteLine("Test journal retained: " + directory);
 var queueDir = Path.Combine(directory, "pending");
-payload=payload with {game_dll_sha256="0861bfa1df347538d932f22d580e75420f08082792eb914e53b4882764acdbe9",
-    training=new("be4f87d1704bd6880d1b9d5f8f2989f6ed6b024a0e6a22f168b1e50f4e0820b8","trainable")};
+payload=payload with {game_dll_sha256=GameBuild.Sha256,
+    training=new(GameBuild.VanillaFingerprint,"trainable")};
 await AscensionRecordingTests.Run(payload);
 var http = new QueueHandler();
 var testNow=DateTimeOffset.UtcNow;
@@ -351,8 +418,18 @@ await using (var cappedQueue = new UploadQueue(Path.Combine(directory, "oversize
 }
 Console.WriteLine("PASS: synthetic byte-cap enforcement (not a gameplay payload-size measurement)");
 await StorageBudgetTests.Run(payload);
+await StorageSafetyTests.Handoff(payload);
+await StorageSafetyTests.Oversize(payload);
 await QueueResilienceTests.Run(payload);
+await StorageSafetyTests.Reservation(payload);
+await StorageSafetyTests.Ownership();
 await SharingFlagsTests.Run(payload);
+await StorageSafetyTests.RetentionFailure();
+await StorageSafetyTests.DeleteOrphans();
+await StorageSafetyTests.RetryHandoff(payload);
+await StorageSafetyTests.CapacityWarning(payload);
+await StorageSafetyTests.LocalDelete(payload);
+StorageSafetyTests.NoticeDeferral();
 Require(RecorderDisclosure.Text.Contains("catbox.moe") && RecorderDisclosure.Text.Contains("링크를 아는 누구나") &&
     RecorderDisclosure.Text.Contains("HTTPS") && RecorderDisclosure.Text.Contains("IP 주소가 전달") &&
     RecorderDisclosure.Text.Contains("30일간 로그에 보관") && RecorderDisclosure.Text.Contains("각자의 정책에 따라 로그를 처리"),

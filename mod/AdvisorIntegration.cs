@@ -25,7 +25,7 @@ public static partial class RecorderMod
 
     static void InstallAdvisorIntegration(Harmony harmony) => AdvisorBoundary(() => {
         // Original-DLL verification owns its own advisor and never starts HTTP.
-        if (TestMode.IsOn) return;
+        if (!GameBuild.PolicyEnabled || TestMode.IsOn) return;
         advisorMain = SynchronizationContext.Current;
         // The game loads mods into its own load context, whose native probing does not
         // reach the mod folder; bind the bridge to the copy shipped beside this assembly.
@@ -128,7 +128,7 @@ public static partial class RecorderMod
 
     static void EnsureLiveAdvisor()
     {
-        if (advisorActive || advisorMain is null ||
+        if (!GameBuild.PolicyEnabled || advisorActive || advisorMain is null ||
             !RecommendationSettings.ShowRecommendations && !MultiplayerAi.HostsAi) return;
         var state = RunManager.Instance.DebugOnlyGetState();
         // SetUpSavedMultiplayer sets State, then awaits before InitializeShared sets NetService.
@@ -155,7 +155,7 @@ public static partial class RecorderMod
     static void StartAdvisor(RunHeader? header, int ascension, string gameDll,
         RunState? liveState = null, int liveSeat = 0)
     {
-        if (advisorMain is null) return;
+        if (!GameBuild.PolicyEnabled || advisorMain is null) return;
         AdvisorMain(() => {
             if (!RecommendationSettings.ShowRecommendations && !MultiplayerAi.HostsAi) return;
             if (header is not null) advisorRecordingHeader = header;
@@ -183,7 +183,7 @@ public static partial class RecorderMod
                     return;
                 }
                 string start = JsonSerializer.Serialize(new {
-                    schema = "sts2-human-run-v2", action_schema = "sts2-native-input-v1",
+                    schema = "sts2-human-run-v2", action_schema = RecordingFormat.ActionSchema,
                     game_dll_sha256 = hash.Result, ascension, seed, input_seed = seed,
                     party_size = party.Length, party, local_seat = seat, initial_state = initial, setup,
                     live_advice = true

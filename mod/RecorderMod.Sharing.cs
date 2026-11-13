@@ -53,6 +53,12 @@ public static partial class RecorderMod
 
     static partial void InstallSharing(Harmony harmony)
     {
+        // An install left over budget by an earlier version recovers before its first run. Harnesses
+        // (TestMode) can run Init against the real data folder; they never compact it.
+        if (!TestMode.IsOn) { var storage = Storage; _ = Task.Run(async () => {
+            await storage.CompactAsync();
+            await UploadQueue.RecoverRetainedAsync(storage, FirstLaunchNotice.ShowStorageCapacity);
+        }); }
         foreach (var constructor in AccessTools.GetDeclaredConstructors(typeof(StartRunLobby)))
             harmony.Patch(constructor,
                 postfix: new HarmonyMethod(typeof(RecorderMod), nameof(RegisterLobbyNonceHandler)));
@@ -81,6 +87,8 @@ public static partial class RecorderMod
         string? recordingRejection = StartupConsent.RecordingDeclinedThisSession
             ? "declined at start-up" : state.Players.Count > 1 &&
                 runStartToken is null && !TestMode.IsOn ? "multiplayer_run_nonce_unavailable" : null;
+        if (state.GameMode != GameMode.Standard || state.IsCustomGame || state.Modifiers.Count != 0)
+            recordingRejection ??= "unsupported_run_mode";
         // Training consent and replay saving both off: nothing is recorded, not even locally.
         if (!UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving))
             recordingRejection ??= "training consent and replay saving are both off";
@@ -297,6 +305,7 @@ public static partial class RecorderMod
             uploads.StampReceipt ??= ReplayLinks.Stamp;
             uploads.Allowed ??= () => UploadPolicy.Allowed(Settings.SharingSettings.TrainingConsent, Settings.SharingSettings.ReplaySaving);
             uploads.Accepted ??= ReplayLinks.Announce;
+            uploads.CapacityWarning ??= FirstLaunchNotice.ShowStorageCapacity;
             _ = uploads.StartAsync();
         }
         var game = typeof(RunState).Assembly;
@@ -316,10 +325,18 @@ public static partial class RecorderMod
             await other.PurgeAllAsync(at);
         }
     }
+    internal static IReadOnlyList<LocalRun> LocalRuns() => Storage.ListRuns();
+    // The local storage window frees this PC only; replays on sts.pqp.me stay (that is DeleteAllMine).
+    internal static async Task<int> DeleteLocalRunsAsync(IReadOnlyCollection<string> runIds)
+    {
+        if (uploads is { } current) return await current.DeleteLocalAsync(runIds);
+        await using var queue = new UploadQueue(Path.Combine(DataDirectory, "pending"), budget: Storage);
+        return await queue.DeleteLocalAsync(runIds);
+    }
     static void OnLiveFailure(Exception error)
     {
         if (error is InvalidOperationException { Message: "queue_full" })
-            FirstLaunchNotice.ShowQueueFull();
+            FirstLaunchNotice.ShowStorageCapacity();
     }
     static void CaptureFloor()
     {

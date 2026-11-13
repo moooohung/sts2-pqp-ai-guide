@@ -57,7 +57,7 @@ public static partial class RecorderMod
         return stamped;
     }
     static readonly HashSet<string> BaseCharacters = [
-        "IRONCLAD", "SILENT", "DEFECT", "REGENT", "NECROBINDER"
+        "IRONCLAD", "SILENT", "DEFECT", "REGENT", "NECROBINDER", "FOOL"
     ];
     internal const string NetworkModName = Edition.NetworkModName;
 
@@ -247,7 +247,7 @@ public static partial class RecorderMod
                 return;
             }
             journal.Append(new { kind = "entry", schema = "sts2-human-run-v2",
-                action_schema = "sts2-native-input-v1", run_id = id,
+                action_schema = RecordingFormat.ActionSchema, run_id = id,
                 character = state.Players[localSeat].Character.Id.Entry, ascension = state.AscensionLevel,
                 seed = state.Rng.Seed.ToString(CultureInfo.InvariantCulture),
                 mode, party_size = party.Length, local_seat = localSeat, party,
@@ -474,16 +474,7 @@ public static partial class RecorderMod
             // worker. Its stable checkpoint is the synchronous input boundary;
             // the next input/floor/terminal boundary verifies resulting effects.
             if(action.kind=="EndTurn")digest=digest with{replay=null};
-            string phase = action.kind switch {
-                "Move" => "MapChoice", "RestOption" => "RestSite",
-                "EventChoice" => "Event",
-                "BuyCard" or "BuyPotion" or "BuyRelic" or "RemoveCard" => "Shop",
-                "Collect" => "Treasure",
-                "OpenReward" or "PickCard" or "PickCardBundle" or "RerollCardReward" or
-                "PickPotion" or "PickRelicReward" or "SkipRewards" or "SkipPotion" or
-                "SkipRelic" or "Skip" => "CardReward",
-                _ => "Combat"
-            };
+            string phase = RecordingFormat.Phase(action);
             action = action.InputSequence is null ? Stamp(action) : action;
             var row = new ActionRow(action.InputSequence!.Value, phase, Timestamp(),
                 action, digest, RecordingFormat.Hash(digest), action.ParentSequence) {before=action.ReplayBefore};
@@ -600,7 +591,7 @@ public static partial class RecorderMod
         int localSeat, PartySeat[] party)
     {
         var game = typeof(RunState).Assembly;
-        return new RunHeader(id, "0.1.0", game.GetName().Version!.ToString(), "",
+        return new RunHeader(id, "0.1.0", GameBuild.Version, "",
             state.Players[localSeat].Character.Id.Entry,
             state.Rng.Seed.ToString(CultureInfo.InvariantCulture), [], Timestamp(),
             party.Length == 1 ? "solo" : "multiplayer", party.Length, localSeat, party,

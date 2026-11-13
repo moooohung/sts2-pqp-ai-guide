@@ -13,7 +13,7 @@ namespace HumanPlayRecorder.VanillaGuard;
 // gates remain authoritative for effects outside these interception points.
 public static class ContentPools
 {
-    static readonly HashSet<string> BaseCharacters = ["IRONCLAD", "SILENT", "DEFECT", "REGENT", "NECROBINDER"];
+    static readonly HashSet<string> BaseCharacters = ["IRONCLAD", "SILENT", "DEFECT", "REGENT", "NECROBINDER", "FOOL"];
     static readonly HashSet<string> PreservedModelDbCaches = ["_allCharacterCardPools", "_allCardPools"];
     static readonly List<(FieldInfo Field, object? Owner, object? Value)> caches = [];
     static HashSet<string>? originalIds;
@@ -126,7 +126,7 @@ public static class ContentPools
     {
         MenuLifecycle.BeginLobbyLaunch();
         if (!OriginalRulesSettings.Enabled && !Active) return;
-        if (__instance.GameMode != GameMode.Standard || __instance.DailyTime is not null || modifiers.Count != 0)
+        if (__instance.GameMode != GameMode.Standard || __instance.IsCustom || __instance.DailyTime is not null || modifiers.Count != 0)
         {
             UnsupportedMode();
             return;
@@ -149,14 +149,14 @@ public static class ContentPools
             __result = __result.Where(IsOriginalCharacter).ToArray();
     }
 
-    static void PrepareSolo(CharacterModel character, IReadOnlyList<ModifierModel> modifiers, GameMode gameMode, MethodBase __originalMethod)
+    static void PrepareSolo(MegaCrit.Sts2.Core.Entities.Players.Player player, IReadOnlyList<ModifierModel> modifiers, GameMode gameMode, bool isCustomGame, MethodBase __originalMethod)
     {
         MenuLifecycle.EnteredGameStart();
         try
         {
             if (!OriginalRulesSettings.Enabled && !Active) return;
-            if (gameMode != GameMode.Standard || modifiers.Count != 0) { UnsupportedMode(); return; }
-            if (!BaseCharacters.Contains(character.Id.Entry)) { UnsupportedCharacter(); return; }
+            if (gameMode != GameMode.Standard || isCustomGame || modifiers.Count != 0) { UnsupportedMode(); return; }
+            if (!IsOriginalCharacter(player.Character)) { UnsupportedCharacter(); return; }
             ValidateStart(__originalMethod);
         }
         catch (Exception e) { Fail(e); Stop(); }
@@ -167,7 +167,7 @@ public static class ContentPools
         try
         {
             if (!OriginalRulesSettings.Enabled && !Active) return;
-            if (lobby.GameMode != GameMode.Standard || dailyTime is not null ||
+            if (lobby.GameMode != GameMode.Standard || lobby.IsCustom || dailyTime is not null ||
                 modifiers.Count != 0 || lobby.Modifiers.Count != 0) { UnsupportedMode(); return; }
             if (lobby.Players.Count == 0 || lobby.Players.Any(p => !IsOriginalCharacter(p.character)))
             {
@@ -237,7 +237,7 @@ public static class ContentPools
         try
         {
             if (!OriginalRulesSettings.Enabled && !Active) return;
-            if (state.GameMode != GameMode.Standard || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
+            if (state.GameMode != GameMode.Standard || state.IsCustomGame || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
             if (state.Players.Count == 0 || state.Players.Any(p => !IsOriginalCharacter(p.Character)))
             {
                 UnsupportedCharacter();
@@ -254,7 +254,7 @@ public static class ContentPools
         try
         {
             if (!OriginalRulesSettings.Enabled && !Active) return;
-            if (state.GameMode != GameMode.Standard || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
+            if (state.GameMode != GameMode.Standard || state.IsCustomGame || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
             if (state.Players.Count == 0 || state.Players.Any(p => !IsOriginalCharacter(p.Character)))
             {
                 UnsupportedCharacter();
@@ -268,7 +268,7 @@ public static class ContentPools
     }
     internal static bool ValidateSave(SerializableRun save)
     {
-        if (save.GameMode != GameMode.Standard || save.DailyTime is not null || (save.Modifiers?.Count ?? 0) != 0)
+        if (save.GameMode != GameMode.Standard || save.IsCustomGame || save.DailyTime is not null || (save.Modifiers?.Count ?? 0) != 0)
         {
             UnsupportedMode();
             return false;
@@ -348,7 +348,9 @@ public static class ContentPools
     {
         failure = null;
         End();
-        if (!enabled || state.Players.Count != 1 ||
+        if (!enabled) return;
+        if (state.GameMode != GameMode.Standard || state.IsCustomGame || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
+        if (state.Players.Count != 1 ||
             !BaseCharacters.Contains(state.Players[0].Character.Id.Entry)) return;
         BeginScope();
     }
@@ -358,7 +360,7 @@ public static class ContentPools
         failure = null;
         End();
         if (!enabled) return;
-        if (state.GameMode != GameMode.Standard || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
+        if (state.GameMode != GameMode.Standard || state.IsCustomGame || state.Modifiers.Count != 0) { UnsupportedMode(); return; }
         if (state.Players.Count == 0 || state.Players.Any(p => !IsOriginalCharacter(p.Character)))
         {
             UnsupportedCharacter();

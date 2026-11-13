@@ -82,9 +82,6 @@ static class OfflineAllowlist
         [(Mod + "MultiplayerAi::Remove", Invoke)] = 1,
         // LoadRunLobby.HandleClientLoadJoinRequestMessage: a saved run's AI seat rejoins.
         [(Mod + "MultiplayerAi::RejoinSavedAi", Invoke)] = 1,
-        // OneOffSynchronizer.DoMerchantCardRemoval for an AI seat.
-        [(Mod + "RecorderMod::AiMerchantRemoval", Invoke)] = 1,
-        [(Mod + "RecorderMod::AiPurchase", Invoke)] = 1,
         // HarmonySharedState.GetPatchInfo / UpdatePatchInfo, PatchFunctions.UpdateWrapper (original-rules suspension).
         [(Mod + "VanillaGuard.PatchSuspension::Apply", Invoke)] = 2,
         [(Mod + "VanillaGuard.PatchSuspension::Current", Invoke)] = 1,

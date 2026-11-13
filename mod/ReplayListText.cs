@@ -1,41 +1,44 @@
+using HumanPlayRecorder.Settings;
+
 namespace HumanPlayRecorder;
 
-// "내 리플레이" window copy (written by the Writer agent, 2026-11-08).
+// "My Replays" window copy, per language in Localization/ui_strings.json.
 static class ReplayListText
 {
-    public const string Title = "내 리플레이";
-    public const string Intro = "이 PC로 기록한 최근 리플레이(최대 500개)를 카드·유물 이름으로 찾을 수 있습니다.\n각 판의 공개 설정을 누르면 sts.pqp.me에 바로 적용됩니다.";
-    public const string SearchPlaceholder = "카드·유물 이름 검색";
-    public const string SearchEmpty = "일치하는 리플레이가 없습니다.";
-    public const string SearchCount = "검색 결과 {0}개";
-    public const string RowDeck = "덱 {0}장";
-    public const string RowRelics = "유물 {0}개";
-    public const string RowKiller = "{0}에게 패배";
-    public const string RowMore = "+{0}";
-    public const string RowMatched = "일치";
-    public const string DeckBack = "목록으로";
-    public const string DeckTitle = "{0} 최종 덱 ({1}장)";
-    public const string TooltipDeck = "누르면 전체 덱을 카드로 봅니다.";
-    public const string TooltipRelic = "누르면 유물 설명을 크게 봅니다.";
-    public const string TooltipCard = "누르면 카드를 크게 봅니다.";
-    public const string DefaultPublic = "앞으로 끝나는 판 기본 설정: 공개 목록에 올립니다.";
-    public const string DefaultPrivate = "앞으로 끝나는 판 기본 설정: 나만 봅니다.";
-    public const string DefaultToPrivate = "나만 보기로";
-    public const string DefaultToPublic = "공개로";
-    public const string OpenSite = "브라우저 열기";
-    public const string Close = "닫기";
-    public const string Loading = "리플레이 목록을 불러오는 중입니다...";
-    public const string Empty = "아직 올라온 리플레이가 없습니다. 판이 끝나고 1~2분 뒤에 목록에 올라옵니다.";
-    public const string LoadFailed = "목록을 불러오지 못했습니다. 아래 '브라우저 열기'로 직접 확인해 주세요.";
-    public const string RowWin = "승리";
-    public const string RowDeath = "사망";
-    public const string RowAscension = "승천 {0}";
-    public const string RowFloor = "{0}막 {1}층";
-    public const string RowParty = "{0}인";
-    public const string RowView = "보기";
-    public const string RowIsPublic = "공개";
-    public const string RowIsPrivate = "나만 보기";
-    public const string RowSaving = "저장 중";
-    public const string RowToggleFailed = "설정을 바꾸지 못했습니다. 잠시 후 다시 시도해 주세요.";
-    public const string TooltipToggle = "누르면 이 리플레이의 공개·나만 보기 상태가 바로 바뀝니다.";
+    public static string MenuButton => UiText.Get("replay_list_menu_button");
+    public static string Title => UiText.Get("replay_list_title");
+    public static string Intro => UiText.Get("replay_list_intro");
+    public static string SearchPlaceholder => UiText.Get("replay_list_search_placeholder");
+    public static string SearchEmpty => UiText.Get("replay_list_search_empty");
+    public static string SearchCount => UiText.Get("replay_list_search_count");
+    public static string RowDeck => UiText.Get("replay_list_row_deck");
+    public static string RowRelics => UiText.Get("replay_list_row_relics");
+    public static string RowKiller => UiText.Get("replay_list_row_killer");
+    public static string RowMore => UiText.Get("replay_list_row_more");
+    public static string RowMatched => UiText.Get("replay_list_row_matched");
+    public static string DeckBack => UiText.Get("replay_list_deck_back");
+    public static string DeckTitle => UiText.Get("replay_list_deck_title");
+    public static string TooltipDeck => UiText.Get("replay_list_tooltip_deck");
+    public static string TooltipRelic => UiText.Get("replay_list_tooltip_relic");
+    public static string TooltipCard => UiText.Get("replay_list_tooltip_card");
+    public static string DefaultPublic => UiText.Get("replay_list_default_public");
+    public static string DefaultPrivate => UiText.Get("replay_list_default_private");
+    public static string DefaultToPrivate => UiText.Get("replay_list_default_to_private");
+    public static string DefaultToPublic => UiText.Get("replay_list_default_to_public");
+    public static string OpenSite => UiText.Get("replay_list_open_site");
+    public static string Close => UiText.Get("replay_list_close");
+    public static string Loading => UiText.Get("replay_list_loading");
+    public static string Empty => UiText.Get("replay_list_empty");
+    public static string LoadFailed => UiText.Get("replay_list_load_failed");
+    public static string RowWin => UiText.Get("replay_list_row_win");
+    public static string RowDeath => UiText.Get("replay_list_row_death");
+    public static string RowAscension => UiText.Get("replay_list_row_ascension");
+    public static string RowFloor => UiText.Get("replay_list_row_floor");
+    public static string RowParty => UiText.Get("replay_list_row_party");
+    public static string RowView => UiText.Get("replay_list_row_view");
+    public static string RowIsPublic => UiText.Get("replay_list_row_is_public");
+    public static string RowIsPrivate => UiText.Get("replay_list_row_is_private");
+    public static string RowSaving => UiText.Get("replay_list_row_saving");
+    public static string RowToggleFailed => UiText.Get("replay_list_row_toggle_failed");
+    public static string TooltipToggle => UiText.Get("replay_list_tooltip_toggle");
 }

@@ -8,6 +8,9 @@
     <!-- -p:Sts2GameDir=<game or game-refs folder>, as in the public repository's build. -->
     <GameData Condition="'$(GameData)' == '' and '$(Sts2GameDir)' != ''">$(Sts2GameDir)\data_sts2_windows_x86_64</GameData>
     <Version>0.1.0</Version>
+    <!-- Game assemblies come only from their GameData HintPaths: without this, a stray sts2.dll in the project's
+         candidate files (e.g. an archived older build) is searched first and wins. -->
+    <AssemblySearchPaths>{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}</AssemblySearchPaths>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyMetadata Include="HumanPlayRecorder.SourceCommit" Value="$(RecorderSourceCommit)" />
@@ -20,6 +23,7 @@
     <Content Remove="tests\**" />
     <None Remove="tests\**" />
     <EmbeddedResource Include="vanilla-content.json" Condition="Exists('vanilla-content.json')" LogicalName="HumanPlayRecorder.vanilla-content.json" />
+    <EmbeddedResource Include="game-build.json" LogicalName="HumanPlayRecorder.game-build.json" />
     <!-- Settings/UiText reads the mod's UI strings from the DLL; the Workshop package ships only DLL + manifest. -->
     <EmbeddedResource Include="Localization\ui_strings.json" LogicalName="HumanPlayRecorder.ui_strings.json" />
   </ItemGroup>
@@ -28,6 +32,21 @@
   </Target>
   <!-- -p:Edition=Offline builds the offline edition from this same source (Editions.props). -->
   <Import Project="Editions.props" />
+  <!-- Records the sts2.dll actually compiled against: the compiler input from ReferencePathWithRefAssemblies (which
+       a ReferenceAssembly can substitute), not ReferencePath or the HintPath, so the package check can tie it to the
+       game pin. The sts2 input is matched by its Reference item or its file name. -->
+  <Target Name="StampReferenceGameHash" DependsOnTargets="FindReferenceAssembliesForReferences" BeforeTargets="GetAssemblyAttributes">
+    <ItemGroup>
+      <_ResolvedSts2Reference Include="@(ReferencePathWithRefAssemblies)" Condition="'%(ReferencePathWithRefAssemblies.OriginalItemSpec)' == 'sts2' or '%(ReferencePathWithRefAssemblies.Filename)%(ReferencePathWithRefAssemblies.Extension)' == 'sts2.dll'" />
+    </ItemGroup>
+    <Error Condition="'@(_ResolvedSts2Reference->Count())' != '1'" Text="Expected exactly one resolved sts2 reference, found @(_ResolvedSts2Reference->Count()): @(_ResolvedSts2Reference)" />
+    <GetFileHash Files="@(_ResolvedSts2Reference)" Algorithm="SHA256">
+      <Output TaskParameter="Hash" PropertyName="ReferenceSts2Sha256" />
+    </GetFileHash>
+    <ItemGroup>
+      <AssemblyMetadata Include="HumanPlayRecorder.ReferenceSts2Sha256" Value="$(ReferenceSts2Sha256.ToLowerInvariant())" />
+    </ItemGroup>
+  </Target>
   <!-- STS2_GAME_DATA: the offline gate scans this sts2.dll for game methods that reach the network. -->
   <Target Name="VerifyReleaseEntryPoint" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' and '$(GateFixture)' == ''">
     <Exec Command="dotnet run --project &quot;$(MSBuildProjectDirectory)\tests\PackagingCheck\PackagingCheck.csproj&quot; -c Release -- --expect-release &quot;$(TargetPath)&quot;" EnvironmentVariables="STS2_GAME_DATA=$(GameData)" />

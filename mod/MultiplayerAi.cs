@@ -33,10 +33,9 @@ public static class MultiplayerAi
     internal static bool PolicyAvailable => admissionPolicy?.IsCompletedSuccessfully == true ||
         HumanPlayRecorder.Ai.AiAdvisor.Status == HumanPlayRecorder.Ai.AdvisorStatus.Ready;
     const ulong FirstId = 0x5051504149000001;
-    const string GameHash = "0861bfa1df347538d932f22d580e75420f08082792eb914e53b4882764acdbe9";
     static readonly Lazy<bool> compatible = new(() => {
         using var stream = File.OpenRead(typeof(RunState).Assembly.Location);
-        return Convert.ToHexStringLower(SHA256.HashData(stream)) == GameHash;
+        return Convert.ToHexStringLower(SHA256.HashData(stream)) == GameBuild.Sha256;
     });
     static readonly FieldInfo bus = AccessTools.Field(typeof(NetHostGameService), "_messageBus");
     static readonly MethodInfo broadcast = AccessTools.Method(typeof(NetHostGameService), "BroadcastMessage")
@@ -58,6 +57,7 @@ public static class MultiplayerAi
 
     internal static void Install(Harmony harmony)
     {
+        if (!GameBuild.PolicyEnabled) return;
         harmony.Patch(AccessTools.Method(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.InitializeMultiplayerAsHost)),
             postfix: new HarmonyMethod(typeof(MultiplayerAi), nameof(ShowControls)));
         harmony.Patch(AccessTools.Method(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen._Process)),
@@ -131,6 +131,7 @@ public static class MultiplayerAi
 
     internal static string? CannotAdd(StartRunLobby target)
     {
+        if (!GameBuild.PolicyEnabled) return UiText.Get("compat_policy_paused");
         if (target.NetService.Type != NetGameType.Host ||
             (bool)AccessTools.Field(typeof(StartRunLobby), "_isBeginningRun").GetValue(target)! ||
             target.LocalPlayer.isReady) return UiText.Get("mp_ai_cannot_add_note");
@@ -149,7 +150,7 @@ public static class MultiplayerAi
             .First(value => target.Players.All(p => p.id != value));
         var local = target.LocalPlayer;
         var player = (StartRunLobbyPlayer?)add.Invoke(target,
-            [local.unlockState, local.maxMultiplayerAscensionUnlocked, true, id]);
+            [local.unlockState, local.maxStandardAscension, local.maxBlitzAscension, true, id]);
         if (player is null) return false;
         // Let the normal join handler own notifications, event subscribers and
         // ascension reconciliation; TryAdd already inserted the slot.

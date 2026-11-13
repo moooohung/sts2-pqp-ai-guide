@@ -78,7 +78,7 @@ internal sealed class LiveRunSession
         {
             try
             {
-                await journal.DisposeAsync();
+                await journal.FinishForHandoffAsync();
                 // Frozen snapshot plus journal completion: channel overflow,
                 // disk errors and unsupported adapters must never upload.
                 if (!complete || !journal.Complete || journal.Failure is not null)
@@ -90,7 +90,7 @@ internal sealed class LiveRunSession
                         .ThenBy(p=>p.kind,StringComparer.Ordinal).ToArray()
                 };
                 await CompletedRun.QueueAsync(queue, completedHeader, captured,
-                    capturedFloors, result, endedAt, completeCapture: true, log: log);
+                    capturedFloors, result, endedAt, completeCapture: true, log: log, journal: journal);
             }
             catch (Exception e)
             {
@@ -98,6 +98,7 @@ internal sealed class LiveRunSession
                 Console.Error.WriteLine("[HumanPlayRecorder] run retained locally: " + e.Message);
                 failureSink?.Invoke(e);
             }
+            finally { await journal.DisposeAsync(); }
         });
     }
 }

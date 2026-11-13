@@ -201,9 +201,7 @@ public static class GameOptionAdapters
     public static IReadOnlyList<LiveOption> Shop(RunState run, Player player, MerchantRoom room)
     {
         int seat = run.GetPlayerSlotIndex(player);
-        if (seat >= room.Inventories.Count)
-            throw new AdviceUnavailableException(AdviceReason.ShopSyncing, LiveObservation.ShopListUnavailable);
-        return Shop(seat, room.Inventories[seat], run.Players.Count > 1);
+        return Shop(seat, RunManager.Instance.MerchantSynchronizer.GetInventoryFor(player), run.Players.Count > 1);
     }
 
     public static IReadOnlyList<LiveOption> Shop(int seat, MerchantInventory inventory, bool multiplayer)

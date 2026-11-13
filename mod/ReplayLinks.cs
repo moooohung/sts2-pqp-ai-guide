@@ -156,8 +156,8 @@ public static class ReplayLinks
             parent.MoveChild(button, settings.GetIndex() + 1);
             if (button.label is { } label)
             {
-                label.Text = "내 리플레이";
-                if (FontManager.GetSubstituteFont("kor", FontType.Regular) is { } font)
+                label.Text = ReplayListText.MenuButton;
+                if (FontManager.GetSubstituteFont(Settings.UiText.Language, FontType.Regular) is { } font)
                     label.AddThemeFontOverride(ThemeConstants.Label.Font, font);
             }
             button.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => ShowMenu()));
@@ -219,9 +219,9 @@ public static class ReplayLinks
         return await Forget(new { key = Key, delete_all = true, before = at.ToUnixTimeSeconds() });
     }
 
-    static void OnMain(Action action) => Callable.From(action).CallDeferred();
+    internal static void OnMain(Action action) => Callable.From(action).CallDeferred();
 
-    static Label Text(string text, int size, Color? color = null)
+    internal static Label Text(string text, int size, Color? color = null)
     {
         var label = Plain(text, size, color);
         label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
@@ -230,7 +230,7 @@ public static class ReplayLinks
     }
 
     // One unwrapped line sized to its text (tags, numbers, names beside an image).
-    static Label Plain(string text, int size, Color? color = null)
+    internal static Label Plain(string text, int size, Color? color = null)
     {
         var label = new Label { Text = text, VerticalAlignment = VerticalAlignment.Center,
             MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -240,7 +240,7 @@ public static class ReplayLinks
         return label;
     }
 
-    static StyleBoxFlat Box(Color fill, Color? border = null, int radius = 8, int margin = 8)
+    internal static StyleBoxFlat Box(Color fill, Color? border = null, int radius = 8, int margin = 8)
     {
         var box = new StyleBoxFlat { BgColor = fill };
         box.SetCornerRadiusAll(radius);
@@ -270,7 +270,7 @@ public static class ReplayLinks
 
     // Names and pictures of the ids a row holds, read from the game's own models (mod content
     // included) and cached: search compares every row's names on each keystroke.
-    static class Art
+    internal static class Art
     {
         static Dictionary<string, MegaCrit.Sts2.Core.Models.CardModel>? cards;
         static Dictionary<string, MegaCrit.Sts2.Core.Models.RelicModel>? relics;
@@ -445,7 +445,7 @@ public static class ReplayLinks
         return grid;
     }
 
-    static Button RowButton(string text)
+    internal static Button RowButton(string text)
     {
         var button = new Button { Text = text, FocusMode = Control.FocusModeEnum.None,
             CustomMinimumSize = new Vector2(96, 36) };
@@ -454,7 +454,7 @@ public static class ReplayLinks
         return button;
     }
 
-    static readonly Color Muted = new(0.8f, 0.78f, 0.7f), Gold = new(0.95f, 0.8f, 0.4f);
+    internal static readonly Color Muted = new(0.8f, 0.78f, 0.7f), Gold = new(0.95f, 0.8f, 0.4f);
     const int RelicStrip = 16;
 
     // Search ignores case, spaces and underscores, so "몸통박치기" finds "몸통 박치기" and ids match too.
@@ -471,7 +471,7 @@ public static class ReplayLinks
         return cards.Length + relics.Length > 0 ? new(row, cards, relics) : null;
     }
 
-    static HBoxContainer HRow(int gap)
+    internal static HBoxContainer HRow(int gap)
     {
         var box = new HBoxContainer { MouseFilter = Control.MouseFilterEnum.Pass };
         box.AddThemeConstantOverride("separation", gap);
@@ -695,7 +695,7 @@ public static class ReplayLinks
         }
     }
 
-    static void ShowMenu()
+    internal static void ShowMenu()
     {
         bool isPublic = Consent().public_replay;
         string k = Key;

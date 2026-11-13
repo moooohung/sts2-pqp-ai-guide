@@ -160,7 +160,7 @@ internal static class WireInterop
         if (MegaCrit.Sts2.Core.Nodes.NGame.Instance is not null) return true;
         __result = new PeerVersionInfo
         {
-            version = "0.111.0",
+            version = GameBuild.Version,
             branch = default,
             idDatabaseHash = ModelIdSerializationCache.Hash,
             gameplayAffectingMods = ModManager.GetGameplayRelevantModNameList(),

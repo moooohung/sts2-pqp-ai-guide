@@ -132,9 +132,13 @@ public static partial class RecorderMod
         }
         if (run.CurrentRoom is RestSiteRoom)
             return GameOptionAdapters.Rest(seat, RunManager.Instance.RestSiteSynchronizer.GetOptionsForPlayer(player));
-        if (run.CurrentRoom is TreasureRoom &&
-            RunManager.Instance.TreasureRoomRelicSynchronizer.CurrentRelics is { } relics)
+        if (run.CurrentRoom is TreasureRoom treasure &&
+            RunManager.Instance.TreasureRoomRelicSynchronizer.CurrentRelics is { } relics) {
+            // The solo chest's gold is not settled while it opens (InventoryAdapters
+            // ChestOpening): nothing to advise until it is.
+            if (run.Players.Count == 1 && ChestOpening(treasure)) return [];
             return GameOptionAdapters.Treasure(seat, relics, run.Players.Count > 1);
+        }
         if (run.CurrentRoom is MerchantRoom merchant) {
             return GameOptionAdapters.Shop(run, player, merchant);
         }

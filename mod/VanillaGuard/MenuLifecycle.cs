@@ -5,9 +5,11 @@ using HumanPlayRecorder.Settings;
 using MegaCrit.Sts2.Core.Multiplayer.Game;
 using MegaCrit.Sts2.Core.Multiplayer.Game.Lobby;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Screens.Blitz;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 using MegaCrit.Sts2.Core.Nodes.Screens.CustomRun;
 using MegaCrit.Sts2.Core.Nodes.Screens.DailyRun;
+using MegaCrit.Sts2.Core.Nodes.Screens.Dread;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
@@ -65,8 +67,7 @@ public static class MenuLifecycle
             prefix: new HarmonyMethod(typeof(MenuLifecycle), nameof(BeforeHostLoad)));
         h.Patch(AccessTools.Method(typeof(NJoinFriendScreen), nameof(NJoinFriendScreen.JoinGameAsync)),
             prefix: new HarmonyMethod(typeof(MenuLifecycle), nameof(BeforeJoinFriend)));
-        foreach (var type in new[] { typeof(NDailyRunScreen), typeof(NCustomRunScreen),
-            typeof(NDailyRunLoadScreen), typeof(NCustomRunLoadScreen) })
+        foreach (var type in NonStandardScreens)
             h.Patch(AccessTools.Method(type, "OnSubmenuOpened"),
                 prefix: new HarmonyMethod(typeof(MenuLifecycle), nameof(OpenedNonStandard)));
         foreach (var ctor in AccessTools.GetDeclaredConstructors(typeof(StartRunLobby)))
@@ -86,8 +87,12 @@ public static class MenuLifecycle
             prefix: new HarmonyMethod(typeof(MenuLifecycle), nameof(ReturnedToMenu)));
         OriginalRulesSettings.Changed += ToggleChanged;
     }
+    // Singleplayer submenus whose runs are never Standard (NSingleplayerSubmenu opens each directly).
+    internal static readonly Type[] NonStandardScreens = [ typeof(NDailyRunScreen), typeof(NCustomRunScreen),
+        typeof(NDailyRunLoadScreen), typeof(NCustomRunLoadScreen), typeof(NBlitzScreen), typeof(NDreadScreen) ];
     static void Opened(NCharacterSelectScreen __instance) => UiGuard.Run("guard menu open",
-        () => OpenSelection(__instance.Lobby is null || __instance.Lobby.GameMode == GameMode.Standard));
+        () => OpenSelection(__instance.Lobby is null ||
+            __instance.Lobby.GameMode == GameMode.Standard && !__instance.Lobby.IsCustom));
     static void OpenedLoad(NMultiplayerLoadGameScreen __instance) => UiGuard.Run("guard load menu open", () => {
         var lobby = (LoadRunLobby?)AccessTools.Field(typeof(NMultiplayerLoadGameScreen), "_runLobby").GetValue(__instance);
         if (lobby?.Run is { } save) PrepareLoad(save);
@@ -96,17 +101,17 @@ public static class MenuLifecycle
         selectionOpen = false;
         if (OriginalRulesSettings.Enabled) ContentPools.UnsupportedMode();
     });
-    static void BeforeHostSubmenu(GameMode gameMode) => UiGuard.Run("guard host submenu", () => {
-        if (gameMode == GameMode.Standard) OpenSelection(true);
+    static void BeforeHostSubmenu(GameMode gameMode, bool isCustom) => UiGuard.Run("guard host submenu", () => {
+        if (gameMode == GameMode.Standard && !isCustom) OpenSelection(true);
         else if (OriginalRulesSettings.Enabled) ContentPools.UnsupportedMode();
     });
     static void BeforeHostLoad(SerializableRun run) => UiGuard.Run("guard host load", () => PrepareLoad(run));
     static void BeforeJoinFriend() => UiGuard.Run("guard join friend", () => {
         if (OriginalRulesSettings.Enabled) OpenSelection(true);
     });
-    static void BeforeStartLobbyCtor(GameMode gameMode, INetGameService netService) => UiGuard.Run("guard start lobby", () => {
+    static void BeforeStartLobbyCtor(GameMode gameMode, bool isCustom, INetGameService netService) => UiGuard.Run("guard start lobby", () => {
         if (!netService.Type.IsMultiplayer()) return;
-        if (gameMode == GameMode.Standard) OpenSelection(true);
+        if (gameMode == GameMode.Standard && !isCustom) OpenSelection(true);
         else if (OriginalRulesSettings.Enabled) ContentPools.UnsupportedMode();
     });
     static void BeforeLoadLobbyCtor(SerializableRun runSave) => UiGuard.Run("guard load lobby", () => PrepareLoad(runSave));
@@ -172,7 +177,7 @@ public static class MenuLifecycle
         UiGuard.Run("guard continue", () => {
             if (____readRunSaveResult is { Success: true, SaveData: { } save })
             {
-                PrepareContinue(save.GameMode, save.Players.Count == 1 && save.DailyTime is null && (save.Modifiers?.Count ?? 0) == 0);
+                PrepareContinue(save.GameMode, save.Players.Count == 1 && !save.IsCustomGame && save.DailyTime is null && (save.Modifiers?.Count ?? 0) == 0);
                 if (ContentPools.Active) ContentPools.ValidateSave(save);
             }
         });

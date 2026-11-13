@@ -86,8 +86,6 @@ public static partial class RecorderMod
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(AiPurchaseReward)));
         harmony.Patch(hostSend.MakeGenericMethod(typeof(GoldLostMessage)),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(AiPurchaseGold)));
-        harmony.Patch(AccessTools.Method(typeof(OneOffSynchronizer), nameof(OneOffSynchronizer.DoLocalMerchantCardRemoval)),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(AiMerchantRemoval)));
         harmony.Patch(AccessTools.Method(typeof(OneOffSynchronizer), nameof(OneOffSynchronizer.DoLocalTreasureRoomRewards)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AiTreasureOpened)));
         harmony.Patch(AccessTools.Method(typeof(CombatStateSynchronizer), nameof(CombatStateSynchronizer.StartSync)),
@@ -559,7 +557,7 @@ public static partial class RecorderMod
 
     static void AiBuy(Player player, AiAdvisor.LiveOption option)
     {
-        var inventory = ((MerchantRoom)run!.CurrentRoom!).Inventories[run.GetPlayerSlotIndex(player)];
+        var inventory = RunManager.Instance.MerchantSynchronizer.GetInventoryFor(player);
         var entries = inventory.AllEntries.ToArray();
         int index = Array.FindIndex(entries, entry => entry switch {
             MerchantCardEntry card => ReferenceEquals(card.CreationResult?.Card, option.Option),
@@ -616,7 +614,7 @@ public static partial class RecorderMod
         var state = manager.DebugOnlyGetState();
         var player = state?.Players.FirstOrDefault(p => p.NetId == message.playerId && MultiplayerAi.IsAi(p.NetId));
         if (state?.CurrentRoom is not MerchantRoom merchant || player is null) return;
-        var inventory = merchant.Inventories[state.GetPlayerSlotIndex(player)];
+        var inventory = manager.MerchantSynchronizer.GetInventoryFor(player);
         var entries = inventory.AllEntries.ToArray();
         if (message.entryIndex < 0 || message.entryIndex >= entries.Length ||
             !entries[message.entryIndex].IsStocked || !entries[message.entryIndex].EnoughGold ||
@@ -630,32 +628,11 @@ public static partial class RecorderMod
         var previous = aiPurchasePlayer.Value;
         aiPurchasePlayer.Value = player;
         try {
-            if (entry is MerchantCardRemovalEntry removal) {
-                AiTellVanillaPeers(new MerchantCardRemovalMessage { goldCost = removal.Cost,
-                    Location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation }, player);
-                // DoMerchantCardRemoval is the game's synchronized remote path.
-                bool removed = await (Task<bool>)AccessTools.Method(typeof(OneOffSynchronizer), "DoMerchantCardRemoval")
-                    .Invoke(RunManager.Instance.OneOffSynchronizer, [player, removal.Cost, true])!;
-                if (removed) {
-                    removal.SetUsed();
-                    await MegaCrit.Sts2.Core.Hooks.Hook.AfterItemPurchased(player.RunState, player, removal, removal.Cost);
-                    removal.InvokePurchaseCompleted(removal);
-                }
-            }
-            else await entry.OnTryPurchaseWrapper(inventory);
+            await entry.OnTryPurchaseUnsynchronized(inventory);
         }
         finally { aiPurchasePlayer.Value = previous; }
     }
     // On the host the sync message is built and then routed to vanilla peers only; mod peers
     // replay the whole purchase from AiShopPurchaseMessage.
     static bool AiPurchaseSync() => aiPurchasePlayer.Value is null || RunManager.Instance.NetService is NetHostGameService;
-    static bool AiMerchantRemoval(OneOffSynchronizer __instance, int goldCost, bool cancelable, ref Task<bool> __result)
-    {
-        if (aiPurchasePlayer.Value is not { } player) return true;
-        AiTellVanillaPeers(new MerchantCardRemovalMessage { goldCost = goldCost,
-            Location = RunManager.Instance.RunLocationTargetedBuffer.CurrentLocation }, player);
-        __result = (Task<bool>)AccessTools.Method(typeof(OneOffSynchronizer), "DoMerchantCardRemoval")
-            .Invoke(__instance, [player, goldCost, cancelable])!;
-        return false;
-    }
 }

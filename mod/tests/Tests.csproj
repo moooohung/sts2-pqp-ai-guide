@@ -9,12 +9,16 @@
     <Compile Include="..\Recording.cs" Link="Recording.cs" />
     <Compile Include="..\LocalJournal.cs" Link="LocalJournal.cs" />
     <Compile Include="..\RunHeader.cs" Link="RunHeader.cs" />
+    <Compile Include="..\GameBuild.cs" Link="GameBuild.cs" />
+    <EmbeddedResource Include="..\game-build.json" LogicalName="HumanPlayRecorder.game-build.json" />
+    <EmbeddedResource Include="..\vanilla-content.json" LogicalName="HumanPlayRecorder.vanilla-content.json" />
     <Compile Include="..\UploadQueue.cs" Link="UploadQueue.cs" />
     <Compile Include="..\CompletedRun.cs" Link="CompletedRun.cs" />
     <Compile Include="..\LiveRunSession.cs" Link="LiveRunSession.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RecordingDownload.cs" />
     <Compile Include="StorageBudgetTests.cs" />
+    <Compile Include="StorageSafetyTests.cs" />
     <Compile Include="QueueResilienceTests.cs" />
     <Compile Include="SharingFlagsTests.cs" />
     <Compile Include="..\PartyConsent.cs" Link="PartyConsent.cs" />
@@ -22,6 +26,7 @@
     <Compile Include="..\RunConsent.cs" Link="RunConsent.cs" />
     <Compile Include="AscensionRecordingTests.cs" />
     <Compile Include="..\LocalStorageBudget.cs" Link="LocalStorageBudget.cs" />
+    <Compile Include="..\StorageNotice.cs" Link="StorageNotice.cs" />
     <Compile Include="..\RecorderDisclosure.cs" Link="RecorderDisclosure.cs" />
     <Compile Include="..\RunStartDiagnostics.cs" Link="RunStartDiagnostics.cs" />
     <Compile Include="..\AuditedCompatibleMods.cs" Link="AuditedCompatibleMods.cs" />

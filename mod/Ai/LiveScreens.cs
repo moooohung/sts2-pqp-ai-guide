@@ -376,9 +376,7 @@ public static partial class LiveObservation
         } else if (options.Any(option => option.Reward is CardReward))
             RewardRows(snapshot, run.Players[seat], owner, options, handles, screen);
         else if (run.CurrentRoom is MerchantRoom merchant) {
-            if (seat >= merchant.Inventories.Count)
-                throw new AdviceUnavailableException(AdviceReason.ShopSyncing, ShopListUnavailable);
-            var inventory = merchant.Inventories[seat];
+            var inventory = RunManager.Instance.MerchantSynchronizer.GetInventoryFor(run.Players[seat]);
             void Offer(MerchantEntry entry, int index, object source)
             {
                 FrameCaptureBudget.Check();
@@ -407,6 +405,25 @@ public static partial class LiveObservation
             if (inventory.CardRemovalEntry is { } removal) Offer(removal, 0, removal);
         } else if (options.Any(option => option.Option is EventOption))
             EventRows(snapshot, run, seat, owner, options, handles, screen);
+        // Only GameOptionAdapters.Treasure binds the solo treasure Skip without a reward index.
+        else if (run.CurrentRoom is TreasureRoom treasure &&
+                 options.Any(option => option.Input is { kind: "SkipRelic", reward_index: null }))
+            TreasureRows(snapshot, treasure, owner, options, handles, screen);
         else if (!combat) RewardRows(snapshot, run.Players[seat], owner, options, handles, screen);
+    }
+    // The solo treasure screen as the native encoder shows it (encoder/solo.rs, RunPhase::Treasure):
+    // the chest, naming its relic once opened (NTreasureRoom.OpenChest shows the relic holders,
+    // NTreasureRoom.cs:219-237), with the relic button and the Skip (the proceed button in skip
+    // mode, NTreasureRoom.cs:176-185) acting on it and naming no model of their own.
+    static void TreasureRows(Snapshot snapshot, TreasureRoom room, int owner,
+        IReadOnlyList<AiAdvisor.LiveOption> options, Dictionary<object, int> handles, ScreenRows screen)
+    {
+        var relic = RecorderMod.ChestOpened(room) ? options.Select(option => option.Option).OfType<RelicModel>().FirstOrDefault() : null;
+        int chest = snapshot.Add(new Element("Treasure") { owner = owner, model = relic is null ? null : Model(relic) });
+        foreach (var option in options) {
+            handles[option.Option] = chest;
+            screen.Models[option.Option] = null;
+            if (option.Input.kind == "SkipRelic") screen.Actions[option.Option] = "TreasureSkip";
+        }
     }
 }

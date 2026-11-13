@@ -116,8 +116,10 @@ if ($PolicyDir) {
     if ($hash -notmatch '^[0-9a-f]{64}$') { throw 'published policy manifest has no valid weights_sha256' }
     Invoke-WebRequest -UseBasicParsing -MaximumRedirection 0 -OutFile (Join-Path $policy "$hash.safetensors") "$origin/api/aiplay/policy/weights/$hash.safetensors"
 }
-# SHA-256 against current.json plus the same metadata checks the online mod applies.
-dotnet @check --checkpoint $policy $gameHash
+# SHA-256 against current.json plus the same metadata checks the online mod applies, judged for the
+# built mod: its game pin and sts2.dll reference stamp must equal the refs, and a checkpoint labelled
+# for another game build is accepted only when the mod ships with the guide switched off (inert).
+dotnet @check --policy-gate $dll $gameHash $policy
 
 Write-Host '== package'
 $package = Join-Path $work 'package'

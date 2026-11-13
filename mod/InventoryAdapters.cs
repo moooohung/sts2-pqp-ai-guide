@@ -23,7 +23,6 @@ public static partial class RecorderMod
 {
     static readonly Dictionary<Reward, int> rewardIndices = new();
     static readonly Dictionary<Player, CardReward> currentCardRewards = new();
-    static readonly Dictionary<ulong, int> remoteMerchantPrices = new();
     static readonly Dictionary<(ulong player, string relic), Queue<int?>> pendingTreasureAwards = new();
     static TreasureRoomRelicSynchronizer? treasureSynchronizer;
     sealed record Selection(Player Player, CardModel[] Candidates, RecordedAction Input);
@@ -32,13 +31,8 @@ public static partial class RecorderMod
     static void InstallInventoryAdapters(Harmony h)
     {
         InstallChoiceContexts(h);
-        h.Patch(AccessTools.Method(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseWrapper)),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforePurchase)),
-            postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterRest)));
-        // Card removal declares its own wrapper rather than overriding the base wrapper.
-        h.Patch(AccessTools.DeclaredMethod(typeof(MerchantCardRemovalEntry),
-                nameof(MerchantCardRemovalEntry.OnTryPurchaseWrapper),
-                [typeof(MerchantInventory), typeof(bool), typeof(bool)]),
+        h.Patch(AccessTools.Method(typeof(MerchantEntry), nameof(MerchantEntry.OnTryPurchaseUnsynchronized),
+                [typeof(MerchantInventory), typeof(bool)]),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforePurchase)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterRest)));
         h.Patch(AccessTools.Method(typeof(RewardsSet), nameof(RewardsSet.Offer)),
@@ -58,6 +52,11 @@ public static partial class RecorderMod
         h.Patch(AccessTools.Method(typeof(PickRelicAction), "ExecuteAction"),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeTreasurePick)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterTask)));
+        // NTreasureRoom.OnChestButtonReleased -> OpenChest -> TreasureRoom.DoNormalRewards
+        // (NTreasureRoom.cs:203-227, TreasureRoom.cs:61-64): the chest's gold and its Rewards RNG.
+        h.Patch(AccessTools.Method(typeof(TreasureRoom), nameof(TreasureRoom.DoNormalRewards)),
+            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeChestOpen)),
+            postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterChestOpen)));
         h.Patch(AccessTools.Method(typeof(TreasureRoomRelicSynchronizer), "OnPicked"),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeTreasureVote)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterVoid)));
@@ -68,14 +67,6 @@ public static partial class RecorderMod
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(RewardCardChoice)));
         h.Patch(AccessTools.Method(typeof(PlayerChoiceSynchronizer), "OnReceivePlayerChoice"),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(RemoteRewardCardChoice)));
-        h.Patch(AccessTools.Method(typeof(RewardSynchronizer), "HandleGoldLostMessage"),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeRemoteMerchantGold)));
-        h.Patch(AccessTools.Method(typeof(RewardSynchronizer), "HandleRewardObtainedMessage"),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeRemoteMerchantReward)),
-            postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterVoid)));
-        h.Patch(AccessTools.Method(typeof(OneOffSynchronizer), "HandleMerchantCardRemoval"),
-            prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeRemoteMerchantCardRemoval)),
-            postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterVoid)));
         h.Patch(AccessTools.Method(typeof(CardSelectCmd), nameof(CardSelectCmd.FromSimpleGrid)),
             prefix: new HarmonyMethod(typeof(RecorderMod), nameof(BeforeGrid)),
             postfix: new HarmonyMethod(typeof(RecorderMod), nameof(AfterSelection)));
@@ -115,7 +106,6 @@ public static partial class RecorderMod
         treasureSynchronizer = null;
         rewardIndices.Clear();
         currentCardRewards.Clear();
-        remoteMerchantPrices.Clear();
         pendingTreasureAwards.Clear();
     }
     static void AttachTreasureSynchronizer()
@@ -241,6 +231,17 @@ public static partial class RecorderMod
         if (run.Players.Count != 1) return; // Multiplayer transport is a separate verification gate.
         try
         {
+            if (____relicIndex is null)
+            {
+                // The solo Skip: NTreasureRoom.OnProceedButtonPressed (IsSkip) -> SkipRelicLocally ->
+                // PickRelicAction(player, null) (NTreasureRoom.cs:176-185,
+                // TreasureRoomRelicSynchronizer.cs:113-116); the advisor's Skip binding
+                // (GameOptionAdapters.Treasure) has no relic index either.
+                __state = Track(__instance, new("SkipRelic", run.GetPlayerSlotIndex(____player),
+                    reward_type: "relic"));
+                RecordingFormat.Validate(__state);
+                return;
+            }
             var relics = RunManager.Instance.TreasureRoomRelicSynchronizer.CurrentRelics;
             if (____relicIndex is not { } index || relics is null || index < 0 || index >= relics.Count)
             { journal.Invalidate(); return; }
@@ -250,6 +251,47 @@ public static partial class RecorderMod
             RecordingFormat.Validate(__state);
         }
         catch (Exception) { journal.Invalidate(); __state = null; }
+    }
+    // TreasureRoom keeps no chest state (NTreasureRoom._hasChestBeenOpened belongs to the UI),
+    // so the advisor's solo treasure screen reads it here: false while the chest opens, true
+    // once its rewards are settled.
+    static readonly System.Runtime.CompilerServices.ConditionalWeakTable<TreasureRoom,
+        System.Runtime.CompilerServices.StrongBox<bool>> chests = new();
+    internal static bool ChestOpened(TreasureRoom room) => chests.TryGetValue(room, out var opened) && opened.Value;
+    internal static bool ChestOpening(TreasureRoom room) => chests.TryGetValue(room, out var opened) && !opened.Value;
+    /// The solo chest open is its own input: CurrentRelics is filled on room entry
+    /// (TreasureRoomRelicSynchronizer.BeginRelicPicking via TreasureRoom.EnterInternal), so the
+    /// room's decisions before and after the chest differ only in this click's gold and RNG.
+    static void BeforeChestOpen(TreasureRoom __instance, out RecordedAction? __state)
+    {
+        __state = null;
+        chests.AddOrUpdate(__instance, new(false));
+        MarkAdvisorDirty();
+        if (run is null || journal is null || run.Players.Count != 1) return;
+        try
+        {
+            __state = Stamp(new("OpenChest", run.GetPlayerSlotIndex(run.Players[0])));
+            RecordingFormat.Validate(__state);
+        }
+        catch (Exception) { journal.Invalidate(); __state = null; }
+    }
+    static void AfterChestOpen(TreasureRoom __instance, ref Task<int> __result, RecordedAction? __state) =>
+        __result = ObserveChest(__result, __instance, __state, run, journal);
+    static async Task<int> ObserveChest(Task<int> task, TreasureRoom room, RecordedAction? action,
+        MegaCrit.Sts2.Core.Runs.RunState? state, LocalJournal? destination)
+    {
+        try
+        {
+            if (action is not null && state is not null && destination is not null)
+                await Observe(task, action, state, destination);
+            return await task;
+        }
+        finally
+        {
+            // Settled with the chest's row: the advisor's next capture is the opened chest.
+            chests.AddOrUpdate(room, new(true));
+            MarkAdvisorDirty();
+        }
     }
     static void BeforeTreasureVote(Player player, int? index, out RecordedAction? __state)
     {
@@ -273,7 +315,7 @@ public static partial class RecorderMod
         }
         catch (Exception) { journal.Invalidate(); __state = null; }
     }
-    static void TreasureAwarded(List<RelicPickingResult> results)
+    static void TreasureAwarded(List<RelicPickingResult> results, bool isFinalRound)
     {
         if (run is null || journal is null || run.Players.Count < 2) return;
         try
@@ -485,60 +527,6 @@ public static partial class RecorderMod
         catch (Exception) { journal.Invalidate(); }
     }
     static Player? RemotePlayer(ulong senderId) => run?.Players.FirstOrDefault(p => p.NetId == senderId);
-    static void BeforeRemoteMerchantGold(GoldLostMessage message, ulong senderId)
-    {
-        if (run is null || journal is null || run.Players.Count < 2 || run.CurrentRoom is not MerchantRoom) return;
-        var player = RemotePlayer(senderId);
-        if (player is null || LocalContext.IsMe(player)) return;
-        if (message.goldLost < 0 || remoteMerchantPrices.ContainsKey(senderId))
-        { journal.Invalidate(); return; }
-        remoteMerchantPrices[senderId] = message.goldLost;
-    }
-    static void BeforeRemoteMerchantReward(RewardObtainedMessage message, ulong senderId,
-        out RecordedAction? __state)
-    {
-        __state = null;
-        if (run is null || journal is null || run.Players.Count < 2 || run.CurrentRoom is not MerchantRoom) return;
-        var player = RemotePlayer(senderId);
-        if (player is null || LocalContext.IsMe(player) || message.wasSkipped) return;
-        if (!remoteMerchantPrices.Remove(senderId, out int price)) { journal.Invalidate(); return; }
-        try
-        {
-            int seat = run.GetPlayerSlotIndex(player);
-            __state = message.rewardType switch
-            {
-                MegaCrit.Sts2.Core.Rewards.RewardType.Card when message.cardModel is not null =>
-                    Stamp(new("BuyCard", seat, card: new(message.cardModel.Id.Entry,
-                        message.cardModel.CurrentUpgradeLevel), price: price, sync_kind: "merchant_outcome")),
-                MegaCrit.Sts2.Core.Rewards.RewardType.Potion when message.potionModel is not null =>
-                    Stamp(new("BuyPotion", seat, potion_id: message.potionModel.Id.Entry,
-                        price: price, sync_kind: "merchant_outcome")),
-                MegaCrit.Sts2.Core.Rewards.RewardType.Relic when message.relicModel is not null =>
-                    Stamp(new("BuyRelic", seat, relic_id: message.relicModel.Id.Entry,
-                        price: price, sync_kind: "merchant_outcome")),
-                _ => null
-            };
-            if (__state is null) { journal.Invalidate(); return; }
-            RecordingFormat.Validate(__state);
-        }
-        catch (Exception) { journal.Invalidate(); __state = null; }
-    }
-    static void BeforeRemoteMerchantCardRemoval(MerchantCardRemovalMessage message, ulong senderId,
-        out RecordedAction? __state)
-    {
-        __state = null;
-        if (run is null || journal is null || run.Players.Count < 2 || run.CurrentRoom is not MerchantRoom) return;
-        var player = RemotePlayer(senderId);
-        if (player is null || LocalContext.IsMe(player)) return;
-        try
-        {
-            if (message.goldCost < 0) { journal.Invalidate(); return; }
-            __state = Stamp(new("RemoveCard", run.GetPlayerSlotIndex(player), price: message.goldCost,
-                sync_kind: "merchant_outcome"));
-            RecordingFormat.Validate(__state);
-        }
-        catch (Exception) { journal.Invalidate(); __state = null; }
-    }
     static void BeforeGrid(Player player, IReadOnlyList<CardModel> cardsIn,
         PlayerChoiceContext context, CardSelectorPrefs prefs, out Selection? __state)
         => __state = CaptureBoundary(() => {

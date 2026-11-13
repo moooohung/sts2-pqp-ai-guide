@@ -141,8 +141,15 @@ static class QueueResilienceTests
         var noNetwork=new QueueHandler{Code=201,Body=null};
         var tight=new LocalStorageBudget(noState,maxBytes:4096,maxFiles:8);
         await using(var limited=new UploadQueue(noState,noNetwork,tight))
-        {await limited.EnqueueAsync(payload);await limited.AttemptAsync(payload.run_id);}
-        if(noNetwork.CatboxCalls!=0)throw new Exception("Catbox called without reserved state capacity");
+        {
+            await limited.EnqueueAsync(payload);
+            // Budget pressure now permits draining; an actually unwritable receipt slot must
+            // still stop the remote side effect before it happens.
+            Directory.CreateDirectory(Path.Combine(noState,payload.run_id+".json.receipt"));
+            await limited.AttemptAsync(payload.run_id);
+        }
+        if(noNetwork.CatboxCalls!=0||noNetwork.ServerCopyCalls!=0)
+            throw new Exception("upload proceeded without a writable receipt reservation");
         Console.WriteLine("PASS: persisted shared retry schedule, storage reservation precedes Catbox");
         foreach(var invalid in new[]{
             payload with{environment_mods=Enumerable.Range(0,129).Select(i=>new EnvironmentMod("mod"+i,"1")).ToArray()},

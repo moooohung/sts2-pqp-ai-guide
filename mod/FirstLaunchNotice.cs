@@ -8,12 +8,11 @@ public sealed record GamePopupButton(string Text, Action OnPressed);
 // replay button and the upload notices are online-only (FirstLaunchNotice.Sharing.cs).
 public static partial class FirstLaunchNotice
 {
-    static int queueFullScheduled;
-
     // Main thread. action adds a second button; closeAfterSeconds > 0 removes the note by itself.
-    internal static void ShowShortNote(string heading,string text,GamePopupButton? action=null,double closeAfterSeconds=0)
+    // False when there is no scene tree yet, so the caller can keep its request.
+    internal static bool ShowShortNote(string heading,string text,GamePopupButton? action=null,double closeAfterSeconds=0)
     {
-        if (Engine.GetMainLoop() is not SceneTree tree) { if (action is null) Interlocked.Exchange(ref queueFullScheduled, 0); return; }
+        if (Engine.GetMainLoop() is not SceneTree tree) return false;
         var layer = new CanvasLayer { Layer = 101 };
         var panel = new PanelContainer {
             Position = new Vector2(24, 24), CustomMinimumSize = new Vector2(560, 0),
@@ -29,7 +28,7 @@ public static partial class FirstLaunchNotice
         var body = new Label { Text = text, CustomMinimumSize = new Vector2(520, 0),
             AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = Control.MouseFilterEnum.Ignore };
         body.AddThemeFontOverride("font", font); body.AddThemeFontSizeOverride("font_size", 17);
-        var close = new Button { Text = "닫기", FocusMode = Control.FocusModeEnum.None,
+        var close = new Button { Text = LocalStorageText.NoteClose, FocusMode = Control.FocusModeEnum.None,
             CustomMinimumSize = new Vector2(100, 44) };
         close.AddThemeFontOverride("font", font);
         close.Pressed += () => { if (GodotObject.IsInstanceValid(layer)) layer.QueueFree(); };
@@ -54,5 +53,6 @@ public static partial class FirstLaunchNotice
         margin.AddChild(column); panel.AddChild(margin); layer.AddChild(panel); tree.Root.AddChild(layer);
         if (closeAfterSeconds > 0)
             tree.CreateTimer(closeAfterSeconds).Timeout += () => { if (GodotObject.IsInstanceValid(layer)) layer.QueueFree(); };
+        return true;
     }
 }

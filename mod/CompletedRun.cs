@@ -51,7 +51,7 @@ public static class CompletedRun
             throw new ArgumentException("party");
         if (header.ascension is < 0 or > 10)
             throw new ArgumentException("ascension");
-        return new("sts2-human-run-v2", "sts2-native-input-v1", header.run_id,
+        return new("sts2-human-run-v2", RecordingFormat.ActionSchema, header.run_id,
             header.mod_version, header.game_version, header.game_dll_sha256,
             header.character, header.ascension, header.seed, header.active_mods, actions,
             floors.ToArray(), result, header.started_at, endedAt,
@@ -63,13 +63,15 @@ public static class CompletedRun
     public static async Task QueueAsync(UploadQueue queue, RunHeader header,
         IReadOnlyList<ActionRow> actions, IReadOnlyList<FloorDigest> floors,
         RunResult result, string endedAt, bool completeCapture, CancellationToken ct = default,
-        Action<string>? log = null)
+        Action<string>? log = null, LocalJournal? journal = null)
     {
         // This flag is local only, never added to RunPayload.
         await header.Admission.AdviceDrained.ConfigureAwait(false);
         if (!completeCapture || !header.Admission.Clean)
             throw new InvalidOperationException("incomplete capture cannot upload");
-        await queue.EnqueueAsync(Assemble(header, actions, floors, result, endedAt), ct);
+        var payload = Assemble(header, actions, floors, result, endedAt);
+        string? durable = journal is null ? null : await journal.StageHandoffAsync(payload, queue);
+        await queue.EnqueueDurableAsync(payload, durable, ct);
         (log ?? Console.WriteLine)($"[HumanPlayRecorder] record finalized/queued: actions {actions.Count}, floors {floors.Count}, party_size {header.party_size}");
     }
 }

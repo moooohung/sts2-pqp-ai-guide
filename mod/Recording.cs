@@ -110,6 +110,25 @@ public static class RecordingFormat
         return Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(
             "sts2-human-run-v1/shared\n" + seed + "\n" + runStartToken)));
     }
+    /// The action schema this recorder writes. v2 adds the solo chest button as its own
+    /// `OpenChest` input and the solo treasure Skip (a `SkipRelic` without a reward index);
+    /// v1 readers refuse both, so the version says which a recording may carry.
+    public const string ActionSchema = "sts2-native-input-v2";
+    public static bool KnownActionSchema(string? schema) =>
+        schema is "sts2-native-input-v1" or ActionSchema;
+    /// The screen an input belongs to (ActionRow.phase). The solo treasure Skip is the treasure
+    /// room's proceed button (NTreasureRoom.cs:176-185), not a reward screen's Skip.
+    public static string Phase(RecordedAction a) => a.kind switch {
+        "Move" => "MapChoice", "RestOption" => "RestSite",
+        "EventChoice" => "Event",
+        "BuyCard" or "BuyPotion" or "BuyRelic" or "RemoveCard" => "Shop",
+        "Collect" or "OpenChest" => "Treasure",
+        "SkipRelic" when a.reward_index is null => "Treasure",
+        "OpenReward" or "PickCard" or "PickCardBundle" or "RerollCardReward" or
+        "PickPotion" or "PickRelicReward" or "SkipRewards" or "SkipPotion" or
+        "SkipRelic" or "Skip" => "CardReward",
+        _ => "Combat"
+    };
     public static void Validate(RecordedAction a)
     {
         if (a.player < 0 || a.player > 3) throw new ArgumentException("seat");
@@ -187,8 +206,12 @@ public static class RecordingFormat
                 if (a.reward_index is null or < 0 || a.reward_type != "card")
                     throw new ArgumentException("card reward reroll");
                 break;
+            case "OpenChest":
+                break;
             case "OpenReward": case "Collect": case "SkipRewards":
             case "SkipPotion": case "SkipRelic":
+                // The solo treasure Skip leaves every offered relic (NTreasureRoom.cs:176-185).
+                if (a.kind == "SkipRelic" && a.reward_type == "relic" && a.reward_index is null) break;
                 if (a.reward_index is null or < 0 || a.reward_type is null)
                     throw new ArgumentException("reward");
                 break;

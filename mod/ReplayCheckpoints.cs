@@ -63,7 +63,7 @@ public static class ReplayCheckpoints
                     event_rng=run.CurrentRoom is EventRoom?Rng(RunManager.Instance.EventSynchronizer.GetLocalEvent().Rng):null,
                     event_options=run.CurrentRoom is EventRoom?RunManager.Instance.EventSynchronizer.GetLocalEvent().CurrentOptions
                         .Select(o=>new EventOptionCheckpoint(o.TextKey,!o.IsLocked,o.Relic?.Id.Entry)).ToArray():null,
-                    shop=run.CurrentRoom is MerchantRoom shop?shop.GetLocalInventory().AllEntries.Select(e=>new ShopCheckpoint(
+                    shop=run.CurrentRoom is MerchantRoom?RunManager.Instance.MerchantSynchronizer.GetLocalInventory().AllEntries.Select(e=>new ShopCheckpoint(
                         e.GetType().Name,e switch {
                             MerchantCardEntry card=>card.CreationResult?.Card?.Id.Entry,
                             MerchantRelicEntry relic=>relic.Model?.Id.Entry,
