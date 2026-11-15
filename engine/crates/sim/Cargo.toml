@@ -13,7 +13,7 @@ selector-proof = []
 # Latest stable release checked with cargo search on 2026-10-25.
 arrayvec = "=0.7.8"
 # Latest stable checked on crates.io 2026-11-03; inline storage spills instead of imposing a game limit.
-smallvec = { version = "=1.16.4", features = ["const_generics", "union"] }
+smallvec = { version = "=1.16.5", features = ["const_generics", "union"] }
 sts2_wire = { path = "../wire" }
 # Already in the workspace lockfile (native_obs); digests of the admitted selector shapes.
 sha2 = "=0.11.1"
