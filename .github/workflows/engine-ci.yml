@@ -1,0 +1,32 @@
+name: Engine CPU checks
+on:
+  push:
+    branches: [main]
+    paths: &inputs ['engine/**', '.github/workflows/engine-ci.yml']
+  pull_request:
+    paths: *inputs
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: engine-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: engine
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: engine
+      - run: rustup component add rustfmt clippy
+      - run: cargo fmt -p sts2_wire --check
+      - run: cargo clippy --locked -p sts2_wire --all-targets
+      - run: cargo test --locked -p sts2_wire
