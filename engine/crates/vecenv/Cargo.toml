@@ -19,7 +19,7 @@ selector-proof = ["native", "sts2_sim/selector-proof"]
 # Latest stable release checked with cargo search on 2026-10-25.
 rayon = "=1.12.0"
 # Latest stable checked with cargo search; cached linear-time public-text parsing.
-regex = "=1.13.1"
+regex = "=1.13.2"
 sts2_wire = { path = "../wire" }
 sts2_sim = { path = "../sim" }
 
